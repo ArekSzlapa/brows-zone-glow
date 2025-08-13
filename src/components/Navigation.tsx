@@ -62,9 +62,6 @@ const Navigation = () => {
               <span className="font-bold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
                 Brows•Zone
               </span>
-              {/* <span className="text-xs text-muted-foreground -mt-1">
-                Beauty Studio
-              </span> */}
             </div>
           </div>
 

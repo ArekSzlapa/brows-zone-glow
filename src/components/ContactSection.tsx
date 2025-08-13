@@ -1,6 +1,6 @@
 import { HeroButton } from "@/components/ui/hero-button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Phone, Clock, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import "./mediaQueryStyles.css";
 
 const ContactSection = () => {
@@ -56,24 +56,6 @@ const ContactSection = () => {
                 </div>
               </CardContent>
             </Card>
-            {/* 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full">
-                    <Clock className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">
-                      Media społecznościowe
-                    </h3>
-                    <p className="text-muted-foreground">
-                      Mon-Sat: 9AM-7PM, Sun: 10AM-5PM
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card> */}
 
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
