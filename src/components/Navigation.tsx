@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Facebook, Instagram } from "lucide-react";
 import { HeroButton } from "./ui/hero-button";
+import logo from "../assets/logo.png";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,10 +29,10 @@ const Navigation = () => {
   };
 
   const navLinks = [
-    { name: "Services", id: "services" },
-    { name: "Transformations", id: "transformations" },
-    { name: "About", id: "about" },
-    { name: "Contact", id: "contact" },
+    { name: "Usługi", id: "services" },
+    { name: "Metamorfozy", id: "transformations" },
+    { name: "O mnie", id: "about" },
+    { name: "Kontakt", id: "contact" },
   ];
 
   return (
@@ -45,20 +46,25 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div 
+          <div
             onClick={() => scrollToSection("hero")}
             className="flex items-center space-x-2 cursor-pointer group"
           >
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <span className="text-primary-foreground font-bold text-lg">B</span>
+              <span
+                style={{ display: "flex", justifyContent: "center" }}
+                className="text-primary-foreground font-bold text-lg"
+              >
+                <img style={{ width: "70%" }} src={logo} />
+              </span>
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
-                Brows Zone
+                Brows•Zone
               </span>
-              <span className="text-xs text-muted-foreground -mt-1">
+              {/* <span className="text-xs text-muted-foreground -mt-1">
                 Beauty Studio
-              </span>
+              </span> */}
             </div>
           </div>
 
@@ -81,6 +87,7 @@ const Navigation = () => {
             {/* Social Media Icons */}
             <div className="flex items-center space-x-3">
               <a
+                style={{ display: "flex", alignItems: "center" }}
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -89,6 +96,7 @@ const Navigation = () => {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
+                style={{ display: "flex", alignItems: "center" }}
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -99,11 +107,11 @@ const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <HeroButton 
+            <HeroButton
               size="default"
               onClick={() => scrollToSection("contact")}
             >
-              Book Now
+              Zarezerwuj wizyte
             </HeroButton>
           </div>
 
@@ -119,9 +127,7 @@ const Navigation = () => {
         {/* Mobile Menu */}
         <div
           className={`md:hidden transition-all duration-300 overflow-hidden ${
-            isMobileMenuOpen 
-              ? "max-h-96 opacity-100 py-4" 
-              : "max-h-0 opacity-0"
+            isMobileMenuOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0"
           }`}
         >
           <div className="flex flex-col space-y-4 bg-card/95 backdrop-blur-md rounded-lg p-4 shadow-elegant">
@@ -134,7 +140,7 @@ const Navigation = () => {
                 {link.name}
               </button>
             ))}
-            
+
             {/* Mobile Social Icons */}
             <div className="flex items-center justify-center space-x-6 py-3 border-b border-border/30">
               <a
@@ -154,9 +160,9 @@ const Navigation = () => {
                 <Instagram className="w-6 h-6" />
               </a>
             </div>
-            
-            <HeroButton 
-              size="default" 
+
+            <HeroButton
+              size="default"
               className="w-full mt-4"
               onClick={() => scrollToSection("contact")}
             >

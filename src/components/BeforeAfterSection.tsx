@@ -1,63 +1,103 @@
-import { useState, useRef, useCallback } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { HeroButton } from "@/components/ui/hero-button"
+import { useState, useRef, useCallback, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { HeroButton } from "@/components/ui/hero-button";
 
 // Import before/after images
-import before1 from "@/assets/before-1.jpg"
-import after1 from "@/assets/after-1.jpg"
-import before2 from "@/assets/before-2.jpg"
-import after2 from "@/assets/after-2.jpg"
-import before3 from "@/assets/before-3.jpg"
-import after3 from "@/assets/after-3.jpg"
+import before1 from "@/assets/before-1.jpeg";
+import after1 from "@/assets/after-1.jpeg";
+import before2 from "@/assets/before-2.jpeg";
+import after2 from "@/assets/after-2.jpeg";
+import before3 from "@/assets/before-6.jpeg";
+import after3 from "@/assets/after-6.jpeg";
 
 interface InteractiveSliderProps {
-  beforeImage: string
-  afterImage: string
+  beforeImage: string;
+  afterImage: string;
 }
 
-const InteractiveSlider = ({ beforeImage, afterImage }: InteractiveSliderProps) => {
-  const [sliderPosition, setSliderPosition] = useState(50)
-  const [isDragging, setIsDragging] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+const InteractiveSlider = ({
+  beforeImage,
+  afterImage,
+}: InteractiveSliderProps) => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = useCallback(() => {
-    setIsDragging(true)
-  }, [])
+  // Unified function for updating slider position
+  const updateSliderPosition = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  }, []);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent | MouseEvent) => {
-    if (!isDragging || !containerRef.current) return
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      setIsDragging(true);
+      updateSliderPosition(e.clientX);
+    },
+    [updateSliderPosition]
+  );
 
-    const rect = containerRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100))
-    setSliderPosition(percentage)
-  }, [isDragging])
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging) return;
+      updateSliderPosition(e.clientX);
+    },
+    [isDragging, updateSliderPosition]
+  );
 
   const handleMouseUp = useCallback(() => {
-    setIsDragging(false)
-  }, [])
+    setIsDragging(false);
+  }, []);
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!isDragging || !containerRef.current) return
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      setIsDragging(true);
+      updateSliderPosition(e.touches[0].clientX);
+    },
+    [updateSliderPosition]
+  );
 
-    const rect = containerRef.current.getBoundingClientRect()
-    const x = e.touches[0].clientX - rect.left
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100))
-    setSliderPosition(percentage)
-  }, [isDragging])
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isDragging) return;
+      updateSliderPosition(e.touches[0].clientX);
+    },
+    [isDragging, updateSliderPosition]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Attach native listeners so dragging continues outside the element
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    } else {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative aspect-[4/3] overflow-hidden rounded-lg cursor-ew-resize select-none"
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleMouseUp}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* Before Image (Right Side) */}
+      {/* Before Image */}
       <div className="absolute inset-0">
         <img
           src={beforeImage}
@@ -67,8 +107,8 @@ const InteractiveSlider = ({ beforeImage, afterImage }: InteractiveSliderProps) 
         />
       </div>
 
-      {/* After Image (Left Side - Clipped) */}
-      <div 
+      {/* After Image (clipped) */}
+      <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
@@ -80,18 +120,16 @@ const InteractiveSlider = ({ beforeImage, afterImage }: InteractiveSliderProps) 
         />
       </div>
 
-      {/* Slider Line and Handle */}
+      {/* Slider Line */}
       <div
-        className="absolute top-0 bottom-0 w-1 bg-background shadow-lg z-10 transition-all duration-75"
-        style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+        className="absolute top-0 bottom-0 w-1 bg-background shadow-lg z-10"
+        style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
       >
-        {/* Slider Handle */}
+        {/* Handle */}
         <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-background rounded-full shadow-lg border-2 border-primary cursor-grab flex items-center justify-center transition-all duration-200 ${
-            isDragging ? 'scale-110 cursor-grabbing' : 'hover:scale-105'
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-background rounded-full shadow-lg border-2 border-primary flex items-center justify-center transition-all duration-200 ${
+            isDragging ? "scale-110" : "hover:scale-105"
           }`}
-          onMouseDown={handleMouseDown}
-          onTouchStart={() => setIsDragging(true)}
         >
           <div className="flex gap-0.5">
             <div className="w-0.5 h-4 bg-primary rounded-full"></div>
@@ -102,76 +140,94 @@ const InteractiveSlider = ({ beforeImage, afterImage }: InteractiveSliderProps) 
 
       {/* Labels */}
       <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
-        After
+        Przed
       </div>
       <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
-        Before
+        Po
       </div>
 
-      {/* Instruction Text */}
+      {/* Hint text */}
       {!isDragging && (
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-muted-foreground animate-fade-in">
-          Drag to compare
+          Przeciągnij, aby porównać
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 const BeforeAfterSection = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.offsetTop - navHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const transformations = [
     {
       before: before1,
       after: after1,
-      service: "Eyebrow Threading & Shaping",
-      description: "Complete transformation with precise threading and custom shaping",
-      price: "$45",
-      duration: "30 min"
+      service: "Geometria brwi z koloryzacja",
+      description:
+        "Precyzyjne wyznaczenie kształtu i trwała koloryzacja dla idealnie dopasowanych brwi",
+      price: "40 zł",
+      duration: "60 min",
     },
     {
       before: before2,
       after: after2,
-      service: "Brow Restoration & Tinting",
-      description: "Restored fullness with professional tinting and shaping",
-      price: "$65",
-      duration: "45 min"
+      service: "Laminacja brwi z koloryzacja",
+      description:
+        "Utrwalenie kształtu i koloru brwi dla pełnego, zadbanego wyglądu",
+      price: "50 zł ",
+      duration: "90 min",
     },
     {
       before: before3,
       after: after3,
-      service: "Brow Lamination & Styling",
-      description: "Sleek, groomed look with long-lasting lamination treatment",
-      price: "$85",
-      duration: "60 min"
-    }
-  ]
+      service: "Lifting rzęs z koloryzacją",
+      description:
+        "Podkręcenie i przyciemnienie rzęs dla naturalnie wyrazistego spojrzenia",
+      price: "50 zł",
+      duration: "90 min",
+    },
+  ];
 
   return (
     <section className="py-20 bg-gradient-to-b from-muted/30 via-background to-muted/30">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Potential </span>
+            <span className="text-foreground">Wykonane </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Results
+              Metamorfozy
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            See what's possible with expert eyebrow services. 
-            These sample transformations showcase the techniques I've mastered. Drag the slider to compare!
+            Te metamorfozy pokazują techniki, które opanowałam do perfekcji.
+            Przesuń suwak i porównaj efekty
           </p>
         </div>
 
         {/* Three Separate Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {transformations.map((transformation, index) => (
-            <Card key={index} className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+            <Card
+              key={index}
+              className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            >
               <CardContent className="p-0">
                 {/* Interactive Slider */}
                 <div className="relative">
-                  <InteractiveSlider 
-                    beforeImage={transformation.before}
-                    afterImage={transformation.after}
+                  <InteractiveSlider
+                    beforeImage={transformation.after}
+                    afterImage={transformation.before}
                   />
                 </div>
 
@@ -183,16 +239,24 @@ const BeforeAfterSection = () => {
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
                     {transformation.description}
                   </p>
-                  
+
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <span className="text-2xl font-bold text-primary">{transformation.price}</span>
-                      <span className="text-sm text-muted-foreground ml-2">• {transformation.duration}</span>
+                      <span className="text-md font-bold text-primary">
+                        {transformation.price}
+                      </span>
+                      <span className="text-md text-muted-foreground ml-2">
+                        • {transformation.duration}
+                      </span>
                     </div>
                   </div>
-                  
-                  <HeroButton size="default" className="w-full">
-                    Book Appointment
+
+                  <HeroButton
+                    onClick={() => scrollToSection("contact")}
+                    size="default"
+                    className="w-full"
+                  >
+                    Zarezerwuj wizyte
                   </HeroButton>
                 </div>
               </CardContent>
@@ -204,20 +268,20 @@ const BeforeAfterSection = () => {
         <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">100%</div>
-            <div className="text-sm text-muted-foreground">Dedication</div>
+            <div className="text-sm text-muted-foreground">Pasji</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">3</div>
-            <div className="text-sm text-muted-foreground">Certifications</div>
+            <div className="text-sm text-muted-foreground">Certyfikacje</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">New</div>
-            <div className="text-sm text-muted-foreground">Fresh Start</div>
+            <div className="text-3xl font-bold text-primary mb-2">100%</div>
+            <div className="text-sm text-muted-foreground">Zaangażowania</div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default BeforeAfterSection
+export default BeforeAfterSection;

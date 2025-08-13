@@ -1,6 +1,6 @@
-import { HeroButton } from "@/components/ui/hero-button"
-import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Phone, Clock, Mail } from "lucide-react"
+import { HeroButton } from "@/components/ui/hero-button";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Phone, Clock, Mail } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -8,14 +8,14 @@ const ContactSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Get In </span>
+            <span className="text-foreground">Porozmawiajmy o </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Touch
+              Twoich brwiach
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to transform your brows? Book your appointment today or contact 
-            us for any questions about our services.
+            Gotowa na metamorfozę swoich brwi? Umów się na wizytę już dziś lub
+            skontaktuj się z nami, aby dowiedzieć się więcej o naszych usługach
           </p>
         </div>
 
@@ -29,8 +29,12 @@ const ContactSection = () => {
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Location</h3>
-                    <p className="text-muted-foreground">123 Beauty Street, Downtown, NY 10001</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Lokalizacja
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Czaniec, ul. Cisowa 3, 43-354
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -43,13 +47,15 @@ const ContactSection = () => {
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Phone</h3>
-                    <p className="text-muted-foreground">(555) 123-BROW</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Telefon
+                    </h3>
+                    <p className="text-muted-foreground">+48 516 170 052</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-
+            {/* 
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
@@ -57,12 +63,16 @@ const ContactSection = () => {
                     <Clock className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Hours</h3>
-                    <p className="text-muted-foreground">Mon-Sat: 9AM-7PM, Sun: 10AM-5PM</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Media społecznościowe
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Mon-Sat: 9AM-7PM, Sun: 10AM-5PM
+                    </p>
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
@@ -71,8 +81,12 @@ const ContactSection = () => {
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <p className="text-muted-foreground">hello@browszone.com</p>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      Email
+                    </h3>
+                    <p className="text-muted-foreground">
+                      aleksandra.janos@gmail.com
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -83,26 +97,31 @@ const ContactSection = () => {
           <div className="flex flex-col justify-center">
             <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30">
               <h3 className="text-2xl font-bold text-foreground mb-4">
-                Ready for Perfect Brows?
+                Gotowa na perfekcyjne brwi?
               </h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Book your appointment online 24/7 and discover why hundreds of clients 
-                trust Brows Zone for their eyebrow needs. First-time clients receive 
-                15% off all services!
+                Umów wizyte i przekonaj się sama, dlaczego klientki wybrały
+                Brows•Zone w kwestii stylizacji brwi. Nowe klientki otrzymują
+                10% zniżki na wszystkie usługi!
               </p>
-              
+
               <div className="space-y-4">
                 <HeroButton size="lg" className="w-full text-lg py-4">
-                  Book Now - 15% Off First Visit
+                  10% Zniżki na pierwszą wizyte
                 </HeroButton>
-                <HeroButton variant="outline" size="lg" className="w-full text-lg py-4">
-                  Call Us: (555) 123-BROW
+                <HeroButton
+                  variant="outline"
+                  size="lg"
+                  className="w-full text-lg py-4"
+                >
+                  Zadzwoń: +48 516 170 052
                 </HeroButton>
               </div>
-              
+
               <div className="mt-6 pt-6 border-t border-border/30">
                 <p className="text-sm text-muted-foreground text-center">
-                  Follow us on social media for beauty tips and special offers
+                  Śledź mnie w mediach społecznościowych, aby otrzymywać porady
+                  urodowe oraz wyjątkowe oferty!
                 </p>
               </div>
             </div>
@@ -110,7 +129,7 @@ const ContactSection = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ContactSection
+export default ContactSection;

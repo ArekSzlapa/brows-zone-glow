@@ -1,43 +1,44 @@
-import { Card, CardContent } from "@/components/ui/card"
-import serviceImage from "@/assets/service-image.jpg"
+import { Card, CardContent } from "@/components/ui/card";
+import serviceImage from "@/assets/service-image.jpg";
 
 const ServicesSection = () => {
   const services = [
     {
-      title: "Eyebrow Threading",
-      description: "Precision hair removal technique for perfectly shaped brows",
-      price: "From $25"
+      title: "Geometria Brwi z koloryzacją",
+      description: "Precyzyjne modelowanie włosków dla idealnego kształtu brwi",
+      price: "40 zł",
     },
     {
-      title: "Brow Shaping & Styling",
-      description: "Custom brow design tailored to your facial features",
-      price: "From $35"
+      title: "Laminacja Brwi",
+      description: "Stylizacja brwi dopasowana do rysów twarzy",
+      price: "40 zł",
     },
     {
-      title: "Brow Tinting",
-      description: "Semi-permanent color enhancement for fuller-looking brows",
-      price: "From $30"
+      title: "Lifting Rzęs",
+      description: "Podkreślenie koloru i objętości rzęs.",
+      price: "From $30",
     },
     {
-      title: "Brow Lamination",
-      description: "Long-lasting treatment for sleek, groomed brows",
-      price: "From $45"
-    }
-  ]
+      title: "Laminacja Brwi i Rzęs",
+      description:
+        "trwałe podkreślenie, odżywienie i nadanie idealnego kształtu dla pełnego, naturalnego efektu",
+      price: "70 zł",
+    },
+  ];
 
   return (
     <section className="py-20 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Our </span>
+            <span className="text-foreground">Oferowane </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Services
+              Usługi
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Professional eyebrow services designed to enhance your natural beauty 
-            with precision and care.
+            Profesjonalna stylizacja brwi, która podkreśli Twoje naturalne
+            piękno – z precyzją i troską o każdy detal.
           </p>
         </div>
 
@@ -45,8 +46,8 @@ const ServicesSection = () => {
           {/* Services Grid */}
           <div className="grid sm:grid-cols-2 gap-6">
             {services.map((service, index) => (
-              <Card 
-                key={index} 
+              <Card
+                key={index}
                 className="border-0 shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card/80 backdrop-blur-sm"
               >
                 <CardContent className="p-6">
@@ -67,26 +68,29 @@ const ServicesSection = () => {
           {/* Service Image */}
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-elegant">
-              <img 
-                src={serviceImage} 
-                alt="Professional eyebrow threading service" 
+              <img
+                src={serviceImage}
+                alt="Professional eyebrow threading service"
                 className="w-full h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
             </div>
-            
+
             {/* Floating Stats Card */}
             <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-xl shadow-elegant border border-border/50">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-1">500+</div>
-                <div className="text-sm text-muted-foreground">Happy Clients</div>
+                <div className="text-xl font-bold text-primary mb-1">Brwi</div>
+                <div className="text-s text-muted-foreground">
+                  {" "}
+                  dopracowane do perfekcji
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ServicesSection
+export default ServicesSection;

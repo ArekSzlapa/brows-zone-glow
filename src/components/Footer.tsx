@@ -1,4 +1,5 @@
 import { Heart, Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,32 +12,41 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-bold">B</span>
+                <span
+                  style={{ display: "flex", justifyContent: "center" }}
+                  className="text-primary-foreground font-bold"
+                >
+                  <img style={{ width: "70%" }} src={logo} />
+                </span>
               </div>
               <div>
-                <h3 className="font-bold text-lg text-foreground">Brows Zone</h3>
-                <p className="text-sm text-muted-foreground">Beauty Studio</p>
+                <h3 className="font-bold text-lg text-foreground">
+                  Brows•Zone
+                </h3>
+                {/* <p className="text-sm text-muted-foreground">Beauty Studio</p> */}
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              Just starting my journey in the beauty industry with passion, dedication, 
-              and a commitment to helping you achieve your perfect brows.
+              Z pasją, zaangażowaniem i pełnym oddaniem pomagam Ci osiągnąć
+              wymarzone brwi.
             </p>
             <div className="flex items-center space-x-2 text-primary">
               <Heart className="w-4 h-4 fill-primary" />
-              <span className="text-sm font-medium">Made with love and ambition</span>
+              <span className="text-sm font-medium">
+                Stworzone z pasją i zaangażowaniem
+              </span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Quick Links</h3>
+            <h3 className="font-semibold text-foreground">Odnośniki</h3>
             <div className="space-y-2">
               {[
-                { name: "Services", href: "#services" },
-                { name: "Sample Results", href: "#transformations" },
-                { name: "About Me", href: "#about" },
-                { name: "Book Appointment", href: "#contact" }
+                { name: "Usługi", href: "#services" },
+                { name: "Metamorfozy", href: "#transformations" },
+                { name: "O Brows•Zone", href: "#about" },
+                { name: "Zarezerwuj wizyte", href: "#contact" },
               ].map((link) => (
                 <a
                   key={link.name}
@@ -51,28 +61,31 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Get in Touch</h3>
+            <h3 className="font-semibold text-foreground">Kontakt</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm">Downtown Beauty District</span>
+                <span className="text-sm">Czaniec, Śląskie</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Phone className="w-4 h-4 text-primary" />
-                <span className="text-sm">(555) 123-BROW</span>
+                <span className="text-sm">+48 516 170 052</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="w-4 h-4 text-primary" />
-                <span className="text-sm">hello@browszone.com</span>
+                <span className="text-sm">aleksandra.janos@gmail.com</span>
               </div>
             </div>
-            
+
             {/* Social Links */}
             <div className="pt-4">
-              <p className="text-sm text-muted-foreground mb-3">Follow my journey:</p>
+              <p className="text-sm text-muted-foreground mb-3">
+                Śledź mnie w mediach społecznościowych:
+              </p>
               <div className="flex space-x-3">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/szlapa.brows/#"
+                  target="_blank"
                   className="w-8 h-8 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary rounded-full flex items-center justify-center transition-all duration-300"
                 >
                   <Instagram className="w-4 h-4" />
@@ -92,10 +105,10 @@ const Footer = () => {
         <div className="border-t border-border mt-8 pt-8 text-center">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Brows Zone. Starting fresh with big dreams.
+              © {currentYear} Brows•Zone. Dla Ciebie i Twoich brwi.
             </p>
             <p className="text-sm text-muted-foreground">
-              New to the industry • Trained & Certified • Ready to serve you
+              Przeszkolona i certyfikowana • Gotowa, by Ci pomóc
             </p>
           </div>
         </div>
