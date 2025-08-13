@@ -28,7 +28,9 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
-          <div>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
