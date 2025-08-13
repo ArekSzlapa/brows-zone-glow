@@ -31,7 +31,10 @@ const ContactSection = () => {
           <div
             style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card
+              className="border-0 shadow-soft bg-card/80 backdrop-blur-sm"
+              style={{ width: "98%" }}
+            >
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -49,7 +52,10 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card
+              className="border-0 shadow-soft bg-card/80 backdrop-blur-sm"
+              style={{ width: "98%" }}
+            >
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -65,7 +71,10 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card
+              className="border-0 shadow-soft bg-card/80 backdrop-blur-sm"
+              style={{ width: "98%" }}
+            >
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
