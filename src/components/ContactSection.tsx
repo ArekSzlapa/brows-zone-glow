@@ -25,7 +25,7 @@ const ContactSection = () => {
           <div className="mediaSmall">
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
@@ -43,7 +43,7 @@ const ContactSection = () => {
 
             <Card className="w-full border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
@@ -57,9 +57,9 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
-                <div className="flex items-center">
+                <div className="flex items-center small-flex">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
