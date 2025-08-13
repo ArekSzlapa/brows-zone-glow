@@ -22,14 +22,14 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
-          <div className="mediaSmall">
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
+          <div>
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <MapPin className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div style={{ width: "100%" }}>
                     <h3 className="font-semibold text-foreground mb-1">
                       Lokalizacja
                     </h3>
@@ -41,13 +41,13 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="w-full border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
+            <Card className="w-full border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div style={{ width: "100%" }}>
                     <h3 className="font-semibold text-foreground mb-1">
                       Telefon
                     </h3>
@@ -63,7 +63,7 @@ const ContactSection = () => {
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div style={{ width: "100%" }}>
                     <h3 className="font-semibold text-foreground mb-1">
                       Email
                     </h3>
@@ -78,7 +78,7 @@ const ContactSection = () => {
 
           {/* CTA Section */}
           <div className="flex flex-col justify-center">
-            <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30 mediaSmall">
+            <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30">
               <h3 className="text-2xl font-bold text-foreground mb-4">
                 Gotowa na perfekcyjne brwi?
               </h3>
