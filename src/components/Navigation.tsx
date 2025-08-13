@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Facebook, Instagram } from "lucide-react";
 import { HeroButton } from "./ui/hero-button";
 
 const Navigation = () => {
@@ -76,8 +76,29 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Social Icons & CTA */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Social Media Icons */}
+            <div className="flex items-center space-x-3">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 text-foreground/60 hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 text-foreground/60 hover:text-primary transition-colors duration-300 hover:scale-110 transform"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+            </div>
+
+            {/* CTA Button */}
             <HeroButton 
               size="default"
               onClick={() => scrollToSection("contact")}
@@ -99,7 +120,7 @@ const Navigation = () => {
         <div
           className={`md:hidden transition-all duration-300 overflow-hidden ${
             isMobileMenuOpen 
-              ? "max-h-80 opacity-100 py-4" 
+              ? "max-h-96 opacity-100 py-4" 
               : "max-h-0 opacity-0"
           }`}
         >
@@ -113,6 +134,27 @@ const Navigation = () => {
                 {link.name}
               </button>
             ))}
+            
+            {/* Mobile Social Icons */}
+            <div className="flex items-center justify-center space-x-6 py-3 border-b border-border/30">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-300"
+              >
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-300"
+              >
+                <Instagram className="w-6 h-6" />
+              </a>
+            </div>
+            
             <HeroButton 
               size="default" 
               className="w-full mt-4"
