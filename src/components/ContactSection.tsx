@@ -9,7 +9,9 @@ const ContactSection = () => {
       <div className="mx-auto px-6 mediaSmall">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Porozmawiajmy o </span>
+            <span className="text-foreground" style={{ wordBreak: "keep-all" }}>
+              Porozmawiajmy o{" "}
+            </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent smallBlock">
               Twoich brwiach
             </span>
@@ -79,7 +81,10 @@ const ContactSection = () => {
           {/* CTA Section */}
           <div className="flex flex-col justify-center">
             <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30">
-              <h3 className="text-2xl font-bold text-foreground mb-4">
+              <h3
+                className="text-2xl font-bold text-foreground mb-4"
+                style={{ wordBreak: "break-word" }}
+              >
                 Gotowa na perfekcyjne brwi?
               </h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">

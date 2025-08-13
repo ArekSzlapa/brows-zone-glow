@@ -6,7 +6,7 @@
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
     max-width: 95vw !important;
-    word-break: break-all;
+    word-break: break-word;
   }
 }
 
