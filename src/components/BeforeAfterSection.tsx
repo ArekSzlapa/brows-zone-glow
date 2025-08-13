@@ -151,14 +151,14 @@ const BeforeAfterSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Amazing </span>
+            <span className="text-foreground">Potential </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Transformations
+              Results
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            See the incredible difference our expert brow services make. 
-            Real clients, real results. Drag the slider to compare!
+            See what's possible with expert eyebrow services. 
+            These sample transformations showcase the techniques I've mastered. Drag the slider to compare!
           </p>
         </div>
 
@@ -203,16 +203,16 @@ const BeforeAfterSection = () => {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">98%</div>
-            <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+            <div className="text-3xl font-bold text-primary mb-2">100%</div>
+            <div className="text-sm text-muted-foreground">Dedication</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">500+</div>
-            <div className="text-sm text-muted-foreground">Transformations</div>
+            <div className="text-3xl font-bold text-primary mb-2">3</div>
+            <div className="text-sm text-muted-foreground">Certifications</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">8+</div>
-            <div className="text-sm text-muted-foreground">Years Experience</div>
+            <div className="text-3xl font-bold text-primary mb-2">New</div>
+            <div className="text-sm text-muted-foreground">Fresh Start</div>
           </div>
         </div>
       </div>
