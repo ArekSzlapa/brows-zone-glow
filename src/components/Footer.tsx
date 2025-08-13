@@ -23,7 +23,9 @@ const Footer = () => {
                 <h3 className="font-bold text-lg text-foreground">
                   Brows•Zone
                 </h3>
-                {/* <p className="text-sm text-muted-foreground">Beauty Studio</p> */}
+                <p className="text-sm text-muted-foreground">
+                  Aleksandra Szłapa
+                </p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed">

@@ -5,10 +5,7 @@ const AboutSection = () => {
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2
-            className="text-4xl lg:text-5xl font-bold mb-6"
-            style={{ wordBreak: "break-all" }}
-          >
+          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Informacje o </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Brows•Zone

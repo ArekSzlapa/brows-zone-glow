@@ -168,10 +168,7 @@ const BeforeAfterSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Wykonane </span>
-            <span
-              className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-              style={{ wordBreak: "break-all" }}
-            >
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Metamorfozy
             </span>
           </h2>
