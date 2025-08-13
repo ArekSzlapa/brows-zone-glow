@@ -22,3 +22,9 @@
     font-size: 12px !important;
   }
 }
+
+.smallBlock {
+  @media (max-width: 400px) {
+    display: block !important;
+  }
+}
