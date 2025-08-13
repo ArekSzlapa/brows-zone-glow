@@ -8,6 +8,13 @@ const ContactSection = () => {
     window.location.href = "tel:+48516170052";
   };
 
+  const openIG = () => {
+    window.open(
+      "https://instagram.com/direct/inbox/?recipient=szlapa.brows",
+      "_blank"
+    );
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background ">
       <div className="mx-auto px-6 mediaSmall">
@@ -109,7 +116,11 @@ const ContactSection = () => {
               </p>
 
               <div className="space-y-4">
-                <HeroButton size="lg" className="w-full text-lg py-4 smallText">
+                <HeroButton
+                  onClick={() => openIG()}
+                  size="lg"
+                  className="w-full text-lg py-4 smallText"
+                >
                   10% Zniżki na pierwszą wizyte
                 </HeroButton>
                 <HeroButton
