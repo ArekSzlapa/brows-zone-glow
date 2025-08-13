@@ -4,6 +4,10 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import "./mediaQueryStyles.css";
 
 const ContactSection = () => {
+  const callNumber = () => {
+    window.location.href = "tel:+48516170052";
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background ">
       <div className="mx-auto px-6 mediaSmall">
@@ -43,7 +47,7 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="w-full border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -61,7 +65,7 @@ const ContactSection = () => {
 
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
-                <div className="flex items-center small-flex">
+                <div className="flex items-center space-x-4 small-flex ">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
@@ -98,6 +102,7 @@ const ContactSection = () => {
                   10% Zniżki na pierwszą wizyte
                 </HeroButton>
                 <HeroButton
+                  onClick={() => callNumber()}
                   variant="outline"
                   size="lg"
                   className="w-full text-lg py-4 smallText"
