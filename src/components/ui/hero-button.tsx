@@ -9,8 +9,8 @@ const heroButtonVariants = cva(
     variants: {
       variant: {
         hero: "bg-primary text-primary-foreground hover:bg-primary-glow shadow-lg hover:shadow-xl transform hover:-translate-y-0.5",
-        outline: "border border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground",
-        ghost: "text-primary hover:bg-primary/10"
+        outline: "border-2 border-foreground bg-foreground/10 text-foreground hover:bg-foreground hover:text-background backdrop-blur-sm shadow-lg hover:shadow-xl transform hover:-translate-y-0.5",
+        ghost: "text-foreground hover:bg-foreground/20 backdrop-blur-sm"
       },
       size: {
         default: "h-10 px-4 py-2",

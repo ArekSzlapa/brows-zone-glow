@@ -119,38 +119,32 @@ const InteractiveSlider = ({ beforeImage, afterImage }: InteractiveSliderProps) 
 }
 
 const BeforeAfterSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-
   const transformations = [
     {
       before: before1,
       after: after1,
       service: "Eyebrow Threading & Shaping",
-      description: "Complete transformation with precise threading and custom shaping"
+      description: "Complete transformation with precise threading and custom shaping",
+      price: "$45",
+      duration: "30 min"
     },
     {
       before: before2,
       after: after2,
       service: "Brow Restoration & Tinting",
-      description: "Restored fullness with professional tinting and shaping"
+      description: "Restored fullness with professional tinting and shaping",
+      price: "$65",
+      duration: "45 min"
     },
     {
       before: before3,
       after: after3,
       service: "Brow Lamination & Styling",
-      description: "Sleek, groomed look with long-lasting lamination treatment"
+      description: "Sleek, groomed look with long-lasting lamination treatment",
+      price: "$85",
+      duration: "60 min"
     }
   ]
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % transformations.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + transformations.length) % transformations.length)
-  }
-
-  const currentTransformation = transformations[currentSlide]
 
   return (
     <section className="py-20 bg-gradient-to-b from-muted/30 via-background to-muted/30">
@@ -168,80 +162,57 @@ const BeforeAfterSection = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden">
-            <CardContent className="p-0">
-              {/* Interactive Slider */}
-              <div className="relative">
-                <InteractiveSlider 
-                  beforeImage={currentTransformation.before}
-                  afterImage={currentTransformation.after}
-                />
-                
-                {/* Navigation Arrows */}
-                <button
-                  onClick={prevSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background text-foreground p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-105 z-20"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background text-foreground p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-105 z-20"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-
-                {/* Slide Indicators */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
-                  <div className="flex space-x-2">
-                    {transformations.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentSlide(index)}
-                        className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                          index === currentSlide 
-                            ? 'bg-primary w-6' 
-                            : 'bg-background/60 hover:bg-background/80'
-                        }`}
-                      />
-                    ))}
-                  </div>
+        {/* Three Separate Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {transformations.map((transformation, index) => (
+            <Card key={index} className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+              <CardContent className="p-0">
+                {/* Interactive Slider */}
+                <div className="relative">
+                  <InteractiveSlider 
+                    beforeImage={transformation.before}
+                    afterImage={transformation.after}
+                  />
                 </div>
-              </div>
 
-              {/* Slide Info */}
-              <div className="p-8">
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
-                    {currentTransformation.service}
+                {/* Service Info */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    {transformation.service}
                   </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {currentTransformation.description}
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                    {transformation.description}
                   </p>
                   
-                  <HeroButton size="lg" className="animate-fade-in">
-                    Book This Service
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <span className="text-2xl font-bold text-primary">{transformation.price}</span>
+                      <span className="text-sm text-muted-foreground ml-2">• {transformation.duration}</span>
+                    </div>
+                  </div>
+                  
+                  <HeroButton size="default" className="w-full">
+                    Book Appointment
                   </HeroButton>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 mt-12">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">98%</div>
-              <div className="text-sm text-muted-foreground">Client Satisfaction</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">500+</div>
-              <div className="text-sm text-muted-foreground">Transformations</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">8+</div>
-              <div className="text-sm text-muted-foreground">Years Experience</div>
-            </div>
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">98%</div>
+            <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">500+</div>
+            <div className="text-sm text-muted-foreground">Transformations</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">8+</div>
+            <div className="text-sm text-muted-foreground">Years Experience</div>
           </div>
         </div>
       </div>
