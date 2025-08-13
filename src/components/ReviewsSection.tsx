@@ -39,7 +39,10 @@ const ReviewsSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">
             <span className="text-foreground">Opinie o</span>{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span
+              className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              style={{ wordBreak: "break-all" }}
+            >
               Brows•Zone
             </span>
           </h2>

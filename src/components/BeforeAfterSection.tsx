@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { HeroButton } from "@/components/ui/hero-button";
+import "./mediaQueryStyles.css";
 
 // Import before/after images
 import before1 from "@/assets/before-1.jpeg";
@@ -161,99 +162,98 @@ const InteractiveSlider = ({
   afterImage,
 }: InteractiveSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const [direction, setDirection] = useState<1 | -1>(1); // 1 = forward, -1 = backward
+  const [isHolding, setIsHolding] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Animate slider with ping-pong effect
   useEffect(() => {
-    if (isDragging) return; // pause while dragging
+    if (isHolding) return; // pause animation when holding
 
     const interval = setInterval(() => {
       setSliderPosition((prev) => {
-        let next = prev + direction; // move in current direction
+        let next = prev + direction;
         if (next >= 100) {
           next = 100;
-          setDirection(-1); // reverse
+          setDirection(-1);
         } else if (next <= 0) {
           next = 0;
-          setDirection(1); // reverse
+          setDirection(1);
         }
         return next;
       });
-    }, 30); // speed
+    }, 30);
     return () => clearInterval(interval);
-  }, [isDragging, direction]);
+  }, [isHolding, direction]);
 
-  const handleMouseDown = useCallback(() => setIsDragging(true), []);
-  const handleMouseUp = useCallback(() => setIsDragging(false), []);
+  const handleHoldStart = useCallback(() => setIsHolding(true), []);
+  const handleHoldEnd = useCallback(() => setIsHolding(false), []);
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent | MouseEvent) => {
-      if (!isDragging || !containerRef.current) return;
+  const handleMove = useCallback(
+    (clientX: number) => {
+      if (!isHolding || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const x = clientX - rect.left;
       const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
       setSliderPosition(percentage);
     },
-    [isDragging]
+    [isHolding]
   );
 
-  const handleTouchMove = useCallback(
-    (e: React.TouchEvent) => {
-      if (!isDragging || !containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = e.touches[0].clientX - rect.left;
-      const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-      setSliderPosition(percentage);
-    },
-    [isDragging]
-  );
+  const handleMouseMove = (e: React.MouseEvent | MouseEvent) =>
+    handleMove(e.clientX);
+  const handleTouchMove = (e: React.TouchEvent) =>
+    handleMove(e.touches[0].clientX);
 
   return (
     <div
       ref={containerRef}
       className="relative aspect-[4/3] overflow-hidden rounded-lg cursor-ew-resize select-none"
       onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
+      onMouseUp={handleHoldEnd}
+      onMouseLeave={handleHoldEnd}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleMouseUp}
+      onTouchEnd={handleHoldEnd}
+      onMouseDown={handleHoldStart}
+      onTouchStart={handleHoldStart}
+      onContextMenu={(e) => e.preventDefault()} // disable right-click
     >
       {/* Before Image */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <img
           src={beforeImage}
           alt="Before"
           className="w-full h-full object-cover"
+          draggable={false}
         />
       </div>
-      {/* After Image (clipped by slider) */}
+
+      {/* After Image */}
       <div
-        className="absolute inset-0 overflow-hidden"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
         <img
           src={afterImage}
           alt="After"
           className="w-full h-full object-cover"
+          draggable={false}
         />
       </div>
+
       <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
         Przed
       </div>
       <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
         Po
       </div>
-      {/* Slider handle */}
+
+      {/* Slider line & handle */}
       <div
         className="absolute top-0 bottom-0 w-1 bg-white z-10"
         style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
       >
-        <div
-          className="absolute top-1/2 left-1/2 w-8 h-8 bg-white rounded-full border border-gray-500 cursor-grab transform -translate-x-1/2 -translate-y-1/2"
-          onMouseDown={handleMouseDown}
-          onTouchStart={() => setIsDragging(true)}
-        ></div>
+        <div className="absolute top-1/2 left-1/2 w-8 h-8 bg-white rounded-full border border-gray-500 transform -translate-x-1/2 -translate-y-1/2"></div>
       </div>
     </div>
   );
@@ -308,7 +308,10 @@ const BeforeAfterSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Wykonane </span>
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span
+              className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              style={{ wordBreak: "break-all" }}
+            >
               Metamorfozy
             </span>
           </h2>
@@ -368,7 +371,7 @@ const BeforeAfterSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto">
+        <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto small-flex">
           <div className="text-center">
             <div className="text-3xl font-bold text-primary mb-2">100%</div>
             <div className="text-sm text-muted-foreground">Pasji</div>

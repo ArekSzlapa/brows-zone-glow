@@ -5,8 +5,8 @@ import "./mediaQueryStyles.css";
 
 const ContactSection = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background">
-      <div className="container mx-auto px-6">
+    <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background ">
+      <div className="mx-auto px-6 mediaSmall">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Porozmawiajmy o </span>
@@ -22,7 +22,7 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
-          <div className="space-y-6">
+          <div className="mediaSmall">
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
@@ -41,7 +41,7 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
+            <Card className="w-full border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -96,7 +96,7 @@ const ContactSection = () => {
 
           {/* CTA Section */}
           <div className="flex flex-col justify-center">
-            <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30">
+            <div className="bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-2xl border border-border/30 mediaSmall">
               <h3 className="text-2xl font-bold text-foreground mb-4">
                 Gotowa na perfekcyjne brwi?
               </h3>
@@ -107,13 +107,13 @@ const ContactSection = () => {
               </p>
 
               <div className="space-y-4">
-                <HeroButton size="lg" className="w-full text-lg py-4">
+                <HeroButton size="lg" className="w-full text-lg py-4 smallText">
                   10% Zniżki na pierwszą wizyte
                 </HeroButton>
                 <HeroButton
                   variant="outline"
                   size="lg"
-                  className="w-full text-lg py-4"
+                  className="w-full text-lg py-4 smallText"
                 >
                   Zadzwoń: +48 516 170 052
                 </HeroButton>

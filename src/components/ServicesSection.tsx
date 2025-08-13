@@ -16,7 +16,7 @@ const ServicesSection = () => {
     {
       title: "Lifting Rzęs",
       description: "Podkreślenie koloru i objętości rzęs.",
-      price: "From $30",
+      price: "40 zł",
     },
     {
       title: "Laminacja Brwi i Rzęs",
