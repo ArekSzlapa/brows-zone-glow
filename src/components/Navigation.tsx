@@ -1,0 +1,130 @@
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { HeroButton } from "./ui/hero-button";
+
+const Navigation = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.offsetTop - navHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const navLinks = [
+    { name: "Services", id: "services" },
+    { name: "Transformations", id: "transformations" },
+    { name: "About", id: "about" },
+    { name: "Contact", id: "contact" },
+  ];
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md shadow-elegant border-b border-border"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div 
+            onClick={() => scrollToSection("hero")}
+            className="flex items-center space-x-2 cursor-pointer group"
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <span className="text-primary-foreground font-bold text-lg">B</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl text-foreground group-hover:text-primary transition-colors duration-300">
+                Brows Zone
+              </span>
+              <span className="text-xs text-muted-foreground -mt-1">
+                Beauty Studio
+              </span>
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium relative group"
+              >
+                {link.name}
+                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              </button>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className="hidden md:block">
+            <HeroButton 
+              size="default"
+              onClick={() => scrollToSection("contact")}
+            >
+              Book Now
+            </HeroButton>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors duration-300"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden transition-all duration-300 overflow-hidden ${
+            isMobileMenuOpen 
+              ? "max-h-80 opacity-100 py-4" 
+              : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="flex flex-col space-y-4 bg-card/95 backdrop-blur-md rounded-lg p-4 shadow-elegant">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
+                className="text-left text-foreground/80 hover:text-primary transition-colors duration-300 font-medium py-2 border-b border-border/30 last:border-b-0"
+              >
+                {link.name}
+              </button>
+            ))}
+            <HeroButton 
+              size="default" 
+              className="w-full mt-4"
+              onClick={() => scrollToSection("contact")}
+            >
+              Book Now
+            </HeroButton>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;
