@@ -16,142 +16,245 @@ interface InteractiveSliderProps {
   afterImage: string;
 }
 
+// const InteractiveSlider = ({
+//   beforeImage,
+//   afterImage,
+// }: InteractiveSliderProps) => {
+//   const [sliderPosition, setSliderPosition] = useState(50);
+//   const [isDragging, setIsDragging] = useState(false);
+//   const containerRef = useRef<HTMLDivElement>(null);
+
+//   // Unified function for updating slider position
+//   const updateSliderPosition = useCallback((clientX: number) => {
+//     if (!containerRef.current) return;
+//     const rect = containerRef.current.getBoundingClientRect();
+//     const x = clientX - rect.left;
+//     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+//     setSliderPosition(percentage);
+//   }, []);
+
+//   const handleMouseDown = useCallback(
+//     (e: React.MouseEvent) => {
+//       setIsDragging(true);
+//       updateSliderPosition(e.clientX);
+//     },
+//     [updateSliderPosition]
+//   );
+
+//   const handleMouseMove = useCallback(
+//     (e: MouseEvent) => {
+//       if (!isDragging) return;
+//       updateSliderPosition(e.clientX);
+//     },
+//     [isDragging, updateSliderPosition]
+//   );
+
+//   const handleMouseUp = useCallback(() => {
+//     setIsDragging(false);
+//   }, []);
+
+//   const handleTouchStart = useCallback(
+//     (e: React.TouchEvent) => {
+//       setIsDragging(true);
+//       updateSliderPosition(e.touches[0].clientX);
+//     },
+//     [updateSliderPosition]
+//   );
+
+//   const handleTouchMove = useCallback(
+//     (e: React.TouchEvent) => {
+//       if (!isDragging) return;
+//       updateSliderPosition(e.touches[0].clientX);
+//     },
+//     [isDragging, updateSliderPosition]
+//   );
+
+//   const handleTouchEnd = useCallback(() => {
+//     setIsDragging(false);
+//   }, []);
+
+//   // Attach native listeners so dragging continues outside the element
+//   useEffect(() => {
+//     if (isDragging) {
+//       window.addEventListener("mousemove", handleMouseMove);
+//       window.addEventListener("mouseup", handleMouseUp);
+//     } else {
+//       window.removeEventListener("mousemove", handleMouseMove);
+//       window.removeEventListener("mouseup", handleMouseUp);
+//     }
+//     return () => {
+//       window.removeEventListener("mousemove", handleMouseMove);
+//       window.removeEventListener("mouseup", handleMouseUp);
+//     };
+//   }, [isDragging, handleMouseMove, handleMouseUp]);
+
+//   return (
+//     <div
+//       ref={containerRef}
+//       className="relative aspect-[4/3] overflow-hidden rounded-lg cursor-ew-resize select-none"
+//       onMouseDown={handleMouseDown}
+//       onTouchStart={handleTouchStart}
+//       onTouchMove={handleTouchMove}
+//       onTouchEnd={handleTouchEnd}
+//     >
+//       {/* Before Image */}
+//       <div className="absolute inset-0">
+//         <img
+//           src={beforeImage}
+//           alt="Before treatment"
+//           className="w-full h-full object-cover"
+//           draggable={false}
+//         />
+//       </div>
+
+//       {/* After Image (clipped) */}
+//       <div
+//         className="absolute inset-0 overflow-hidden"
+//         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+//       >
+//         <img
+//           src={afterImage}
+//           alt="After treatment"
+//           className="w-full h-full object-cover"
+//           draggable={false}
+//         />
+//       </div>
+
+//       {/* Slider Line */}
+//       <div
+//         className="absolute top-0 bottom-0 w-1 bg-background shadow-lg z-10"
+//         style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
+//       >
+//         {/* Handle */}
+//         <div
+//           className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-background rounded-full shadow-lg border-2 border-primary flex items-center justify-center transition-all duration-200 ${
+//             isDragging ? "scale-110" : "hover:scale-105"
+//           }`}
+//         >
+//           <div className="flex gap-0.5">
+//             <div className="w-0.5 h-4 bg-primary rounded-full"></div>
+//             <div className="w-0.5 h-4 bg-primary rounded-full"></div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Labels */}
+//       <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+//         Przed
+//       </div>
+//       <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+//         Po
+//       </div>
+
+//       {/* Hint text */}
+//       {!isDragging && (
+//         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-muted-foreground animate-fade-in">
+//           Przeciągnij, aby porównać
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
 const InteractiveSlider = ({
   beforeImage,
   afterImage,
 }: InteractiveSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1); // 1 = forward, -1 = backward
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Unified function for updating slider position
-  const updateSliderPosition = useCallback((clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-    setSliderPosition(percentage);
-  }, []);
+  useEffect(() => {
+    if (isDragging) return; // pause while dragging
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      setIsDragging(true);
-      updateSliderPosition(e.clientX);
-    },
-    [updateSliderPosition]
-  );
+    const interval = setInterval(() => {
+      setSliderPosition((prev) => {
+        let next = prev + direction; // move in current direction
+        if (next >= 100) {
+          next = 100;
+          setDirection(-1); // reverse
+        } else if (next <= 0) {
+          next = 0;
+          setDirection(1); // reverse
+        }
+        return next;
+      });
+    }, 30); // speed
+    return () => clearInterval(interval);
+  }, [isDragging, direction]);
+
+  const handleMouseDown = useCallback(() => setIsDragging(true), []);
+  const handleMouseUp = useCallback(() => setIsDragging(false), []);
 
   const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (!isDragging) return;
-      updateSliderPosition(e.clientX);
+    (e: React.MouseEvent | MouseEvent) => {
+      if (!isDragging || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+      setSliderPosition(percentage);
     },
-    [isDragging, updateSliderPosition]
-  );
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const handleTouchStart = useCallback(
-    (e: React.TouchEvent) => {
-      setIsDragging(true);
-      updateSliderPosition(e.touches[0].clientX);
-    },
-    [updateSliderPosition]
+    [isDragging]
   );
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
-      if (!isDragging) return;
-      updateSliderPosition(e.touches[0].clientX);
+      if (!isDragging || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+      setSliderPosition(percentage);
     },
-    [isDragging, updateSliderPosition]
+    [isDragging]
   );
-
-  const handleTouchEnd = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  // Attach native listeners so dragging continues outside the element
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
-    } else {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
     <div
       ref={containerRef}
       className="relative aspect-[4/3] overflow-hidden rounded-lg cursor-ew-resize select-none"
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
       onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      onTouchEnd={handleMouseUp}
     >
       {/* Before Image */}
       <div className="absolute inset-0">
         <img
           src={beforeImage}
-          alt="Before treatment"
+          alt="Before"
           className="w-full h-full object-cover"
-          draggable={false}
         />
       </div>
-
-      {/* After Image (clipped) */}
+      {/* After Image (clipped by slider) */}
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
         <img
           src={afterImage}
-          alt="After treatment"
+          alt="After"
           className="w-full h-full object-cover"
-          draggable={false}
         />
       </div>
-
-      {/* Slider Line */}
-      <div
-        className="absolute top-0 bottom-0 w-1 bg-background shadow-lg z-10"
-        style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
-      >
-        {/* Handle */}
-        <div
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-background rounded-full shadow-lg border-2 border-primary flex items-center justify-center transition-all duration-200 ${
-            isDragging ? "scale-110" : "hover:scale-105"
-          }`}
-        >
-          <div className="flex gap-0.5">
-            <div className="w-0.5 h-4 bg-primary rounded-full"></div>
-            <div className="w-0.5 h-4 bg-primary rounded-full"></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Labels */}
       <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
         Przed
       </div>
       <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
         Po
       </div>
-
-      {/* Hint text */}
-      {!isDragging && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-background/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-muted-foreground animate-fade-in">
-          Przeciągnij, aby porównać
-        </div>
-      )}
+      {/* Slider handle */}
+      <div
+        className="absolute top-0 bottom-0 w-1 bg-white z-10"
+        style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
+      >
+        <div
+          className="absolute top-1/2 left-1/2 w-8 h-8 bg-white rounded-full border border-gray-500 cursor-grab transform -translate-x-1/2 -translate-y-1/2"
+          onMouseDown={handleMouseDown}
+          onTouchStart={() => setIsDragging(true)}
+        ></div>
+      </div>
     </div>
   );
 };

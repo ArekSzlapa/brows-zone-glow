@@ -31,12 +31,7 @@ const HeroSection = () => {
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-foreground">Idealne</span>{" "}
-            <span
-              className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-              style={{ color: "hsl(var(--primary))" }}
-            >
-              Brwi
-            </span>
+            <span className="text-foreground ">Brwi</span>
             <br />
             <span className="text-foreground">Za każdy razem</span>
           </h1>

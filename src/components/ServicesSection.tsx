@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import serviceImage from "@/assets/service-image.jpg";
+import serviceImage from "@/assets/Ola-2.jpeg";
 
 const ServicesSection = () => {
   const services = [

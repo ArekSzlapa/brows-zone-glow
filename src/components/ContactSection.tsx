@@ -1,6 +1,7 @@
 import { HeroButton } from "@/components/ui/hero-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Clock, Mail } from "lucide-react";
+import "./mediaQueryStyles.css";
 
 const ContactSection = () => {
   return (
@@ -22,7 +23,7 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
           <div className="space-y-6">
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -40,7 +41,7 @@ const ContactSection = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4">
                   <div className="bg-primary/10 p-3 rounded-full">
@@ -74,9 +75,9 @@ const ContactSection = () => {
               </CardContent>
             </Card> */}
 
-            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm mediaSmall">
               <CardContent className="p-6">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
