@@ -278,6 +278,8 @@ const ContactSection = () => {
                               className="z-50 bg-background border-border shadow-lg"
                               position="popper"
                               sideOffset={4}
+                              avoidCollisions={true}
+                              sticky="always"
                             >
                               <SelectGroup>
                                 <SelectLabel className="text-primary font-semibold">

@@ -124,6 +124,10 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    overflow-y: scroll; /* Always show vertical scrollbar */
+  }
+
   body {
     overflow-x: hidden;
     @apply bg-background text-foreground;
