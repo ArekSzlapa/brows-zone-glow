@@ -30,6 +30,7 @@ const formSchema = z.object({
   name: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
   phone: z.string().min(9, "Numer telefonu jest wymagany"),
   service: z.string().min(1, "Wybierz usługę"),
+  email: z.string().optional(),
 });
 
 const ContactSection = () => {
@@ -41,6 +42,7 @@ const ContactSection = () => {
       name: "",
       phone: "",
       service: "",
+      email: "",
     },
   });
 
@@ -56,22 +58,58 @@ const ContactSection = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const timestamp = Date.now();
+    const date = new Date(timestamp);
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}`;
+
     try {
-      // EmailJS configuration - you'll need to set these values
-      const serviceId = "YOUR_SERVICE_ID"; // Replace with your EmailJS service ID
-      const templateId = "YOUR_TEMPLATE_ID"; // Replace with your EmailJS template ID
-      const publicKey = "YOUR_PUBLIC_KEY"; // Replace with your EmailJS public key
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      const sendNotification = async () => {
+        try {
+          const response = await emailjs.send(
+            serviceId,
+            "template_btecl8r",
+            notificationParams,
+            publicKey
+          );
+          console.log("Notification sent!", response.status, response.text);
+        } catch (err) {
+          console.error("Error sending notification:", err);
+        }
+      };
+
+      const notificationParams = {
+        from_name: values.name,
+        from_email: values.email,
+        phone: values.phone,
+        reservation_date: formattedDateTime,
+        message: `Nowa rezerwacja od ${values.name} (${values.phone}) na usługę: ${values.service}`,
+      };
 
       const templateParams = {
         from_name: values.name,
         from_phone: values.phone,
         selected_service: values.service,
-        to_email: "asbrows.zone@gmail.com",
+        customer_email: values.email,
+        from_email: "asbrows.zone@gmail.com",
         message: `Nowa rezerwacja od ${values.name} (${values.phone}) na usługę: ${values.service}`,
       };
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      
+
+      await sendNotification();
+
       toast({
         title: "Formularz wysłany!",
         description: "Skontaktujemy się z Tobą wkrótce.",
@@ -282,6 +320,27 @@ const ContactSection = () => {
 
                     <FormField
                       control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-foreground font-semibold">
+                            Adres email
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="TwojMail@brwi.pl"
+                              type="email"
+                              {...field}
+                              className="border-border bg-background/50"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="service"
                       render={({ field }) => (
                         <FormItem>
@@ -297,7 +356,7 @@ const ContactSection = () => {
                                 <SelectValue placeholder="Wybierz usługę, która Cię interesuje" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent 
+                            <SelectContent
                               className="z-50 bg-background border-border shadow-lg max-h-[300px] overflow-y-auto"
                               position="popper"
                               sideOffset={4}
