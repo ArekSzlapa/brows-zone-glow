@@ -1,9 +1,48 @@
 import { HeroButton } from "@/components/ui/hero-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
+} from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import "./mediaQueryStyles.css";
 
+const formSchema = z.object({
+  name: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
+  phone: z.string().min(9, "Numer telefonu jest wymagany"),
+  service: z.string().min(1, "Wybierz usługę"),
+});
+
 const ContactSection = () => {
+  const { toast } = useToast();
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      service: "",
+    },
+  });
+
   const callNumber = () => {
     window.location.href = "tel:+48516170052";
   };
@@ -13,6 +52,16 @@ const ContactSection = () => {
       "https://instagram.com/direct/inbox/?recipient=szlapa.brows",
       "_blank"
     );
+  };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // Handle form submission
+    console.log(values);
+    toast({
+      title: "Formularz wysłany!",
+      description: "Skontaktujemy się z Tobą wkrótce.",
+    });
+    form.reset();
   };
 
   return (
@@ -140,6 +189,141 @@ const ContactSection = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl lg:text-4xl font-bold mb-4">
+              <span className="text-foreground">Umów się na </span>
+              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                wizytę
+              </span>
+            </h3>
+            <p className="text-lg text-muted-foreground">
+              Wypełnij formularz, a skontaktujemy się z Tobą w ciągu 24 godzin
+            </p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-foreground font-semibold">
+                              Imię i nazwisko
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Wprowadź swoje imię i nazwisko"
+                                {...field}
+                                className="border-border bg-background/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-foreground font-semibold">
+                              Numer telefonu
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="+48 xxx xxx xxx"
+                                type="tel"
+                                {...field}
+                                className="border-border bg-background/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="service"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-foreground font-semibold">
+                            Wybierz usługę
+                          </FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger className="border-border bg-background/50">
+                                <SelectValue placeholder="Wybierz usługę, która Cię interesuje" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="z-50 bg-background border-border">
+                              <SelectGroup>
+                                <SelectLabel className="text-primary font-semibold">
+                                  Brow Bar
+                                </SelectLabel>
+                                <SelectItem value="laminacja-brwi">
+                                  Laminacja brwi
+                                </SelectItem>
+                                <SelectItem value="laminacja-brwi-koloryzacja">
+                                  Laminacja brwi z koloryzacją
+                                </SelectItem>
+                                <SelectItem value="geometria-brwi-koloryzacja">
+                                  Geometria brwi z koloryzacją
+                                </SelectItem>
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="text-primary font-semibold">
+                                  Lash Bar
+                                </SelectLabel>
+                                <SelectItem value="lifting-rzes">
+                                  Lifting rzęs
+                                </SelectItem>
+                                <SelectItem value="lifting-rzes-koloryzacja">
+                                  Lifting rzęs z koloryzacją
+                                </SelectItem>
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="text-primary font-semibold">
+                                  Brow & Lash
+                                </SelectLabel>
+                                <SelectItem value="laminacja-brwi-rzes">
+                                  Laminacja brwi i rzęs
+                                </SelectItem>
+                                <SelectItem value="laminacja-brwi-rzes-koloryzacja">
+                                  Laminacja brwi i rzęs z koloryzacją
+                                </SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <HeroButton
+                      type="submit"
+                      size="lg"
+                      className="w-full text-lg py-4"
+                      disabled={form.formState.isSubmitting}
+                    >
+                      {form.formState.isSubmitting ? "Wysyłanie..." : "Umów wizytę"}
+                    </HeroButton>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
