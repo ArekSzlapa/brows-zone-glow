@@ -126,18 +126,31 @@ All colors MUST be HSL.
   }
 
   html {
-    overflow-y: scroll; /* Always show vertical scrollbar */
-    scrollbar-gutter: stable; /* Reserve space for scrollbar */
+    /* Force scrollbar to always be present to prevent layout shift */
+    overflow-y: scroll;
+    width: 100vw;
+    max-width: 100%;
   }
 
   body {
     overflow-x: hidden;
+    /* Calculate width to account for scrollbar */
+    width: calc(100vw - (100vw - 100%));
+    max-width: 100%;
     @apply bg-background text-foreground;
   }
 
-  /* Prevent layout shift from dropdowns */
+  /* Constrain dropdown positioning to prevent page expansion */
+  [data-radix-select-content],
+  [data-radix-popover-content] {
+    max-height: min(200px, calc(100vh - 100px));
+    overflow-y: auto;
+    contain: size layout style;
+  }
+
+  /* Prevent dropdowns from affecting document flow */
   [data-radix-popper-content-wrapper] {
-    max-height: calc(100vh - 100px) !important;
-    overflow: visible !important;
+    position: fixed !important;
+    contain: layout;
   }
 }
