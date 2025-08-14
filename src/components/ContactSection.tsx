@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
+import { useState, useEffect } from "react";
 import "./mediaQueryStyles.css";
 
 const formSchema = z.object({
@@ -56,6 +57,9 @@ const serviceDurations: Record<string, number> = {
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [selectedService, setSelectedService] = useState<string>("");
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,9 +109,22 @@ const ContactSection = () => {
     return day >= 1 && day <= 5; // 1 = Monday, 5 = Friday
   };
 
-  const selectedService = form.watch("service");
-  const serviceDuration = selectedService ? serviceDurations[selectedService] || 120 : 120;
-  const timeSlots = generateTimeSlots(serviceDuration);
+  // Watch for service selection and update time slots
+  const watchedService = form.watch("service");
+  
+  useEffect(() => {
+    if (watchedService !== selectedService) {
+      setSelectedService(watchedService || "");
+      if (watchedService) {
+        const serviceDuration = serviceDurations[watchedService] || 120;
+        setTimeSlots(generateTimeSlots(serviceDuration));
+      } else {
+        setTimeSlots([]);
+      }
+      // Reset time selection when service changes
+      form.setValue("time", "");
+    }
+  }, [watchedService, selectedService, form]);
 
   const callNumber = () => {
     window.location.href = "tel:+48516170052";
@@ -499,7 +516,7 @@ const ContactSection = () => {
                             <FormLabel className="text-foreground font-semibold">
                               Data wizyty
                             </FormLabel>
-                            <Popover>
+                            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                               <PopoverTrigger asChild>
                                 <FormControl>
                                   <Button
@@ -522,7 +539,10 @@ const ContactSection = () => {
                                 <Calendar
                                   mode="single"
                                   selected={field.value}
-                                  onSelect={field.onChange}
+                                  onSelect={(date) => {
+                                    field.onChange(date);
+                                    setIsCalendarOpen(false);
+                                  }}
                                   disabled={(date) => !isWeekday(date) || date < new Date()}
                                   initialFocus
                                   weekStartsOn={1}
@@ -554,11 +574,11 @@ const ContactSection = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent
-                                className="z-50 bg-background border-border shadow-lg max-h-[300px] overflow-y-auto"
+                                className="z-[60] bg-background border-border shadow-lg max-h-[200px] overflow-y-auto"
                                 position="popper"
+                                side="bottom"
+                                align="start"
                                 sideOffset={4}
-                                avoidCollisions={false}
-                                sticky="partial"
                               >
                                 {timeSlots.map((slot) => (
                                   <SelectItem key={slot} value={slot}>
