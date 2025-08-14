@@ -23,6 +23,7 @@ import {
   SelectLabel,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
 import "./mediaQueryStyles.css";
 
 const formSchema = z.object({
@@ -54,18 +55,40 @@ const ContactSection = () => {
     );
   };
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Handle form submission
-    console.log(values);
-    toast({
-      title: "Formularz wysłany!",
-      description: "Skontaktujemy się z Tobą wkrótce.",
-    });
-    form.reset();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      // EmailJS configuration - you'll need to set these values
+      const serviceId = "YOUR_SERVICE_ID"; // Replace with your EmailJS service ID
+      const templateId = "YOUR_TEMPLATE_ID"; // Replace with your EmailJS template ID
+      const publicKey = "YOUR_PUBLIC_KEY"; // Replace with your EmailJS public key
+
+      const templateParams = {
+        from_name: values.name,
+        from_phone: values.phone,
+        selected_service: values.service,
+        to_email: "asbrows.zone@gmail.com",
+        message: `Nowa rezerwacja od ${values.name} (${values.phone}) na usługę: ${values.service}`,
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      toast({
+        title: "Formularz wysłany!",
+        description: "Skontaktujemy się z Tobą wkrótce.",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast({
+        title: "Błąd wysyłania",
+        description: "Spróbuj ponownie lub skontaktuj się telefonicznie.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background ">
+    <section className="py-20 bg-gradient-to-b from-background via-muted/20 to-background">
       <div className="mx-auto px-6 mediaSmall">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -206,7 +229,7 @@ const ContactSection = () => {
             </p>
           </div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto" style={{ minHeight: "500px" }}>
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-8">
                 <Form {...form}>
@@ -275,11 +298,11 @@ const ContactSection = () => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent 
-                              className="z-50 bg-background border-border shadow-lg"
+                              className="z-50 bg-background border-border shadow-lg max-h-[300px] overflow-y-auto"
                               position="popper"
                               sideOffset={4}
-                              avoidCollisions={true}
-                              sticky="always"
+                              avoidCollisions={false}
+                              sticky="partial"
                             >
                               <SelectGroup>
                                 <SelectLabel className="text-primary font-semibold">
