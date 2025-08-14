@@ -33,7 +33,7 @@ const formSchema = z.object({
 
 const ContactSection = () => {
   const { toast } = useToast();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -141,7 +141,7 @@ const ContactSection = () => {
                       Email
                     </h3>
                     <p className="text-muted-foreground">
-                      aleksandra.janos@gmail.com
+                      asbrows.zone@gmail.com
                     </p>
                   </div>
                 </div>
@@ -193,7 +193,7 @@ const ContactSection = () => {
         </div>
 
         {/* Contact Form */}
-        <div className="mt-20">
+        <div className="mt-20" id="form">
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-bold mb-4">
               <span className="text-foreground">Umów się na </span>
@@ -210,7 +210,10 @@ const ContactSection = () => {
             <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
               <CardContent className="p-8">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}
@@ -262,7 +265,10 @@ const ContactSection = () => {
                           <FormLabel className="text-foreground font-semibold">
                             Wybierz usługę
                           </FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
                             <FormControl>
                               <SelectTrigger className="border-border bg-background/50">
                                 <SelectValue placeholder="Wybierz usługę, która Cię interesuje" />
@@ -318,7 +324,9 @@ const ContactSection = () => {
                       className="w-full text-lg py-4"
                       disabled={form.formState.isSubmitting}
                     >
-                      {form.formState.isSubmitting ? "Wysyłanie..." : "Umów wizytę"}
+                      {form.formState.isSubmitting
+                        ? "Wysyłanie..."
+                        : "Umów wizytę"}
                     </HeroButton>
                   </form>
                 </Form>

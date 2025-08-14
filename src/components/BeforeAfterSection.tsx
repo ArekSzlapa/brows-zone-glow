@@ -215,7 +215,7 @@ const BeforeAfterSection = () => {
                   </div>
 
                   <HeroButton
-                    onClick={() => scrollToSection("contact")}
+                    onClick={() => scrollToSection("form")}
                     size="default"
                     className="w-full"
                   >

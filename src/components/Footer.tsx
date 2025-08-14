@@ -48,7 +48,7 @@ const Footer = () => {
                 { name: "Usługi", href: "#services" },
                 { name: "Metamorfozy", href: "#transformations" },
                 { name: "O Brows•Zone", href: "#about" },
-                { name: "Zarezerwuj wizyte", href: "#contact" },
+                { name: "Zarezerwuj wizyte", href: "#form" },
               ].map((link) => (
                 <a
                   key={link.name}
@@ -93,7 +93,7 @@ const Footer = () => {
                   <Instagram className="w-4 h-4" />
                 </a>
                 <a
-                  href="#"
+                  href="https://facebook.com/share/16jnDEi78z/?mibextid=wwXlfr"
                   className="w-8 h-8 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary rounded-full flex items-center justify-center transition-all duration-300"
                 >
                   <Facebook className="w-4 h-4" />

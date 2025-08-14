@@ -86,7 +86,7 @@ const Navigation = () => {
             <div className="flex items-center space-x-3">
               <a
                 style={{ display: "flex", alignItems: "center" }}
-                href="https://facebook.com"
+                href="https://facebook.com/share/16jnDEi78z/?mibextid=wwXlfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 text-foreground/60 hover:text-primary transition-colors duration-300 hover:scale-110 transform"
@@ -95,7 +95,7 @@ const Navigation = () => {
               </a>
               <a
                 style={{ display: "flex", alignItems: "center" }}
-                href="https://instagram.com"
+                href="https://instagram.com/szlapa.brows/#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 text-foreground/60 hover:text-primary transition-colors duration-300 hover:scale-110 transform"
@@ -105,10 +105,7 @@ const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <HeroButton
-              size="default"
-              onClick={() => scrollToSection("contact")}
-            >
+            <HeroButton size="default" onClick={() => scrollToSection("form")}>
               Zarezerwuj wizyte
             </HeroButton>
           </div>

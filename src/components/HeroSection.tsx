@@ -43,7 +43,7 @@ const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <HeroButton
-              onClick={() => scrollToSection("contact")}
+              onClick={() => scrollToSection("form")}
               size="lg"
               className="text-lg px-8 py-4"
             >
