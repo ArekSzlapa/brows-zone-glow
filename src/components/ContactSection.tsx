@@ -452,13 +452,13 @@ const ContactSection = () => {
                                   Brow Bar
                                 </SelectLabel>
                                 <SelectItem value="laminacja-brwi">
-                                  Laminacja brwi
+                                  Laminacja brwi (120 min)
                                 </SelectItem>
                                 <SelectItem value="laminacja-brwi-koloryzacja">
-                                  Laminacja brwi z koloryzacją
+                                  Laminacja brwi z koloryzacją (120 min)
                                 </SelectItem>
                                 <SelectItem value="geometria-brwi-koloryzacja">
-                                  Geometria brwi z koloryzacją
+                                  Geometria brwi z koloryzacją (120 min)
                                 </SelectItem>
                               </SelectGroup>
                               <SelectGroup>
@@ -466,10 +466,10 @@ const ContactSection = () => {
                                   Lash Bar
                                 </SelectLabel>
                                 <SelectItem value="lifting-rzes">
-                                  Lifting rzęs
+                                  Lifting rzęs (90 min)
                                 </SelectItem>
                                 <SelectItem value="lifting-rzes-koloryzacja">
-                                  Lifting rzęs z koloryzacją
+                                  Lifting rzęs z koloryzacją (90 min)
                                 </SelectItem>
                               </SelectGroup>
                               <SelectGroup>
@@ -477,10 +477,10 @@ const ContactSection = () => {
                                   Brow & Lash
                                 </SelectLabel>
                                 <SelectItem value="laminacja-brwi-rzes">
-                                  Laminacja brwi i rzęs
+                                  Laminacja brwi i rzęs (120 min)
                                 </SelectItem>
                                 <SelectItem value="laminacja-brwi-rzes-koloryzacja">
-                                  Laminacja brwi i rzęs z koloryzacją
+                                  Laminacja brwi i rzęs z koloryzacją (120 min)
                                 </SelectItem>
                               </SelectGroup>
                             </SelectContent>
@@ -525,6 +525,7 @@ const ContactSection = () => {
                                   onSelect={field.onChange}
                                   disabled={(date) => !isWeekday(date) || date < new Date()}
                                   initialFocus
+                                  weekStartsOn={1}
                                   className={cn("p-3 pointer-events-auto")}
                                 />
                               </PopoverContent>
@@ -538,7 +539,7 @@ const ContactSection = () => {
                         control={form.control}
                         name="time"
                         render={({ field }) => (
-                          <FormItem>
+                          <FormItem className="flex flex-col">
                             <FormLabel className="text-foreground font-semibold">
                               Godzina wizyty
                             </FormLabel>
