@@ -12,6 +12,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { CalendarIcon, Clock } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -31,7 +37,22 @@ const formSchema = z.object({
   phone: z.string().min(9, "Numer telefonu jest wymagany"),
   service: z.string().min(1, "Wybierz usługę"),
   email: z.string().optional(),
+  date: z.date({
+    required_error: "Wybierz datę wizyty",
+  }),
+  time: z.string().min(1, "Wybierz godzinę wizyty"),
 });
+
+// Service duration mapping in minutes
+const serviceDurations: Record<string, number> = {
+  "laminacja-brwi": 120,
+  "laminacja-brwi-koloryzacja": 120,
+  "geometria-brwi-koloryzacja": 120,
+  "lifting-rzes": 90,
+  "lifting-rzes-koloryzacja": 90,
+  "laminacja-brwi-rzes": 120,
+  "laminacja-brwi-rzes-koloryzacja": 120,
+};
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -43,8 +64,50 @@ const ContactSection = () => {
       phone: "",
       service: "",
       email: "",
+      date: undefined,
+      time: "",
     },
   });
+
+  // Helper function to generate time slots
+  const generateTimeSlots = (serviceDuration: number): string[] => {
+    const slots: string[] = [];
+    const startHour = 8; // 8:00 AM
+    const endHour = 18; // 6:00 PM
+    const slotDuration = serviceDuration; // Duration in minutes
+    
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += slotDuration) {
+        const startTime = new Date();
+        startTime.setHours(hour, minute, 0, 0);
+        
+        const endTime = new Date(startTime.getTime() + slotDuration * 60000);
+        
+        // Stop if end time exceeds business hours
+        if (endTime.getHours() > endHour) break;
+        
+        const formatTime = (date: Date) => 
+          date.toLocaleTimeString('pl-PL', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+          });
+        
+        slots.push(`${formatTime(startTime)} - ${formatTime(endTime)}`);
+      }
+    }
+    return slots;
+  };
+
+  // Filter to allow only Monday-Friday
+  const isWeekday = (date: Date) => {
+    const day = date.getDay();
+    return day >= 1 && day <= 5; // 1 = Monday, 5 = Friday
+  };
+
+  const selectedService = form.watch("service");
+  const serviceDuration = selectedService ? serviceDurations[selectedService] || 120 : 120;
+  const timeSlots = generateTimeSlots(serviceDuration);
 
   const callNumber = () => {
     window.location.href = "tel:+48516170052";
@@ -59,16 +122,21 @@ const ContactSection = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const timestamp = Date.now();
-    const date = new Date(timestamp);
+    const currentDate = new Date(timestamp);
 
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const year = currentDate.getFullYear();
 
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
 
     const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}`;
+    
+    // Format booking date and time
+    const bookingDate = format(values.date, "dd/MM/yyyy");
+    const bookingTime = values.time;
+    const serviceDuration = serviceDurations[values.service] || 120;
 
     try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -89,21 +157,37 @@ const ContactSection = () => {
         }
       };
 
+      const bookingDetails = `
+📅 Data wizyty: ${bookingDate}
+⏰ Godzina: ${bookingTime}
+💅 Usługa: ${values.service}
+⏱️ Czas trwania: ${serviceDuration} minut
+📱 Telefon: ${values.phone}
+📧 Email: ${values.email || "Nie podano"}
+      `;
+
       const notificationParams = {
         from_name: values.name,
         from_email: values.email,
         phone: values.phone,
+        booking_date: bookingDate,
+        booking_time: bookingTime,
+        service: values.service,
+        duration: serviceDuration,
         reservation_date: formattedDateTime,
-        message: `Nowa rezerwacja od ${values.name} (${values.phone}) na usługę: ${values.service}`,
+        message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
       };
 
       const templateParams = {
         from_name: values.name,
         from_phone: values.phone,
         selected_service: values.service,
+        booking_date: bookingDate,
+        booking_time: bookingTime,
+        service_duration: serviceDuration,
         customer_email: values.email,
         from_email: "asbrows.zone@gmail.com",
-        message: `Nowa rezerwacja od ${values.name} (${values.phone}) na usługę: ${values.service}`,
+        message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
       };
 
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
@@ -405,6 +489,91 @@ const ContactSection = () => {
                         </FormItem>
                       )}
                     />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="date"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col">
+                            <FormLabel className="text-foreground font-semibold">
+                              Data wizyty
+                            </FormLabel>
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <FormControl>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "pl-3 text-left font-normal border-border bg-background/50",
+                                      !field.value && "text-muted-foreground"
+                                    )}
+                                  >
+                                    {field.value ? (
+                                      format(field.value, "dd/MM/yyyy")
+                                    ) : (
+                                      <span>Wybierz datę</span>
+                                    )}
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                  </Button>
+                                </FormControl>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={(date) => !isWeekday(date) || date < new Date()}
+                                  initialFocus
+                                  className={cn("p-3 pointer-events-auto")}
+                                />
+                              </PopoverContent>
+                            </Popover>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="time"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-foreground font-semibold">
+                              Godzina wizyty
+                            </FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              disabled={!selectedService}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="border-border bg-background/50">
+                                  <SelectValue placeholder={selectedService ? "Wybierz godzinę" : "Najpierw wybierz usługę"} />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent
+                                className="z-50 bg-background border-border shadow-lg max-h-[300px] overflow-y-auto"
+                                position="popper"
+                                sideOffset={4}
+                                avoidCollisions={false}
+                                sticky="partial"
+                              >
+                                {timeSlots.map((slot) => (
+                                  <SelectItem key={slot} value={slot}>
+                                    <div className="flex items-center gap-2">
+                                      <Clock className="w-4 h-4" />
+                                      {slot}
+                                    </div>
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <HeroButton
                       type="submit"
