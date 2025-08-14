@@ -101,12 +101,16 @@ const InteractiveSlider = ({
         />
       </div>
 
-      <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
-        Przed
-      </div>
-      <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
-        Po
-      </div>
+      {sliderPosition > 50 && (
+        <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+          Przed
+        </div>
+      )}
+      {sliderPosition < 50 && (
+        <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+          Po
+        </div>
+      )}
 
       {/* Slider line & handle */}
       <div

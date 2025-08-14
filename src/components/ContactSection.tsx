@@ -274,7 +274,11 @@ const ContactSection = () => {
                                 <SelectValue placeholder="Wybierz usługę, która Cię interesuje" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="z-50 bg-background border-border">
+                            <SelectContent 
+                              className="z-50 bg-background border-border shadow-lg"
+                              position="popper"
+                              sideOffset={4}
+                            >
                               <SelectGroup>
                                 <SelectLabel className="text-primary font-semibold">
                                   Brow Bar
