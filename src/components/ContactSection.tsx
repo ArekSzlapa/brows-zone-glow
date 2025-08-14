@@ -458,11 +458,12 @@ const ContactSection = () => {
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent
-                              className="z-50 bg-background border-border shadow-lg max-h-[300px] overflow-y-auto"
+                              className="z-50 bg-background border-border shadow-lg max-h-[200px] overflow-y-auto"
                               position="popper"
+                              side="bottom"
+                              align="start"
                               sideOffset={4}
-                              avoidCollisions={false}
-                              sticky="partial"
+                              collisionPadding={10}
                             >
                               <SelectGroup>
                                 <SelectLabel className="text-primary font-semibold">
@@ -574,11 +575,12 @@ const ContactSection = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent
-                                className="z-[60] bg-background border-border shadow-lg max-h-[200px] overflow-y-auto"
+                                className="z-[60] bg-background border-border shadow-lg max-h-[180px] overflow-y-auto"
                                 position="popper"
                                 side="bottom"
                                 align="start"
                                 sideOffset={4}
+                                collisionPadding={10}
                               >
                                 {timeSlots.map((slot) => (
                                   <SelectItem key={slot} value={slot}>

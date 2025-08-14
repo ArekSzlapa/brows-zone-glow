@@ -127,10 +127,17 @@ All colors MUST be HSL.
 
   html {
     overflow-y: scroll; /* Always show vertical scrollbar */
+    scrollbar-gutter: stable; /* Reserve space for scrollbar */
   }
 
   body {
     overflow-x: hidden;
     @apply bg-background text-foreground;
+  }
+
+  /* Prevent layout shift from dropdowns */
+  [data-radix-popper-content-wrapper] {
+    max-height: calc(100vh - 100px) !important;
+    overflow: visible !important;
   }
 }
