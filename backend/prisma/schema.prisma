@@ -13,3 +13,16 @@ model User {
   email String @unique
   phone String? @unique
 }
+
+model Booking {
+  id               Int      @id @default(autoincrement())
+  clientName       String
+  clientEmail      String
+  clientPhone      String
+  booking_date     DateTime
+  booking_time     String
+  service          String
+  duration         Int
+  reservation_date DateTime
+  createdAt        DateTime @default(now())
+}
