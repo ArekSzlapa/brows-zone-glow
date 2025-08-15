@@ -223,7 +223,17 @@ const ContactSection = () => {
         title: "Formularz wysłany!",
         description: "Skontaktujemy się z Tobą wkrótce.",
       });
-      form.reset();
+      
+      // Reset form and clear selected service state
+      form.reset({
+        name: "",
+        phone: "",
+        service: "",
+        email: "",
+        date: undefined,
+        time: "",
+      });
+      setSelectedService("");
     } catch (error) {
       console.error("Error sending email:", error);
       toast({
@@ -333,7 +343,7 @@ const ContactSection = () => {
                           </FormLabel>
                           <Select
                             onValueChange={field.onChange}
-                            defaultValue={field.value}
+                            value={field.value}
                           >
                             <FormControl>
                               <SelectTrigger className="border-border bg-background/50">

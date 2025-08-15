@@ -187,9 +187,9 @@ const BeforeAfterSection = () => {
           {transformations.map((transformation, index) => (
             <Card
               key={index}
-              className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+              className="border-0 shadow-elegant bg-card/90 backdrop-blur-sm overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex flex-col h-full"
             >
-              <CardContent className="p-0">
+              <CardContent className="p-0 flex flex-col h-full">
                 {/* Interactive Slider */}
                 <div className="relative">
                   <InteractiveSlider
@@ -198,12 +198,12 @@ const BeforeAfterSection = () => {
                   />
                 </div>
 
-                {/* Service Info */}
-                <div className="p-6">
+                {/* Service Info - Flex grow to fill available space */}
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-foreground mb-2">
                     {transformation.service}
                   </h3>
-                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed flex-grow">
                     {transformation.description}
                   </p>
 
@@ -218,10 +218,11 @@ const BeforeAfterSection = () => {
                     </div>
                   </div>
 
+                  {/* Button positioned at bottom */}
                   <HeroButton
                     onClick={() => scrollToSection("form")}
                     size="default"
-                    className="w-full"
+                    className="w-full mt-auto"
                   >
                     Zarezerwuj wizyte
                   </HeroButton>
