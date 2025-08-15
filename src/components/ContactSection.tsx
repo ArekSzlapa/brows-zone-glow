@@ -521,7 +521,7 @@ const ContactSection = () => {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent
-                                className="z-[60] bg-background border-border shadow-lg overflow-hidden"
+                                className="z-[60] bg-background border-border shadow-lg max-h-[200px] overflow-y-auto"
                                 position="popper"
                                 side="bottom"
                                 align="start"
