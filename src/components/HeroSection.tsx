@@ -47,15 +47,15 @@ const HeroSection = () => {
               size="lg"
               className="text-lg px-8 py-4"
             >
-              Zarezerwuj wizyte
+              Umów wizyte
             </HeroButton>
             <HeroButton
-              onClick={() => scrollToSection("services")}
+              onClick={() => window.location.href = "tel:+48516170052"}
               variant="outline"
               size="lg"
               className="text-lg px-8 py-4"
             >
-              Zobacz usługi
+              Zadzwoń 516 170 052
             </HeroButton>
           </div>
         </div>

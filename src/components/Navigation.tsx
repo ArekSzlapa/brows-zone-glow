@@ -28,10 +28,37 @@ const Navigation = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const goToHome = () => {
+    window.location.href = "/";
+  };
+
+  const goToPage = (path: string) => {
+    window.location.href = path;
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleNavigation = (link: any) => {
+    if (link.path) {
+      goToPage(link.path);
+    } else if (window.location.pathname === "/") {
+      scrollToSection(link.id);
+    } else {
+      window.location.href = `/#${link.id}`;
+    }
+  };
+
+  const handleBooking = () => {
+    if (window.location.pathname === "/") {
+      scrollToSection("form");
+    } else {
+      window.location.href = "/#form";
+    }
+  };
+
   const navLinks = [
-    { name: "Usługi", id: "services" },
+    { name: "Usługi", path: "/services" },
     { name: "Metamorfozy", id: "transformations" },
-    { name: "O mnie", id: "about" },
+    { name: "O mnie", path: "/about" },
     { name: "Kontakt", id: "contact" },
   ];
 
@@ -47,7 +74,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div
-            onClick={() => scrollToSection("hero")}
+            onClick={goToHome}
             className="flex items-center space-x-2 cursor-pointer group"
           >
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -70,8 +97,8 @@ const Navigation = () => {
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                key={link.path || link.id}
+                onClick={() => handleNavigation(link)}
                 className="text-foreground/80 hover:text-primary transition-colors duration-300 font-medium relative group"
               >
                 {link.name}
@@ -105,8 +132,8 @@ const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <HeroButton size="default" onClick={() => scrollToSection("form")}>
-              Zarezerwuj wizyte
+            <HeroButton size="default" onClick={handleBooking}>
+              Umów wizyte
             </HeroButton>
           </div>
 
@@ -128,8 +155,8 @@ const Navigation = () => {
           <div className="flex flex-col space-y-4 bg-card/95 backdrop-blur-md rounded-lg p-4 shadow-elegant">
             {navLinks.map((link) => (
               <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                key={link.path || link.id}
+                onClick={() => handleNavigation(link)}
                 className="text-left text-foreground/80 hover:text-primary transition-colors duration-300 font-medium py-2 border-b border-border/30 last:border-b-0"
               >
                 {link.name}
@@ -159,9 +186,9 @@ const Navigation = () => {
             <HeroButton
               size="default"
               className="w-full mt-4"
-              onClick={() => scrollToSection("contact")}
+              onClick={handleBooking}
             >
-              Book Now
+              Umów wizyte
             </HeroButton>
           </div>
         </div>
