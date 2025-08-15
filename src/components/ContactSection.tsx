@@ -13,7 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, Clock } from "lucide-react";
 import { format } from "date-fns";
@@ -32,6 +36,7 @@ import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { useState, useEffect } from "react";
 import "./mediaQueryStyles.css";
+import axios from "axios";
 
 const formSchema = z.object({
   name: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
@@ -79,24 +84,24 @@ const ContactSection = () => {
     const startHour = 8; // 8:00 AM
     const endHour = 18; // 6:00 PM
     const slotDuration = serviceDuration; // Duration in minutes
-    
+
     for (let hour = startHour; hour < endHour; hour++) {
       for (let minute = 0; minute < 60; minute += slotDuration) {
         const startTime = new Date();
         startTime.setHours(hour, minute, 0, 0);
-        
+
         const endTime = new Date(startTime.getTime() + slotDuration * 60000);
-        
+
         // Stop if end time exceeds business hours
         if (endTime.getHours() > endHour) break;
-        
-        const formatTime = (date: Date) => 
-          date.toLocaleTimeString('pl-PL', { 
-            hour: '2-digit', 
-            minute: '2-digit',
-            hour12: false 
+
+        const formatTime = (date: Date) =>
+          date.toLocaleTimeString("pl-PL", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
           });
-        
+
         slots.push(`${formatTime(startTime)} - ${formatTime(endTime)}`);
       }
     }
@@ -111,7 +116,7 @@ const ContactSection = () => {
 
   // Watch for service selection and update time slots
   const watchedService = form.watch("service");
-  
+
   useEffect(() => {
     if (watchedService !== selectedService) {
       setSelectedService(watchedService || "");
@@ -149,7 +154,7 @@ const ContactSection = () => {
     const minutes = String(currentDate.getMinutes()).padStart(2, "0");
 
     const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}`;
-    
+
     // Format booking date and time
     const bookingDate = format(values.date, "dd/MM/yyyy");
     const bookingTime = values.time;
@@ -207,9 +212,12 @@ const ContactSection = () => {
         message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
       };
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      // await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
-      await sendNotification();
+      // await sendNotification();
+      axios
+        .post("/api/bookings", { ...templateParams, booking_date: values.date })
+        .then();
 
       toast({
         title: "Formularz wysłany!",
@@ -518,7 +526,10 @@ const ContactSection = () => {
                             <FormLabel className="text-foreground font-semibold">
                               Data wizyty
                             </FormLabel>
-                            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                            <Popover
+                              open={isCalendarOpen}
+                              onOpenChange={setIsCalendarOpen}
+                            >
                               <PopoverTrigger asChild>
                                 <FormControl>
                                   <Button
@@ -537,7 +548,10 @@ const ContactSection = () => {
                                   </Button>
                                 </FormControl>
                               </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
+                              <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                              >
                                 <Calendar
                                   mode="single"
                                   selected={field.value}
@@ -545,7 +559,9 @@ const ContactSection = () => {
                                     field.onChange(date);
                                     setIsCalendarOpen(false);
                                   }}
-                                  disabled={(date) => !isWeekday(date) || date < new Date()}
+                                  disabled={(date) =>
+                                    !isWeekday(date) || date < new Date()
+                                  }
                                   initialFocus
                                   weekStartsOn={1}
                                   className={cn("p-3 pointer-events-auto")}
@@ -572,7 +588,13 @@ const ContactSection = () => {
                             >
                               <FormControl>
                                 <SelectTrigger className="border-border bg-background/50">
-                                  <SelectValue placeholder={selectedService ? "Wybierz godzinę" : "Najpierw wybierz usługę"} />
+                                  <SelectValue
+                                    placeholder={
+                                      selectedService
+                                        ? "Wybierz godzinę"
+                                        : "Najpierw wybierz usługę"
+                                    }
+                                  />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent

@@ -4,18 +4,29 @@ import { PrismaClient } from "@prisma/client";
 const router = Router();
 const prisma = new PrismaClient();
 
-router.post("/booking", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const {
-      name,
-      email,
-      phone,
-      bookingDate,
-      bookingTime,
-      service,
-      serviceDuration,
-      formattedDateTime,
+      from_name: name,
+      customer_email: email,
+      from_phone: phone,
+      booking_date: bookingDate,
+      booking_time: bookingTime,
+      selected_service: service,
+      service_duration: serviceDuration,
+      //   formattedDateTime,
     } = req.body;
+
+    console.log(
+      "DUPA",
+      !name,
+      !email,
+      !phone,
+      !bookingDate,
+      !bookingTime,
+      !service,
+      !serviceDuration
+    );
 
     if (
       !name ||
@@ -24,8 +35,8 @@ router.post("/booking", async (req: Request, res: Response) => {
       !bookingDate ||
       !bookingTime ||
       !service ||
-      !serviceDuration ||
-      !formattedDateTime
+      !serviceDuration
+      //   !formattedDateTime
     ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
@@ -39,7 +50,7 @@ router.post("/booking", async (req: Request, res: Response) => {
         booking_time: bookingTime,
         service: service,
         duration: serviceDuration,
-        reservation_date: new Date(formattedDateTime),
+        reservation_date: new Date(),
       },
     });
 
