@@ -30,15 +30,18 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-6 text-center lg:text-left">
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-foreground">Idealne</span>{" "}
-            <span className="text-foreground ">brwi</span>
-            <br />
-            <span className="text-foreground">za każdym razem</span>
+            <span className="text-foreground">Podkreślam Twoje</span> <br />
+            <span className="text-foreground">
+              naturalne
+              <span className=" text-primary"> piękno</span>
+            </span>
           </h1>
 
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Odmień swój wygląd dzięki profesjonalnemu modelowaniu, laminacji i
-            stylizacji brwi. Odkryj sztukę perfekcyjnych brwi w Brows•Zone.
+            Odmień swój wygląd dzięki profesjonalnej laminacji i stylizacji
+            brwi.
+            <br />
+            Odkryj sztukę perfekcyjnych brwi w Brows•Zone.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -50,7 +53,7 @@ const HeroSection = () => {
               Umów wizyte
             </HeroButton>
             <HeroButton
-              onClick={() => window.location.href = "tel:+48516170052"}
+              onClick={() => (window.location.href = "tel:+48516170052")}
               variant="outline"
               size="lg"
               className="text-lg px-8 py-4"
