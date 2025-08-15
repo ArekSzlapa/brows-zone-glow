@@ -234,6 +234,7 @@ const ContactSection = () => {
         time: "",
       });
       setSelectedService("");
+      setTimeSlots([]);
     } catch (error) {
       console.error("Error sending email:", error);
       toast({

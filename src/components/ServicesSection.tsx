@@ -26,6 +26,19 @@ const ServicesSection = () => {
     },
   ];
 
+  const brwiServices = [
+    { title: "Geometria Brwi z koloryzacją", time: "120 min", price: "40 zł" },
+    { title: "Laminacja Brwi", time: "120 min", price: "40 zł" },
+  ];
+
+  const rzesyServices = [
+    { title: "Lifting Rzęs", time: "90 min", price: "40 zł" },
+  ];
+
+  const kombinowaneServices = [
+    { title: "Laminacja Brwi i Rzęs", time: "120 min", price: "70 zł" },
+  ];
+
   return (
     <section className="py-20 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-6">
@@ -41,26 +54,65 @@ const ServicesSection = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Services Grid */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {services.map((service, index) => (
-              <Card
-                key={index}
-                className="border-0 shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 bg-card/80 backdrop-blur-sm"
-              >
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-3 text-foreground">
-                    {service.title}
+          {/* Services Card */}
+          <div className="space-y-8">
+            <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+              <CardContent className="p-8">
+                {/* Brwi Section */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
+                    Brwi
                   </h3>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <p className="text-lg font-bold text-primary">
-                    {service.price}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+                  <div className="space-y-4">
+                    {brwiServices.map((service, index) => (
+                      <div key={index} className="flex justify-between items-center py-2">
+                        <div className="flex-1">
+                          <span className="font-semibold text-foreground">{service.title}</span>
+                          <span className="text-muted-foreground ml-2">({service.time})</span>
+                        </div>
+                        <span className="text-lg font-bold text-primary">{service.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Rzęsy Section */}
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
+                    Rzęsy
+                  </h3>
+                  <div className="space-y-4">
+                    {rzesyServices.map((service, index) => (
+                      <div key={index} className="flex justify-between items-center py-2">
+                        <div className="flex-1">
+                          <span className="font-semibold text-foreground">{service.title}</span>
+                          <span className="text-muted-foreground ml-2">({service.time})</span>
+                        </div>
+                        <span className="text-lg font-bold text-primary">{service.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Brwi i Rzęsy Section */}
+                <div>
+                  <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
+                    Brwi i Rzęsy
+                  </h3>
+                  <div className="space-y-4">
+                    {kombinowaneServices.map((service, index) => (
+                      <div key={index} className="flex justify-between items-center py-2">
+                        <div className="flex-1">
+                          <span className="font-semibold text-foreground">{service.title}</span>
+                          <span className="text-muted-foreground ml-2">({service.time})</span>
+                        </div>
+                        <span className="text-lg font-bold text-primary">{service.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Service Image */}
@@ -79,7 +131,6 @@ const ServicesSection = () => {
               <div className="text-center">
                 <div className="text-xl font-bold text-primary mb-1">Brwi</div>
                 <div className="text-s text-muted-foreground">
-                  {" "}
                   dopracowane do perfekcji
                 </div>
               </div>
