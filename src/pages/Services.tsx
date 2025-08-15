@@ -7,7 +7,7 @@ import serviceImage from "@/assets/Ola-2.jpeg";
 
 const Services = () => {
   const navigate = useNavigate();
-  
+
   const scrollToForm = () => {
     navigate("/#form");
   };
@@ -108,9 +108,7 @@ const Services = () => {
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
               <span className="text-foreground">Oferowane </span>
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Usługi
-              </span>
+              <span className="bg-clip-text text-primary">Usługi</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Profesjonalna stylizacja brwi i rzęs, która podkreśli Twoje
@@ -122,19 +120,19 @@ const Services = () => {
             <ServiceSection
               title="Brwi"
               services={brwiServices}
-              gradient="from-primary to-primary/80"
+              gradient="from-primary to-primary/100"
             />
 
             <ServiceSection
               title="Rzęsy"
               services={rzesyServices}
-              gradient="from-accent to-accent/80"
+              gradient="from-primary to-primary/100"
             />
 
             <ServiceSection
               title="Brwi i Rzęsy"
               services={kombinowaneServices}
-              gradient="from-primary to-accent"
+              gradient="from-primary to-primary/100"
             />
           </div>
 

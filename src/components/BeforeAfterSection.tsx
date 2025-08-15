@@ -172,9 +172,7 @@ const BeforeAfterSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Wykonane </span>
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Metamorfozy
-            </span>
+            <span className="text-primary bg-clip-text ">Metamorfozy</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Te metamorfozy pokazują techniki, które opanowałam do perfekcji.

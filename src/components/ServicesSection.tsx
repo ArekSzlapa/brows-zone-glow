@@ -32,9 +32,7 @@ const ServicesSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             <span className="text-foreground">Oferowane </span>
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Usługi
-            </span>
+            <span className="bg-clip-text text-primary">Usługi</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Profesjonalna stylizacja brwi, która podkreśli Twoje naturalne

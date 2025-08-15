@@ -223,7 +223,7 @@ const ContactSection = () => {
         title: "Formularz wysłany!",
         description: "Skontaktujemy się z Tobą wkrótce.",
       });
-      
+
       // Reset form and clear selected service state
       form.reset({
         name: "",
@@ -252,9 +252,7 @@ const ContactSection = () => {
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-bold mb-4">
               <span className="text-foreground">Umów się na </span>
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                wizytę
-              </span>
+              <span className="bg-clip-text text-primary">wizytę</span>
             </h3>
             <p className="text-lg text-muted-foreground">
               Wypełnij formularz, a skontaktujemy się z Tobą w ciągu 24 godzin
