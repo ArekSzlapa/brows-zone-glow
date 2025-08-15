@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import aboutImage from "@/assets/Ola-2.jpeg";
 
 const scrollToForm = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: "smooth" });
   setTimeout(() => {
     window.location.href = "/#form";
   }, 500);
@@ -15,7 +15,7 @@ const About = () => {
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
-      
+
       <section className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center mb-16">
@@ -29,13 +29,16 @@ const About = () => {
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               W Brows•Zone dbam o to, by Twoje brwi były perfekcyjnie dopasowane
               do Ciebie. Precyzja, estetyka i pasja sprawiają, że każda wizyta
-              staje się wyjątkowym doświadczeniem, a efekt dodaje pewności siebie
+              staje się wyjątkowym doświadczeniem, a efekt dodaje pewności
+              siebie
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
               <Card className="bg-card/60 backdrop-blur-sm border-0 shadow-soft">
                 <CardContent className="p-8 text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">100%</div>
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    100%
+                  </div>
                   <div className="text-foreground font-medium mb-2">
                     Certyfikowanych Szkoleń
                   </div>
@@ -48,7 +51,9 @@ const About = () => {
 
               <Card className="bg-card/60 backdrop-blur-sm border-0 shadow-soft">
                 <CardContent className="p-8 text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">100%</div>
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    100%
+                  </div>
                   <div className="text-foreground font-medium mb-2">
                     Najlepszych Produktów
                   </div>
@@ -60,19 +65,21 @@ const About = () => {
 
               <Card className="bg-card/60 backdrop-blur-sm border-0 shadow-soft">
                 <CardContent className="p-8 text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">24/7</div>
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    24/7
+                  </div>
                   <div className="text-foreground font-medium mb-2">
                     Rezerwacja wizyt
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    Skontaktuj się ze mną, a dobierzemy dla Ciebie najdogodniejszy
-                    termin
+                    Skontaktuj się ze mną, a dobierzemy dla Ciebie
+                    najdogodniejszy termin
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            <blockquote className="text-2xl italic text-foreground mb-12 font-light border-l-4 border-primary pl-6">
+            <blockquote className="text-2xl italic text-foreground mb-12 font-light pl-6">
               "Każda klientka wychodzi pewniejsza siebie i piękniejsza. To cel
               Brows•Zone"
             </blockquote>
@@ -87,71 +94,37 @@ const About = () => {
                 className="w-full h-96 object-cover rounded-2xl shadow-elegant"
               />
             </div>
-            
+
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-foreground mb-4">
                 Moja historia
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Pasja do stylizacji brwi rozpoczęła się u mnie kilka lat temu, gdy zauważyłam,
-                jak wielka różnica w wyglądzie może powstać dzięki odpowiednio dopasowanym brwiom.
-                Od tego momentu poświęciłam się nauce i doskonaleniu tej sztuki.
+                Pasja do stylizacji brwi rozpoczęła się u mnie kilka lat temu,
+                gdy zauważyłam, jak wielka różnica w wyglądzie może powstać
+                dzięki odpowiednio dopasowanym brwiom. Od tego momentu
+                poświęciłam się nauce i doskonaleniu tej sztuki.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Ukończyłam kursy u najlepszych specjalistów w branży, zdobywając certyfikaty
-                w zakresie laminacji brwi, liftingu rzęs oraz zaawansowanych technik stylizacji.
-                Każda klientka jest dla mnie wyjątkowa i zasługuje na indywidualne podejście.
+                Ukończyłam kursy u najlepszych specjalistów w branży, zdobywając
+                certyfikaty w zakresie laminacji brwi, liftingu rzęs oraz
+                zaawansowanych technik stylizacji. Każda klientka jest dla mnie
+                wyjątkowa i zasługuje na indywidualne podejście.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                W Brows•Zone używam wyłącznie najwyższej jakości produktów, bezpiecznych
-                i delikatnych dla skóry. Moje zabiegi są wykonywane z najwyższą precyzją
-                i dbałością o detale.
+                W Brows•Zone używam wyłącznie najwyższej jakości produktów,
+                bezpiecznych i delikatnych dla skóry. Moje zabiegi są wykonywane
+                z najwyższą precyzją i dbałością o detale.
               </p>
-              
-              <HeroButton 
-                onClick={scrollToForm}
-                size="lg"
-                className="mt-6"
-              >
+
+              <HeroButton onClick={scrollToForm} size="lg" className="mt-6">
                 Umów się na konsultację
               </HeroButton>
             </div>
           </div>
-
-          {/* Call to Action */}
-          <div className="max-w-4xl mx-auto mt-20">
-            <Card className="bg-gradient-to-br from-primary/5 to-accent/5 border-0 shadow-soft">
-              <CardContent className="p-12 text-center">
-                <h3 className="text-3xl font-bold text-foreground mb-4">
-                  Gotowa na perfekcyjne brwi?
-                </h3>
-                <p className="text-xl text-muted-foreground mb-8">
-                  Umów wizyte i przekonaj się sama, dlaczego klientki wybrały
-                  Brows•Zone w kwestii stylizacji brwi.
-                </p>
-                <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-                  <HeroButton 
-                    onClick={scrollToForm}
-                    size="lg"
-                    className="w-full sm:w-auto"
-                  >
-                    Zarezerwuj wizyte
-                  </HeroButton>
-                  <HeroButton 
-                    onClick={() => window.location.href = "/services"}
-                    variant="outline"
-                    size="lg"
-                    className="w-full sm:w-auto"
-                  >
-                    Zobacz usługi
-                  </HeroButton>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
-      
+
       <Footer />
     </main>
   );
