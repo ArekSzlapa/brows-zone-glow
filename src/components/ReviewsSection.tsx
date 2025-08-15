@@ -93,16 +93,9 @@ const ReviewsSection = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-12">
-          <p className="text-lg text-muted-foreground mb-6">
+          <p className="text-lg text-muted-foreground">
             Gotowa aby zostać kolejną zadowoloną klientką?
           </p>
-          <div className="inline-flex items-center space-x-2 text-primary">
-            <Star className="w-5 h-5 fill-primary" />
-            <span className="font-semibold">
-              Stwórzmy Twoje idealne brwi razem!
-            </span>
-            <Star className="w-5 h-5 fill-primary" />
-          </div>
         </div>
       </div>
     </section>

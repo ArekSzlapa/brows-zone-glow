@@ -32,12 +32,6 @@ const Footer = () => {
               Z pasją, zaangażowaniem i pełnym oddaniem pomagam Ci osiągnąć
               wymarzone brwi.
             </p>
-            <div className="flex items-center space-x-2 text-primary">
-              <Heart className="w-4 h-4 fill-primary" />
-              <span className="text-sm font-medium">
-                Stworzone z pasją i zaangażowaniem
-              </span>
-            </div>
           </div>
 
           {/* Quick Links */}

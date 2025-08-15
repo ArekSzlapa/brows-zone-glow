@@ -230,22 +230,6 @@ const BeforeAfterSection = () => {
             </Card>
           ))}
         </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto small-flex">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">100%</div>
-            <div className="text-sm text-muted-foreground">Pasji</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">3</div>
-            <div className="text-sm text-muted-foreground">Certyfikacje</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">100%</div>
-            <div className="text-sm text-muted-foreground">Zaangażowania</div>
-          </div>
-        </div>
       </div>
     </section>
   );
