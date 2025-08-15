@@ -1,6 +1,23 @@
 import { Router, type Request, type Response } from "express";
 import { PrismaClient } from "@prisma/client";
 
+import fs from "fs";
+import path from "path";
+import { google } from "googleapis";
+
+const serviceAccountPath = path.resolve(process.cwd(), "service-account.json");
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+
+const auth = new google.auth.GoogleAuth({
+  credentials: serviceAccount,
+  scopes: ["https://www.googleapis.com/auth/calendar"],
+});
+
+const calendar = google.calendar({ version: "v3", auth });
+
+const CALENDAR_ID =
+  "c981b1c0bfa0376252a6f8a18567e24a0a870c37c480c460aec6fff7708e8368@group.calendar.google.com";
+
 const router = Router();
 const prisma = new PrismaClient();
 
@@ -25,8 +42,8 @@ router.post("/", async (req: Request, res: Response) => {
       from_name: name,
       customer_email: email,
       from_phone: phone,
-      booking_date: bookingDate,
-      booking_time: bookingTime,
+      booking_date: bookingDate, // ISO string like "2025-08-27T22:00:00.000Z"
+      booking_time: bookingTime, // format: "11:00-13:00"
       selected_service: service,
       service_duration: serviceDuration,
     } = req.body;
@@ -55,6 +72,39 @@ router.post("/", async (req: Request, res: Response) => {
       },
     });
 
+    try {
+      // Extract start time from "11:00-13:00"
+      const [startTimeStr] = bookingTime.split("-");
+      const [startHour, startMinute] = startTimeStr.split(":").map(Number);
+
+      // Construct start date
+      const startDate = new Date(bookingDate);
+      startDate.setHours(startHour, startMinute, 0, 0);
+
+      // Calculate end date based on service duration in minutes
+      const endDate = new Date(startDate.getTime() + serviceDuration * 60000);
+
+      await calendar.events.insert({
+        calendarId: CALENDAR_ID,
+        requestBody: {
+          summary: `Rezerwacja: ${service}`,
+          description: `Kilent: ${name}\nTelefon: ${phone}\nEmail: ${
+            email || "brak maila"
+          }`,
+          start: {
+            dateTime: startDate.toISOString(),
+            timeZone: "Europe/Warsaw",
+          },
+          end: {
+            dateTime: endDate.toISOString(),
+            timeZone: "Europe/Warsaw",
+          },
+        },
+      });
+    } catch (err) {
+      console.error("Failed to create calendar event:", err);
+    }
+
     res.status(201).json(newBooking);
   } catch (error) {
     console.error("Error creating booking:", error);
@@ -68,15 +118,15 @@ router.get("/available-slots", async (req: Request, res: Response) => {
     const serviceParam = req.query.service as string;
 
     if (!dateParam || !serviceParam) {
-      return res.status(400).json({ 
-        error: "Missing required date and service parameters" 
+      return res.status(400).json({
+        error: "Missing required date and service parameters",
       });
     }
 
     const date = new Date(dateParam);
     if (isNaN(date.getTime())) {
-      return res.status(400).json({ 
-        error: "Invalid date format. Use YYYY-MM-DD." 
+      return res.status(400).json({
+        error: "Invalid date format. Use YYYY-MM-DD.",
       });
     }
 
@@ -91,8 +141,15 @@ router.get("/available-slots", async (req: Request, res: Response) => {
 
     // Define all possible 2-hour slots
     const allSlots = [
-      "08:00-10:00", "09:00-11:00", "10:00-12:00", "11:00-13:00",
-      "12:00-14:00", "13:00-15:00", "14:00-16:00", "15:00-17:00", "16:00-18:00",
+      "08:00-10:00",
+      "09:00-11:00",
+      "10:00-12:00",
+      "11:00-13:00",
+      "12:00-14:00",
+      "13:00-15:00",
+      "14:00-16:00",
+      "15:00-17:00",
+      "16:00-18:00",
     ];
 
     // Fetch bookings for the day

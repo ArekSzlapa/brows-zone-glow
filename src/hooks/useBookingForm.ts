@@ -83,14 +83,14 @@ export const useBookingForm = () => {
         message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
       };
 
-      await axios.post("/api/bookings", { 
-        ...templateParams, 
-        booking_date: values.date 
+      await axios.post("/api/bookings", {
+        ...templateParams,
+        booking_date: values.date,
       });
 
       toast({
         title: "Formularz wysłany!",
-        description: "Skontaktujemy się z Tobą wkrótce.",
+        description: "Wizyta została zarezerwowana.",
       });
 
       // Reset form

@@ -56,7 +56,7 @@ const Navigation = () => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleNavigation = (link: any) => {
+  const handleNavigation = (link) => {
     if (link.path) {
       goToPage(link.path);
     } else if (location.pathname === "/") {
@@ -79,7 +79,6 @@ const Navigation = () => {
     { name: "Metamorfozy", id: "transformations" },
     { name: "Opinie", id: "reviews" },
     { name: "O mnie", path: "/about" },
-    { name: "Kontakt", id: "contact" },
   ];
 
   return (

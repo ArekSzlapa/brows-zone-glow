@@ -25,11 +25,11 @@ interface TimeSlotSelectorProps {
   onTimeChange?: (time: string) => void;
 }
 
-export const TimeSlotSelector = ({ 
-  control, 
-  service, 
-  date, 
-  onTimeChange 
+export const TimeSlotSelector = ({
+  control,
+  service,
+  date,
+  onTimeChange,
 }: TimeSlotSelectorProps) => {
   const { timeSlots, isLoading } = useTimeSlots(service, date);
 
@@ -47,8 +47,7 @@ export const TimeSlotSelector = ({
               field.onChange(value);
               onTimeChange?.(value);
             }}
-            defaultValue={field.value}
-            disabled={!service || !date || isLoading}
+            disabled={!service || !date || isLoading || timeSlots.length === 0}
           >
             <FormControl>
               <SelectTrigger className="border-border bg-background/50">
