@@ -210,8 +210,11 @@ router.get("/available-slots", async (req: Request, res: Response) => {
 
     bookings.forEach((booking) => {
       const durationMins = booking.duration >= 90 ? 120 : booking.duration;
-      const bookingStart = timeToMinutes(booking.booking_time);
+      const [startTimeStr] = booking.booking_time.split("-");
+      const bookingStart = timeToMinutes(startTimeStr);
       const bookingEnd = bookingStart + durationMins;
+
+      console.log(`Booking: ${booking.booking_time}, Start: ${bookingStart}, End: ${bookingEnd}, Duration: ${durationMins}`);
 
       allSlots.forEach((slot) => {
         const [slotStartStr, slotEndStr] = slot.split("-");
@@ -220,6 +223,7 @@ router.get("/available-slots", async (req: Request, res: Response) => {
 
         // Overlap check
         if (bookingStart < slotEnd && bookingEnd > slotStart) {
+          console.log(`Slot ${slot} conflicts with booking ${booking.booking_time}`);
           unavailable.add(slot);
         }
       });
