@@ -65,6 +65,7 @@ const ContactSection = () => {
   const [selectedService, setSelectedService] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isLoadingAvailability, setIsLoadingAvailability] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -114,22 +115,45 @@ const ContactSection = () => {
     return day >= 1 && day <= 5; // 1 = Monday, 5 = Friday
   };
 
-  // Watch for service selection and update time slots
+  // Fetch available time slots from backend
+  const fetchAvailableTimeSlots = async (date: Date, service: string) => {
+    setIsLoadingAvailability(true);
+    try {
+      const formattedDate = format(date, "yyyy-MM-dd");
+      const response = await axios.get(`/api/bookings/availability?date=${formattedDate}&service=${service}`);
+      setTimeSlots(response.data.availableSlots || []);
+    } catch (error) {
+      console.error("Error fetching available time slots:", error);
+      // Fallback to generated time slots if API fails
+      const serviceDuration = serviceDurations[service] || 120;
+      setTimeSlots(generateTimeSlots(serviceDuration));
+    } finally {
+      setIsLoadingAvailability(false);
+    }
+  };
+
+  // Watch for service and date selection
   const watchedService = form.watch("service");
+  const watchedDate = form.watch("date");
 
   useEffect(() => {
     if (watchedService !== selectedService) {
       setSelectedService(watchedService || "");
-      if (watchedService) {
-        const serviceDuration = serviceDurations[watchedService] || 120;
-        setTimeSlots(generateTimeSlots(serviceDuration));
-      } else {
-        setTimeSlots([]);
-      }
-      // Reset time selection when service changes
+      // Reset time selection and slots when service changes
       form.setValue("time", "");
+      setTimeSlots([]);
     }
   }, [watchedService, selectedService, form]);
+
+  // Fetch availability when both service and date are selected
+  useEffect(() => {
+    if (watchedService && watchedDate) {
+      fetchAvailableTimeSlots(watchedDate, watchedService);
+    } else {
+      setTimeSlots([]);
+      form.setValue("time", "");
+    }
+  }, [watchedService, watchedDate, form]);
 
   const callNumber = () => {
     window.location.href = "tel:+48516170052";
@@ -442,6 +466,8 @@ const ContactSection = () => {
                                   onSelect={(date) => {
                                     field.onChange(date);
                                     setIsCalendarOpen(false);
+                                    // Reset time when date changes
+                                    form.setValue("time", "");
                                   }}
                                   disabled={(date) =>
                                     !isWeekday(date) || date < new Date()
@@ -468,15 +494,21 @@ const ContactSection = () => {
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
-                              disabled={!selectedService}
+                              disabled={!selectedService || !watchedDate || isLoadingAvailability}
                             >
                               <FormControl>
                                 <SelectTrigger className="border-border bg-background/50">
                                   <SelectValue
                                     placeholder={
-                                      selectedService
-                                        ? "Wybierz godzinę"
-                                        : "Najpierw wybierz usługę"
+                                      isLoadingAvailability
+                                        ? "Ładowanie dostępnych godzin..."
+                                        : !selectedService
+                                        ? "Najpierw wybierz usługę"
+                                        : !watchedDate
+                                        ? "Najpierw wybierz datę"
+                                        : timeSlots.length === 0
+                                        ? "Brak dostępnych terminów"
+                                        : "Wybierz godzinę"
                                     }
                                   />
                                 </SelectTrigger>
