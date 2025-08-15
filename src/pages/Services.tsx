@@ -1,17 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { HeroButton } from "@/components/ui/hero-button";
 import serviceImage from "@/assets/Ola-2.jpeg";
 
-const scrollToForm = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  setTimeout(() => {
-    window.location.href = "/#form";
-  }, 500);
-};
-
 const Services = () => {
+  const navigate = useNavigate();
+  
+  const scrollToForm = () => {
+    navigate("/#form");
+  };
   const brwiServices = [
     {
       title: "Laminacja Brwi",

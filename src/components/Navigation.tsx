@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Facebook, Instagram } from "lucide-react";
 import { HeroButton } from "./ui/hero-button";
 import logo from "../assets/logo.png";
 
 const Navigation = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -14,6 +17,15 @@ const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle hash-based scrolling when navigating from other pages
+  useEffect(() => {
+    if (location.hash && location.pathname === "/") {
+      setTimeout(() => {
+        scrollToSection(location.hash.substring(1));
+      }, 100);
+    }
+  }, [location]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -29,29 +41,29 @@ const Navigation = () => {
   };
 
   const goToHome = () => {
-    window.location.href = "/";
+    navigate("/");
   };
 
   const goToPage = (path: string) => {
-    window.location.href = path;
+    navigate(path);
     setIsMobileMenuOpen(false);
   };
 
   const handleNavigation = (link: any) => {
     if (link.path) {
       goToPage(link.path);
-    } else if (window.location.pathname === "/") {
+    } else if (location.pathname === "/") {
       scrollToSection(link.id);
     } else {
-      window.location.href = `/#${link.id}`;
+      navigate(`/#${link.id}`);
     }
   };
 
   const handleBooking = () => {
-    if (window.location.pathname === "/") {
+    if (location.pathname === "/") {
       scrollToSection("form");
     } else {
-      window.location.href = "/#form";
+      navigate("/#form");
     }
   };
 
@@ -166,7 +178,7 @@ const Navigation = () => {
             {/* Mobile Social Icons */}
             <div className="flex items-center justify-center space-x-6 py-3 border-b border-border/30">
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/share/16jnDEi78z/?mibextid=wwXlfr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/60 hover:text-primary transition-colors duration-300"
@@ -174,7 +186,7 @@ const Navigation = () => {
                 <Facebook className="w-6 h-6" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/szlapa.brows/#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground/60 hover:text-primary transition-colors duration-300"
