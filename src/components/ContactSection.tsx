@@ -120,7 +120,10 @@ const ContactSection = () => {
     setIsLoadingAvailability(true);
     try {
       const formattedDate = format(date, "yyyy-MM-dd");
-      const response = await axios.get(`/api/bookings/available-slots?date=${formattedDate}&service=${service}`);
+      const response = await axios.get(
+        `/api/bookings/available-slots?date=${formattedDate}&service=${service}`
+      );
+      console.log("DATA", response.data);
       setTimeSlots(response.data.availableSlots || []);
     } catch (error) {
       console.error("Error fetching available time slots:", error);
@@ -494,7 +497,11 @@ const ContactSection = () => {
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
-                              disabled={!selectedService || !watchedDate || isLoadingAvailability}
+                              disabled={
+                                !selectedService ||
+                                !watchedDate ||
+                                isLoadingAvailability
+                              }
                             >
                               <FormControl>
                                 <SelectTrigger className="border-border bg-background/50">

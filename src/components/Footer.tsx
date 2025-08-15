@@ -26,7 +26,7 @@ const Footer = () => {
     });
   };
 
-  const handleNavigation = (link: any) => {
+  const handleNavigation = (link) => {
     if (link.path) {
       navigate(link.path);
     } else if (location.pathname === "/") {
@@ -42,8 +42,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand & Mission */}
           <div className="space-y-4">
-            <div 
-              onClick={() => location.pathname === "/" ? scrollToTop() : navigate("/")}
+            <div
+              onClick={() =>
+                location.pathname === "/" ? scrollToTop() : navigate("/")
+              }
               className="flex items-center space-x-2 cursor-pointer group"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
