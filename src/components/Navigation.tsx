@@ -41,7 +41,14 @@ const Navigation = () => {
   };
 
   const goToHome = () => {
-    navigate("/");
+    if (location.pathname === "/") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      navigate("/");
+    }
   };
 
   const goToPage = (path: string) => {
@@ -70,6 +77,7 @@ const Navigation = () => {
   const navLinks = [
     { name: "Usługi", path: "/services" },
     { name: "Metamorfozy", id: "transformations" },
+    { name: "Opinie", id: "reviews" },
     { name: "O mnie", path: "/about" },
     { name: "Kontakt", id: "contact" },
   ];

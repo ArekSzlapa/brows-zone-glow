@@ -1,8 +1,40 @@
 import { Heart, Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const currentYear = new Date().getFullYear();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.offsetTop - navHeight;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleNavigation = (link: any) => {
+    if (link.path) {
+      navigate(link.path);
+    } else if (location.pathname === "/") {
+      scrollToSection(link.id);
+    } else {
+      navigate(`/#${link.id}`);
+    }
+  };
 
   return (
     <footer className="bg-foreground/5 border-t border-border">
@@ -10,8 +42,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand & Mission */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
+            <div 
+              onClick={() => location.pathname === "/" ? scrollToTop() : navigate("/")}
+              className="flex items-center space-x-2 cursor-pointer group"
+            >
+              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <span
                   style={{ display: "flex", justifyContent: "center" }}
                   className="text-primary-foreground font-bold"
@@ -20,7 +55,7 @@ const Footer = () => {
                 </span>
               </div>
               <div>
-                <h3 className="font-bold text-lg text-foreground">
+                <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
                   Brows•Zone
                 </h3>
                 <p className="text-sm text-muted-foreground">
@@ -39,18 +74,20 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground">Odnośniki</h3>
             <div className="space-y-2">
               {[
-                { name: "Usługi", href: "#services" },
-                { name: "Metamorfozy", href: "#transformations" },
-                { name: "O Brows•Zone", href: "#about" },
-                { name: "Zarezerwuj wizyte", href: "#form" },
+                { name: "Usługi", path: "/services" },
+                { name: "Metamorfozy", id: "transformations" },
+                { name: "Opinie", id: "reviews" },
+                { name: "O mnie", path: "/about" },
+                { name: "Kontakt", id: "contact" },
+                { name: "Zarezerwuj wizyte", id: "form" },
               ].map((link) => (
-                <a
+                <button
                   key={link.name}
-                  href={link.href}
-                  className="block text-muted-foreground hover:text-primary transition-colors duration-300"
+                  onClick={() => handleNavigation(link)}
+                  className="block text-left text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
                   {link.name}
-                </a>
+                </button>
               ))}
             </div>
           </div>
