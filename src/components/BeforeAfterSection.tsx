@@ -206,7 +206,7 @@ const BeforeAfterSection = () => {
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed flex-grow">
                     {transformation.description}
                   </p>
-
+                  {/* 
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <span className="text-md font-bold text-primary">
@@ -216,16 +216,16 @@ const BeforeAfterSection = () => {
                         • {transformation.duration}
                       </span>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Button positioned at bottom */}
-                  <HeroButton
+                  {/* <HeroButton
                     onClick={() => scrollToSection("form")}
                     size="default"
                     className="w-full mt-auto"
                   >
                     Zarezerwuj wizyte
-                  </HeroButton>
+                  </HeroButton>  */}
                 </div>
               </CardContent>
             </Card>
