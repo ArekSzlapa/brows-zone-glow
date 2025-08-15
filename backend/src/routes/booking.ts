@@ -46,7 +46,7 @@ const generateTimeSlots = (serviceDuration: number): string[] => {
 };
 
 // Get availability for a specific date and service
-router.get("/availability", async (req: Request, res: Response) => {
+router.get("/available-slots", async (req: Request, res: Response) => {
   try {
     const { date, service } = req.query;
 

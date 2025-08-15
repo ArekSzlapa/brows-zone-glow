@@ -120,7 +120,7 @@ const ContactSection = () => {
     setIsLoadingAvailability(true);
     try {
       const formattedDate = format(date, "yyyy-MM-dd");
-      const response = await axios.get(`/api/bookings/availability?date=${formattedDate}&service=${service}`);
+      const response = await axios.get(`/api/bookings/available-slots?date=${formattedDate}&service=${service}`);
       setTimeSlots(response.data.availableSlots || []);
     } catch (error) {
       console.error("Error fetching available time slots:", error);
