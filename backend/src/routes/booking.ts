@@ -6,7 +6,6 @@ const { google } = require("googleapis");
 const nodePath = require("path");
 const nodeExpress = require("express");
 const nodeDotenv = require("dotenv");
-const axios = require("axios");
 
 nodeDotenv.config();
 
@@ -54,33 +53,10 @@ function timeToMinutes(time: string) {
   return h * 60 + m;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-async function sendEmail({ serviceId, templateId, userId, templateParams }) {
-  try {
-    const response = await axios.post(
-      "https://api.emailjs.com/api/v1.0/email/send",
-      {
-        service_id: serviceId,
-        template_id: templateId,
-        user_id: userId,
-        template_params: templateParams,
-      }
-    );
-    console.log(
-      `Email sent via EmailJS template ${templateId}:`,
-      response.data
-    );
-  } catch (error) {
-    console.error(`Error sending EmailJS template ${templateId}:`);
-  }
-}
-
 // === POST /api/bookings ===
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 router.post("/", async (req, res) => {
-  console.log("BODY", req.body);
   try {
     const {
       from_name: name,
@@ -129,8 +105,6 @@ router.post("/", async (req, res) => {
       serviceDuration,
     ];
 
-    console.log("DB VALUES", values);
-
     const { rows } = await pool.query(insertQuery, values);
     const newBooking = rows[0];
 
@@ -163,36 +137,6 @@ router.post("/", async (req, res) => {
             dateTime: endDate.toISOString(),
             timeZone: "Europe/Warsaw",
           },
-        },
-      });
-
-      // Send confirmation email to customer
-      await sendEmail({
-        serviceId: process.env.EMAILJS_SERVICE_ID,
-        templateId: process.env.EMAILJS_TEMPLATE_ID_CUSTOMER,
-        userId: process.env.EMAILJS_PUBLIC_KEY,
-        templateParams: {
-          customer_name: name,
-          booking_date: bookingDateOnly,
-          booking_time: bookingTimeOnly,
-          booking_service: service,
-          customer_email: email,
-        },
-      });
-
-      // Send notification email to you (admin)
-      await sendEmail({
-        serviceId: process.env.EMAILJS_SERVICE_ID,
-        templateId: process.env.EMAILJS_TEMPLATE_ID_ADMIN,
-        userId: process.env.EMAILJS_PUBLIC_KEY,
-        templateParams: {
-          admin_name: "Brows Zone",
-          customer_name: name,
-          booking_date: bookingDateOnly,
-          booking_time: bookingTimeOnly,
-          booking_service: service,
-          customer_phone: phone,
-          customer_email: email,
         },
       });
     } catch (err) {
