@@ -155,7 +155,7 @@ router.post("/", async (req, res) => {
 // @ts-expect-error
 router.get("/available-slots", async (req, res) => {
   try {
-    const dateParam = req.query.date;
+    const dateParam = req.query.date; // format YYYY-MM-DD
     const serviceParam = req.query.service;
 
     if (!dateParam || !serviceParam) {
@@ -176,14 +176,15 @@ router.get("/available-slots", async (req, res) => {
       "16:00",
     ];
 
+    const unavailable = new Set();
+
+    // 1️⃣ Pobranie rezerwacji z bazy
     const bookingsQuery = `
       SELECT booking_time, duration
       FROM booking
       WHERE reservation_date = $1::date;
     `;
-
     const { rows: bookings } = await pool.query(bookingsQuery, [dateParam]);
-    const unavailable = new Set();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
@@ -205,6 +206,45 @@ router.get("/available-slots", async (req, res) => {
       });
     });
 
+    // 2️⃣ Pobranie eventów z Google Calendar
+    const dayStart = new Date(`${dateParam}T00:00:00+02:00`);
+    const dayEnd = new Date(`${dateParam}T23:59:59+02:00`);
+
+    const googleEvents = await calendar.events.list({
+      calendarId: CALENDAR_ID,
+      timeMin: dayStart.toISOString(),
+      timeMax: dayEnd.toISOString(),
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    googleEvents.data.items.forEach((event) => {
+      if (!event.start || !event.end) return;
+
+      const startTime = event.start.dateTime || event.start.date;
+      const endTime = event.end.dateTime || event.end.date;
+
+      // Pomijamy całodniowe wydarzenia
+      if (!event.start.dateTime) return;
+
+      const eventStart = timeToMinutes(startTime.substring(11, 16));
+      const eventEnd = timeToMinutes(endTime.substring(11, 16));
+
+      allSlots.forEach((slot) => {
+        const slotStart = timeToMinutes(slot);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        const slotEnd = slotStart + (serviceDurations[serviceParam] || 0);
+
+        if (eventStart < slotEnd && eventEnd > slotStart) {
+          unavailable.add(slot);
+        }
+      });
+    });
+
+    // 3️⃣ Filtrowanie wolnych slotów
     const availableSlots = allSlots.filter((slot) => !unavailable.has(slot));
 
     res.json({

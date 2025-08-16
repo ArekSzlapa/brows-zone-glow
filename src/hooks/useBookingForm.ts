@@ -109,6 +109,15 @@ export const useBookingForm = () => {
         message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
       };
 
+      await axios.post("/api/bookings", {
+        ...templateParams,
+      });
+
+      toast({
+        title: "Formularz wysłany!",
+        description: "Wizyta została zarezerwowana.",
+      });
+
       await sendEmail({
         serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
         templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CUSTOMER,
@@ -131,15 +140,6 @@ export const useBookingForm = () => {
           reservation_date: templateParams.booking_date,
           message: templateParams.message,
         },
-      });
-
-      await axios.post("/api/bookings", {
-        ...templateParams,
-      });
-
-      toast({
-        title: "Formularz wysłany!",
-        description: "Wizyta została zarezerwowana.",
       });
 
       // Reset form
