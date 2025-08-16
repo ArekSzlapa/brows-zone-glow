@@ -13,6 +13,8 @@ dist-ssr
 *.local
 .env
 service-account.json
+deploy_small.sh
+public_nodejs
 
 # Editor directories and files
 .vscode/*

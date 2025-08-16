@@ -85,7 +85,6 @@ export const useBookingForm = () => {
 
       await axios.post("/api/bookings", {
         ...templateParams,
-        booking_date: values.date,
       });
 
       toast({

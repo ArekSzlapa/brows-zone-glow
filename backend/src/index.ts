@@ -1,7 +1,10 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import bookingRouter from "./routes/booking";
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const bookingRouter = require("./routes/booking");
+const path = require("path");
 
 dotenv.config();
 
@@ -9,10 +12,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// === API routes ===
 app.use("/api/bookings", bookingRouter);
 
-app.get("/api/hello", (_, res) => {
-  res.json({ message: "Hello from backend!" });
+// === Static frontend ===
+const clientPath = path.join(__dirname, "../dist-client");
+app.use(express.static(clientPath));
+
+// Wszystkie inne trasy kierujemy do Reacta
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
