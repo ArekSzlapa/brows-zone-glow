@@ -21,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useBookingForm } from "@/hooks/useBookingForm";
-import { useDateAvailability } from "@/hooks/useDateAvailability";
 import { ServiceSelector } from "./ServiceSelector";
 import { TimeSlotSelector } from "./TimeSlotSelector";
 
@@ -32,9 +31,6 @@ export const BookingForm = () => {
   // Watch form values for conditional rendering
   const watchedService = form.watch("service");
   const watchedDate = form.watch("date");
-
-  // Check date availability based on selected service
-  const { isDateUnavailable } = useDateAvailability(watchedService);
 
   // Filter to allow only Monday-Friday
   const isWeekday = (date: Date) => {
@@ -156,9 +152,7 @@ export const BookingForm = () => {
                               form.setValue("time", "");
                             }}
                             disabled={(date) =>
-                              !isWeekday(date) || 
-                              date < new Date() || 
-                              (watchedService && isDateUnavailable(date))
+                              !isWeekday(date) || date < new Date()
                             }
                             initialFocus
                             weekStartsOn={1}
