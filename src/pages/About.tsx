@@ -20,7 +20,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              <span className="text-foreground">Informacje o </span>
+              {/* <span className="text-foreground">Informacje o </span> */}
               <span className="bg-clip-text text-primary">Brows•Zone</span>
             </h1>
 

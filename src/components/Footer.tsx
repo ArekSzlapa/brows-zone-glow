@@ -48,7 +48,7 @@ const Footer = () => {
               }
               className="flex items-center space-x-2 cursor-pointer group"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <span
                   style={{ display: "flex", justifyContent: "center" }}
                   className="text-primary-foreground font-bold"

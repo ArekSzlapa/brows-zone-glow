@@ -178,34 +178,6 @@ router.get("/available-slots", async (req, res) => {
 
     const unavailable = new Set();
 
-    // 1️⃣ Pobranie rezerwacji z bazy
-    const bookingsQuery = `
-      SELECT booking_time, duration
-      FROM booking
-      WHERE reservation_date = $1::date;
-    `;
-    const { rows: bookings } = await pool.query(bookingsQuery, [dateParam]);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    bookings.forEach((booking) => {
-      const bookingStart = timeToMinutes(
-        booking.booking_time.toString().substring(0, 5)
-      );
-      const bookingEnd = bookingStart + booking.duration;
-
-      allSlots.forEach((slot) => {
-        const slotStart = timeToMinutes(slot);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        const slotEnd = slotStart + (serviceDurations[serviceParam] || 0);
-
-        if (bookingStart < slotEnd && bookingEnd > slotStart) {
-          unavailable.add(slot);
-        }
-      });
-    });
-
     // 2️⃣ Pobranie eventów z Google Calendar
     const dayStart = new Date(`${dateParam}T00:00:00+02:00`);
     const dayEnd = new Date(`${dateParam}T23:59:59+02:00`);
@@ -226,9 +198,14 @@ router.get("/available-slots", async (req, res) => {
       const startTime = event.start.dateTime || event.start.date;
       const endTime = event.end.dateTime || event.end.date;
 
-      // Pomijamy całodniowe wydarzenia
-      if (!event.start.dateTime) return;
+      // 🔴 Jeśli wydarzenie jest całodniowe (brak dateTime)
+      if (!event.start.dateTime) {
+        // blokujemy wszystkie sloty
+        allSlots.forEach((slot) => unavailable.add(slot));
+        return;
+      }
 
+      // 🕒 Normalne wydarzenia godzinowe
       const eventStart = timeToMinutes(startTime.substring(11, 16));
       const eventEnd = timeToMinutes(endTime.substring(11, 16));
 

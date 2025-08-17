@@ -23,7 +23,7 @@ const Navigation = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (isMobileMenuOpen) {
-        const nav = document.querySelector('nav');
+        const nav = document.querySelector("nav");
         if (nav && !nav.contains(event.target as Node)) {
           setIsMobileMenuOpen(false);
         }
@@ -31,11 +31,11 @@ const Navigation = () => {
     };
 
     if (isMobileMenuOpen) {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [isMobileMenuOpen]);
 
@@ -117,7 +117,7 @@ const Navigation = () => {
             onClick={goToHome}
             className="flex items-center space-x-2 cursor-pointer group"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
               <span
                 style={{ display: "flex", justifyContent: "center" }}
                 className="text-primary-foreground font-bold text-lg"
