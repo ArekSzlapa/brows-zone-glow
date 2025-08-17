@@ -191,50 +191,51 @@ const VirtualTryOn = () => {
               <div className="lg:col-span-2">
                 <Card className="p-6">
                   <div className="relative aspect-video bg-muted rounded-lg overflow-hidden mb-4">
-                    {isStreaming ? (
-                      <>
-                        <video
-                          ref={videoRef}
-                          autoPlay
-                          playsInline
-                          muted
-                          className="w-full h-full object-cover"
-                          style={{ transform: 'scaleX(-1)' }}
-                        />
-                        <canvas
-                          ref={canvasRef}
-                          className="hidden"
-                        />
-                        <div className="absolute inset-0 pointer-events-none">
-                          <svg
-                            className="absolute inset-0 w-full h-full"
-                            style={{ filter: `drop-shadow(2px 2px 4px rgba(0,0,0,0.3))` }}
-                          >
-                            {/* Left eyebrow overlay */}
-                            <g transform={`translate(${240}, ${140})`}>
-                              <path
-                                d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
-                                fill={browColors.find(c => c.id === selectedColor)?.color}
-                                opacity="0.8"
-                              />
-                            </g>
-                            {/* Right eyebrow overlay */}
-                            <g transform={`translate(${400}, ${140}) scale(-1,1)`}>
-                              <path
-                                d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
-                                fill={browColors.find(c => c.id === selectedColor)?.color}
-                                opacity="0.8"
-                              />
-                            </g>
-                          </svg>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="flex items-center justify-center h-full">
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className={`w-full h-full object-cover ${isStreaming ? 'block' : 'hidden'}`}
+                      style={{ transform: 'scaleX(-1)' }}
+                    />
+                    <canvas
+                      ref={canvasRef}
+                      className="hidden"
+                    />
+                    
+                    {!isStreaming && (
+                      <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
                           <Camera className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
                           <p className="text-muted-foreground">Kliknij "Uruchom kamerę" aby rozpocząć</p>
                         </div>
+                      </div>
+                    )}
+                    
+                    {isStreaming && (
+                      <div className="absolute inset-0 pointer-events-none">
+                        <svg
+                          className="absolute inset-0 w-full h-full"
+                          style={{ filter: `drop-shadow(2px 2px 4px rgba(0,0,0,0.3))` }}
+                        >
+                          {/* Left eyebrow overlay */}
+                          <g transform={`translate(${240}, ${140})`}>
+                            <path
+                              d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
+                              fill={browColors.find(c => c.id === selectedColor)?.color}
+                              opacity="0.8"
+                            />
+                          </g>
+                          {/* Right eyebrow overlay */}
+                          <g transform={`translate(${400}, ${140}) scale(-1,1)`}>
+                            <path
+                              d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
+                              fill={browColors.find(c => c.id === selectedColor)?.color}
+                              opacity="0.8"
+                            />
+                          </g>
+                        </svg>
                       </div>
                     )}
                   </div>
