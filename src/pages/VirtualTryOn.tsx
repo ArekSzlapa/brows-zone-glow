@@ -10,23 +10,34 @@ import browClassic from "@/assets/brow-classic.png";
 import browDramatic from "@/assets/brow-dramatic.png";
 import browSoft from "@/assets/brow-soft.png";
 import browStraight from "@/assets/brow-straight.png";
+import browUpward from "@/assets/brow-upward.png";
+import browSoftArch from "@/assets/brow-soft-arch.png";
+import browMediumArch from "@/assets/brow-medium-arch.png";
+import browHighArch from "@/assets/brow-high-arch.png";
+import browSShape from "@/assets/brow-s-shape.png";
+import browRound from "@/assets/brow-round.png";
+import browRoundArch from "@/assets/brow-round-arch.png";
 import { removeBackground, loadImage } from "@/utils/backgroundRemoval";
 
 const VirtualTryOn = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isStreaming, setIsStreaming] = useState(false);
-  const [selectedShape, setSelectedShape] = useState<string>("classic");
+  const [selectedShape, setSelectedShape] = useState<string>("straight");
   const [selectedColor, setSelectedColor] = useState<string>("dark-brown");
   const [isTakingPhoto, setIsTakingPhoto] = useState(false);
   const [processedBrows, setProcessedBrows] = useState<{[key: string]: string}>({});
   const [isProcessingBrows, setIsProcessingBrows] = useState(true);
 
   const browShapes = [
-    { id: "classic", name: "Klasyczne", description: "Naturalny łuk" },
-    { id: "dramatic", name: "Dramatyczne", description: "Wysoki łuk" },
-    { id: "soft", name: "Delikatne", description: "Łagodna krzywa" },
-    { id: "straight", name: "Proste", description: "Minimalny łuk" },
+    { id: "straight", name: "Proste", description: "Poziome" },
+    { id: "upward", name: "W Górę", description: "Skośne" },
+    { id: "soft-arch", name: "Delikatny Łuk", description: "Łagodny" },
+    { id: "medium-arch", name: "Średni Łuk", description: "Umiarkowany" },
+    { id: "high-arch", name: "Wysoki Łuk", description: "Dramatyczny" },
+    { id: "s-shape", name: "Kształt S", description: "Falisty" },
+    { id: "round", name: "Okrągłe", description: "Zaokrąglone" },
+    { id: "round-arch", name: "Okrągły Łuk", description: "Mieszany" },
   ];
 
   const browColors = [
@@ -47,35 +58,8 @@ const VirtualTryOn = () => {
   }, []);
 
   useEffect(() => {
-    const processBrowImages = async () => {
-      try {
-        setIsProcessingBrows(true);
-        const shapes = ['classic', 'dramatic', 'soft', 'straight'];
-        const images = [browClassic, browDramatic, browSoft, browStraight];
-        
-        const processed: {[key: string]: string} = {};
-        
-        for (let i = 0; i < shapes.length; i++) {
-          try {
-            const img = await loadImage(images[i]);
-            const processedDataUrl = await removeBackground(img);
-            processed[shapes[i]] = processedDataUrl;
-          } catch (error) {
-            console.error(`Failed to process ${shapes[i]} brow:`, error);
-            // Fallback to original image
-            processed[shapes[i]] = images[i];
-          }
-        }
-        
-        setProcessedBrows(processed);
-        setIsProcessingBrows(false);
-      } catch (error) {
-        console.error('Error processing brow images:', error);
-        setIsProcessingBrows(false);
-      }
-    };
-    
-    processBrowImages();
+    // Remove the background processing since new images should be transparent
+    setIsProcessingBrows(false);
   }, []);
 
   const startCamera = async () => {
@@ -169,22 +153,25 @@ const VirtualTryOn = () => {
   };
 
   const getBrowImage = (shape: string) => {
-    // Use processed image if available, otherwise fallback to original
-    if (processedBrows[shape]) {
-      return processedBrows[shape];
-    }
-    
     switch (shape) {
-      case "classic":
-        return browClassic;
-      case "dramatic":
-        return browDramatic;
-      case "soft":
-        return browSoft;
       case "straight":
         return browStraight;
+      case "upward":
+        return browUpward;
+      case "soft-arch":
+        return browSoftArch;
+      case "medium-arch":
+        return browMediumArch;
+      case "high-arch":
+        return browHighArch;
+      case "s-shape":
+        return browSShape;
+      case "round":
+        return browRound;
+      case "round-arch":
+        return browRoundArch;
       default:
-        return browClassic;
+        return browStraight;
     }
   };
 
@@ -296,10 +283,10 @@ const VirtualTryOn = () => {
                         <img
                           src={getBrowImage(selectedShape)}
                           alt="Left eyebrow"
-                          className="absolute w-35 h-21 object-contain"
+                          className="absolute w-16 h-8 object-contain"
                           style={{
-                            left: '28%',
-                            top: '25%',
+                            left: '30%',
+                            top: '28%',
                             filter: getBrowColorFilter(selectedColor),
                             transform: 'scaleX(-1)', // Mirror for camera view
                           }}
@@ -308,10 +295,10 @@ const VirtualTryOn = () => {
                         <img
                           src={getBrowImage(selectedShape)}
                           alt="Right eyebrow"
-                          className="absolute w-35 h-21 object-contain"
+                          className="absolute w-16 h-8 object-contain"
                           style={{
-                            left: '57%',
-                            top: '25%',
+                            left: '54%',
+                            top: '28%',
                             filter: getBrowColorFilter(selectedColor),
                             transform: 'scaleX(1)', // No mirror for right brow to create proper pair
                           }}
@@ -359,21 +346,21 @@ const VirtualTryOn = () => {
                     <Eye className="w-5 h-5 mr-2 text-primary" />
                     Kształt brwi
                   </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {browShapes.map((shape) => (
-                      <button
-                        key={shape.id}
-                        onClick={() => setSelectedShape(shape.id)}
-                        className={`p-3 rounded-lg border text-left transition-all ${
-                          selectedShape === shape.id
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                      >
-                        <div className="font-medium">{shape.name}</div>
-                        <div className="text-sm text-muted-foreground">{shape.description}</div>
-                      </button>
-                    ))}
+                   <div className="grid grid-cols-2 gap-2">
+                     {browShapes.map((shape) => (
+                       <button
+                         key={shape.id}
+                         onClick={() => setSelectedShape(shape.id)}
+                         className={`p-2 rounded-lg border text-left transition-all text-sm ${
+                           selectedShape === shape.id
+                             ? "border-primary bg-primary/10 text-primary"
+                             : "border-border hover:border-primary/50"
+                         }`}
+                       >
+                         <div className="font-medium text-xs">{shape.name}</div>
+                         <div className="text-xs text-muted-foreground">{shape.description}</div>
+                       </button>
+                     ))}
                   </div>
                 </Card>
 
