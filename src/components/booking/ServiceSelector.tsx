@@ -50,25 +50,21 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
                 <SelectLabel className="text-primary font-semibold">
                   Brow Bar
                 </SelectLabel>
-                <SelectItem value="laminacja-brwi">
-                  Laminacja brwi (120 min)
-                </SelectItem>
+                <SelectItem value="laminacja-brwi">Laminacja brwi</SelectItem>
                 <SelectItem value="laminacja-brwi-koloryzacja">
-                  Laminacja brwi z koloryzacją (120 min)
+                  Laminacja brwi z koloryzacją
                 </SelectItem>
                 <SelectItem value="geometria-brwi-koloryzacja">
-                  Geometria brwi z koloryzacją (120 min)
+                  Geometria brwi z koloryzacją
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectLabel className="text-primary font-semibold">
                   Lash Bar
                 </SelectLabel>
-                <SelectItem value="lifting-rzes">
-                  Lifting rzęs (90 min)
-                </SelectItem>
+                <SelectItem value="lifting-rzes">Lifting rzęs</SelectItem>
                 <SelectItem value="lifting-rzes-koloryzacja">
-                  Lifting rzęs z koloryzacją (90 min)
+                  Lifting rzęs z koloryzacją
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
@@ -76,10 +72,10 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
                   Brow & Lash
                 </SelectLabel>
                 <SelectItem value="laminacja-brwi-rzes">
-                  Laminacja brwi i rzęs (120 min)
+                  Laminacja brwi i rzęs
                 </SelectItem>
                 <SelectItem value="laminacja-brwi-rzes-koloryzacja">
-                  Laminacja brwi i rzęs z koloryzacją (120 min)
+                  Laminacja brwi i rzęs z koloryzacją
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
