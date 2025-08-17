@@ -10,6 +10,7 @@ import browClassic from "@/assets/brow-classic.png";
 import browDramatic from "@/assets/brow-dramatic.png";
 import browSoft from "@/assets/brow-soft.png";
 import browStraight from "@/assets/brow-straight.png";
+import { removeBackground, loadImage } from "@/utils/backgroundRemoval";
 
 const VirtualTryOn = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -18,6 +19,8 @@ const VirtualTryOn = () => {
   const [selectedShape, setSelectedShape] = useState<string>("classic");
   const [selectedColor, setSelectedColor] = useState<string>("dark-brown");
   const [isTakingPhoto, setIsTakingPhoto] = useState(false);
+  const [processedBrows, setProcessedBrows] = useState<{[key: string]: string}>({});
+  const [isProcessingBrows, setIsProcessingBrows] = useState(true);
 
   const browShapes = [
     { id: "classic", name: "Classic", description: "Natural arch" },
@@ -41,6 +44,38 @@ const VirtualTryOn = () => {
         stopCamera();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    const processBrowImages = async () => {
+      try {
+        setIsProcessingBrows(true);
+        const shapes = ['classic', 'dramatic', 'soft', 'straight'];
+        const images = [browClassic, browDramatic, browSoft, browStraight];
+        
+        const processed: {[key: string]: string} = {};
+        
+        for (let i = 0; i < shapes.length; i++) {
+          try {
+            const img = await loadImage(images[i]);
+            const processedDataUrl = await removeBackground(img);
+            processed[shapes[i]] = processedDataUrl;
+          } catch (error) {
+            console.error(`Failed to process ${shapes[i]} brow:`, error);
+            // Fallback to original image
+            processed[shapes[i]] = images[i];
+          }
+        }
+        
+        setProcessedBrows(processed);
+        setIsProcessingBrows(false);
+      } catch (error) {
+        console.error('Error processing brow images:', error);
+        setIsProcessingBrows(false);
+      }
+    };
+    
+    processBrowImages();
   }, []);
 
   const startCamera = async () => {
@@ -134,6 +169,11 @@ const VirtualTryOn = () => {
   };
 
   const getBrowImage = (shape: string) => {
+    // Use processed image if available, otherwise fallback to original
+    if (processedBrows[shape]) {
+      return processedBrows[shape];
+    }
+    
     switch (shape) {
       case "classic":
         return browClassic;
@@ -250,7 +290,7 @@ const VirtualTryOn = () => {
                       </div>
                     )}
                     
-                    {isStreaming && (
+                    {isStreaming && !isProcessingBrows && (
                       <div className="absolute inset-0 pointer-events-none">
                         {/* Left eyebrow overlay */}
                         <img
@@ -273,9 +313,18 @@ const VirtualTryOn = () => {
                             left: '55%',
                             top: '30%',
                             filter: getBrowColorFilter(selectedColor),
-                            transform: 'scaleX(-1)', // Mirror for camera view
+                            transform: 'scaleX(1)', // No mirror for right brow to create proper pair
                           }}
                         />
+                      </div>
+                    )}
+                    
+                    {isProcessingBrows && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <div className="text-white text-center">
+                          <div className="animate-spin w-8 h-8 border-2 border-white border-t-transparent rounded-full mx-auto mb-2"></div>
+                          <p>Processing eyebrow images...</p>
+                        </div>
                       </div>
                     )}
                   </div>
