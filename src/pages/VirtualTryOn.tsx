@@ -18,6 +18,7 @@ import browSShape from "@/assets/brow-s-shape.png";
 import browRound from "@/assets/brow-round.png";
 import browRoundArch from "@/assets/brow-round-arch.png";
 import { removeBackground, loadImage } from "@/utils/backgroundRemoval";
+import { processBrowImages } from "@/utils/processBrowImages";
 
 const VirtualTryOn = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -400,6 +401,14 @@ const VirtualTryOn = () => {
                     <li>• Sprawdź jak wyglądasz w lustrzance</li>
                     <li>• Pobierz zdjęcie aby pokazać je podczas wizyty</li>
                   </ul>
+                  <Button 
+                    onClick={processBrowImages}
+                    variant="outline" 
+                    size="sm" 
+                    className="mt-4 w-full"
+                  >
+                    Process Brow Images (Remove Backgrounds)
+                  </Button>
                 </Card>
               </div>
             </div>
