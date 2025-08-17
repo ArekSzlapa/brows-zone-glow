@@ -6,6 +6,10 @@ import { Camera, RotateCcw, Download, Palette, Eye } from "lucide-react";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import browClassic from "@/assets/brow-classic.png";
+import browDramatic from "@/assets/brow-dramatic.png";
+import browSoft from "@/assets/brow-soft.png";
+import browStraight from "@/assets/brow-straight.png";
 
 const VirtualTryOn = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -129,54 +133,37 @@ const VirtualTryOn = () => {
     setTimeout(() => setIsTakingPhoto(false), 500);
   };
 
-  const getBrowPath = (shape: string) => {
+  const getBrowImage = (shape: string) => {
     switch (shape) {
       case "classic":
-        return "M0,0 Q25,-8 50,0 Q30,5 0,3 Z";
+        return browClassic;
       case "dramatic":
-        return "M0,0 Q25,-12 50,0 Q30,6 0,4 Z";
+        return browDramatic;
       case "soft":
-        return "M0,0 Q25,-5 50,0 Q30,4 0,2 Z";
+        return browSoft;
       case "straight":
-        return "M0,0 Q25,-2 50,0 Q30,3 0,2 Z";
+        return browStraight;
       default:
-        return "M0,0 Q25,-8 50,0 Q30,5 0,3 Z";
+        return browClassic;
     }
   };
 
-  const renderBrowHairs = (color: string, shape: string) => {
-    const paths = [];
-    const browPath = getBrowPath(shape);
+  const getBrowColorFilter = (colorId: string) => {
+    const color = browColors.find(c => c.id === colorId);
+    if (!color) return "";
+
+    // Convert hex to RGB for filter calculations
+    const hex = color.color.replace('#', '');
+    const r = parseInt(hex.substr(0, 2), 16) / 255;
+    const g = parseInt(hex.substr(2, 2), 16) / 255;
+    const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+    // Create sepia filter to colorize the brown base
+    const brightness = (r + g + b) / 3;
+    const sepia = colorId === 'blonde' ? 1 : 0.8;
+    const saturate = colorId === 'black' ? 0.2 : 1.2;
     
-    // Create multiple hair strokes for realistic look
-    for (let i = 0; i < 8; i++) {
-      const offset = (i - 3.5) * 2;
-      const opacity = 0.6 - Math.abs(offset) * 0.05;
-      paths.push(
-        <path
-          key={i}
-          d={browPath}
-          fill="none"
-          stroke={color}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          opacity={opacity}
-          transform={`translate(0, ${offset})`}
-        />
-      );
-    }
-    
-    // Add main shape with slight transparency
-    paths.push(
-      <path
-        key="main"
-        d={browPath}
-        fill={color}
-        opacity="0.4"
-      />
-    );
-    
-    return paths;
+    return `sepia(${sepia}) saturate(${saturate}) brightness(${brightness * 1.2}) contrast(1.1)`;
   };
 
   const drawBrowShape = (ctx: CanvasRenderingContext2D, startX: number, startY: number, shape: string, side: "left" | "right") => {
@@ -265,19 +252,30 @@ const VirtualTryOn = () => {
                     
                     {isStreaming && (
                       <div className="absolute inset-0 pointer-events-none">
-                        <svg
-                          className="absolute inset-0 w-full h-full"
-                          style={{ filter: `drop-shadow(2px 2px 4px rgba(0,0,0,0.3))` }}
-                        >
-                          {/* Left eyebrow overlay */}
-                          <g transform={`translate(${240}, ${140})`}>
-                            {renderBrowHairs(browColors.find(c => c.id === selectedColor)?.color || "#3C2414", selectedShape)}
-                          </g>
-                          {/* Right eyebrow overlay */}
-                          <g transform={`translate(${400}, ${140}) scale(-1,1)`}>
-                            {renderBrowHairs(browColors.find(c => c.id === selectedColor)?.color || "#3C2414", selectedShape)}
-                          </g>
-                        </svg>
+                        {/* Left eyebrow overlay */}
+                        <img
+                          src={getBrowImage(selectedShape)}
+                          alt="Left eyebrow"
+                          className="absolute w-20 h-12 object-contain"
+                          style={{
+                            left: '35%',
+                            top: '30%',
+                            filter: getBrowColorFilter(selectedColor),
+                            transform: 'scaleX(-1)', // Mirror for camera view
+                          }}
+                        />
+                        {/* Right eyebrow overlay */}
+                        <img
+                          src={getBrowImage(selectedShape)}
+                          alt="Right eyebrow"
+                          className="absolute w-20 h-12 object-contain"
+                          style={{
+                            left: '55%',
+                            top: '30%',
+                            filter: getBrowColorFilter(selectedColor),
+                            transform: 'scaleX(-1)', // Mirror for camera view
+                          }}
+                        />
                       </div>
                     )}
                   </div>
