@@ -23,19 +23,19 @@ const VirtualTryOn = () => {
   const [isProcessingBrows, setIsProcessingBrows] = useState(true);
 
   const browShapes = [
-    { id: "classic", name: "Classic", description: "Natural arch" },
-    { id: "dramatic", name: "Dramatic", description: "High arch" },
-    { id: "soft", name: "Soft", description: "Gentle curve" },
-    { id: "straight", name: "Straight", description: "Minimal arch" },
+    { id: "classic", name: "Klasyczne", description: "Naturalny łuk" },
+    { id: "dramatic", name: "Dramatyczne", description: "Wysoki łuk" },
+    { id: "soft", name: "Delikatne", description: "Łagodna krzywa" },
+    { id: "straight", name: "Proste", description: "Minimalny łuk" },
   ];
 
   const browColors = [
-    { id: "light-brown", name: "Light Brown", color: "#8B6F47" },
-    { id: "medium-brown", name: "Medium Brown", color: "#654321" },
-    { id: "dark-brown", name: "Dark Brown", color: "#3C2414" },
-    { id: "black", name: "Black", color: "#1C1C1C" },
-    { id: "auburn", name: "Auburn", color: "#A0522D" },
-    { id: "blonde", name: "Blonde", color: "#D2B48C" },
+    { id: "light-brown", name: "Jasny Brąz", color: "#8B6F47" },
+    { id: "medium-brown", name: "Średni Brąz", color: "#654321" },
+    { id: "dark-brown", name: "Ciemny Brąz", color: "#3C2414" },
+    { id: "black", name: "Czarny", color: "#1C1C1C" },
+    { id: "auburn", name: "Kasztanowy", color: "#A0522D" },
+    { id: "blonde", name: "Blond", color: "#D2B48C" },
   ];
 
   useEffect(() => {
@@ -296,10 +296,10 @@ const VirtualTryOn = () => {
                         <img
                           src={getBrowImage(selectedShape)}
                           alt="Left eyebrow"
-                          className="absolute w-20 h-12 object-contain"
+                          className="absolute w-35 h-21 object-contain"
                           style={{
-                            left: '35%',
-                            top: '30%',
+                            left: '28%',
+                            top: '25%',
                             filter: getBrowColorFilter(selectedColor),
                             transform: 'scaleX(-1)', // Mirror for camera view
                           }}
@@ -308,10 +308,10 @@ const VirtualTryOn = () => {
                         <img
                           src={getBrowImage(selectedShape)}
                           alt="Right eyebrow"
-                          className="absolute w-20 h-12 object-contain"
+                          className="absolute w-35 h-21 object-contain"
                           style={{
-                            left: '55%',
-                            top: '30%',
+                            left: '57%',
+                            top: '25%',
                             filter: getBrowColorFilter(selectedColor),
                             transform: 'scaleX(1)', // No mirror for right brow to create proper pair
                           }}
