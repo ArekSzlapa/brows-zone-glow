@@ -43,6 +43,32 @@ export const useBookingForm = () => {
     },
   });
 
+  async function sendEmail({ serviceId, templateId, userId, templateParams }) {
+    try {
+      const response = await axios.post(
+        "https://api.emailjs.com/api/v1.0/email/send",
+        {
+          service_id: serviceId,
+          template_id: templateId,
+          user_id: userId,
+          template_params: templateParams,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(
+        `✅ Email sent via EmailJS template ${templateId}:`,
+        response.data
+      );
+    } catch (error) {
+      console.error(`❌ Error sending EmailJS template ${templateId}:`, error);
+    }
+  }
+
   const onSubmit = async (values: BookingFormData) => {
     const timestamp = Date.now();
     const currentDate = new Date(timestamp);
@@ -85,12 +111,35 @@ export const useBookingForm = () => {
 
       await axios.post("/api/bookings", {
         ...templateParams,
-        booking_date: values.date,
       });
 
       toast({
         title: "Formularz wysłany!",
         description: "Wizyta została zarezerwowana.",
+      });
+
+      await sendEmail({
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CUSTOMER,
+        userId: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        templateParams: {
+          service_duration: templateParams.service_duration,
+          customer_name: templateParams.from_name,
+          booking_date: templateParams.booking_date,
+          booking_time: templateParams.booking_time,
+          booking_service: templateParams.selected_service,
+          customer_email: templateParams.customer_email,
+        },
+      });
+
+      await sendEmail({
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID_ADMIN,
+        userId: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        templateParams: {
+          reservation_date: templateParams.booking_date,
+          message: templateParams.message,
+        },
       });
 
       // Reset form
