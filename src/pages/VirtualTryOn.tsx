@@ -23,7 +23,7 @@ const VirtualTryOn = () => {
   ];
 
   const browColors = [
-    { id: "light-brown", name: "Light Brown", color: "#8B4513" },
+    { id: "light-brown", name: "Light Brown", color: "#8B6F47" },
     { id: "medium-brown", name: "Medium Brown", color: "#654321" },
     { id: "dark-brown", name: "Dark Brown", color: "#3C2414" },
     { id: "black", name: "Black", color: "#1C1C1C" },
@@ -129,6 +129,56 @@ const VirtualTryOn = () => {
     setTimeout(() => setIsTakingPhoto(false), 500);
   };
 
+  const getBrowPath = (shape: string) => {
+    switch (shape) {
+      case "classic":
+        return "M0,0 Q25,-8 50,0 Q30,5 0,3 Z";
+      case "dramatic":
+        return "M0,0 Q25,-12 50,0 Q30,6 0,4 Z";
+      case "soft":
+        return "M0,0 Q25,-5 50,0 Q30,4 0,2 Z";
+      case "straight":
+        return "M0,0 Q25,-2 50,0 Q30,3 0,2 Z";
+      default:
+        return "M0,0 Q25,-8 50,0 Q30,5 0,3 Z";
+    }
+  };
+
+  const renderBrowHairs = (color: string, shape: string) => {
+    const paths = [];
+    const browPath = getBrowPath(shape);
+    
+    // Create multiple hair strokes for realistic look
+    for (let i = 0; i < 8; i++) {
+      const offset = (i - 3.5) * 2;
+      const opacity = 0.6 - Math.abs(offset) * 0.05;
+      paths.push(
+        <path
+          key={i}
+          d={browPath}
+          fill="none"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          opacity={opacity}
+          transform={`translate(0, ${offset})`}
+        />
+      );
+    }
+    
+    // Add main shape with slight transparency
+    paths.push(
+      <path
+        key="main"
+        d={browPath}
+        fill={color}
+        opacity="0.4"
+      />
+    );
+    
+    return paths;
+  };
+
   const drawBrowShape = (ctx: CanvasRenderingContext2D, startX: number, startY: number, shape: string, side: "left" | "right") => {
     const flipX = side === "right" ? -1 : 1;
     
@@ -221,19 +271,11 @@ const VirtualTryOn = () => {
                         >
                           {/* Left eyebrow overlay */}
                           <g transform={`translate(${240}, ${140})`}>
-                            <path
-                              d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
-                              fill={browColors.find(c => c.id === selectedColor)?.color}
-                              opacity="0.8"
-                            />
+                            {renderBrowHairs(browColors.find(c => c.id === selectedColor)?.color || "#3C2414", selectedShape)}
                           </g>
                           {/* Right eyebrow overlay */}
                           <g transform={`translate(${400}, ${140}) scale(-1,1)`}>
-                            <path
-                              d="M0,0 Q25,-8 50,0 Q30,5 0,3 Z"
-                              fill={browColors.find(c => c.id === selectedColor)?.color}
-                              opacity="0.8"
-                            />
+                            {renderBrowHairs(browColors.find(c => c.id === selectedColor)?.color || "#3C2414", selectedShape)}
                           </g>
                         </svg>
                       </div>
