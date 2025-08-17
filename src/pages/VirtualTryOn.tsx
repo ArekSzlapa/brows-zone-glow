@@ -40,15 +40,35 @@ const VirtualTryOn = () => {
   }, []);
 
   const startCamera = async () => {
+    console.log("Starting camera...");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user", width: 640, height: 480 }
       });
       
+      console.log("Stream obtained:", stream);
+      
       if (videoRef.current) {
+        console.log("Video element found, setting srcObject...");
         videoRef.current.srcObject = stream;
-        setIsStreaming(true);
-        toast.success("Kamera uruchomiona! Spróbuj różne kształty brwi.");
+        
+        // Wait for video to be ready
+        videoRef.current.onloadedmetadata = () => {
+          console.log("Video metadata loaded");
+          if (videoRef.current) {
+            videoRef.current.play().then(() => {
+              console.log("Video playing successfully");
+              setIsStreaming(true);
+              toast.success("Kamera uruchomiona! Spróbuj różne kształty brwi.");
+            }).catch((playError) => {
+              console.error("Error playing video:", playError);
+              toast.error("Błąd odtwarzania wideo.");
+            });
+          }
+        };
+      } else {
+        console.error("Video element not found");
+        toast.error("Błąd inicjalizacji wideo.");
       }
     } catch (error) {
       console.error("Error accessing camera:", error);
@@ -57,11 +77,16 @@ const VirtualTryOn = () => {
   };
 
   const stopCamera = () => {
+    console.log("Stopping camera...");
     if (videoRef.current && videoRef.current.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-      tracks.forEach(track => track.stop());
+      tracks.forEach(track => {
+        console.log("Stopping track:", track);
+        track.stop();
+      });
       videoRef.current.srcObject = null;
       setIsStreaming(false);
+      console.log("Camera stopped");
     }
   };
 
@@ -174,6 +199,7 @@ const VirtualTryOn = () => {
                           playsInline
                           muted
                           className="w-full h-full object-cover"
+                          style={{ transform: 'scaleX(-1)' }}
                         />
                         <canvas
                           ref={canvasRef}
