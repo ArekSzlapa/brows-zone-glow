@@ -13,10 +13,31 @@ const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      setIsMobileMenuOpen(false); // Close mobile menu on scroll
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMobileMenuOpen) {
+        const nav = document.querySelector('nav');
+        if (nav && !nav.contains(event.target as Node)) {
+          setIsMobileMenuOpen(false);
+        }
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   // Handle hash-based scrolling when navigating from other pages
   useEffect(() => {
