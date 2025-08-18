@@ -171,7 +171,7 @@ const BeforeAfterSection = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            <span className="text-foreground">Wykonane </span>
+            <span className="text-foreground/80">Wykonane </span>
             <span className="text-primary bg-clip-text ">Metamorfozy</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

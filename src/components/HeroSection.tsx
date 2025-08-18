@@ -30,8 +30,8 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-6 text-center lg:text-left">
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-foreground">Podkreślam Twoje</span> <br />
-            <span className="text-foreground">
+            <span className="text-foreground/80">Podkreślam Twoje</span> <br />
+            <span className="text-foreground/80">
               naturalne
               <span className=" text-primary"> piękno</span>
             </span>

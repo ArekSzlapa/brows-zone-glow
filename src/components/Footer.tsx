@@ -57,7 +57,7 @@ const Footer = () => {
                 </span>
               </div>
               <div>
-                <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-lg text-foreground group-hover:text-primary transition-colors duration-300">
                   Brows•Zone
                 </h3>
                 <p className="text-sm text-muted-foreground">
