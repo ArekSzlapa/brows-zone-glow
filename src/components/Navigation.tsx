@@ -188,11 +188,11 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 overflow-hidden ${
+          className={`md:hidden transition-all duration-300 overflow-hidden z-50 ${
             isMobileMenuOpen ? "max-h-96 opacity-100 py-4" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="flex flex-col space-y-4 bg-card/95 backdrop-blur-md rounded-lg p-4 shadow-elegant">
+          <div className="flex flex-col space-y-4 bg-card/95 backdrop-blur-md rounded-lg p-4 shadow-elegant border border-border/20">
             {navLinks.map((link) => (
               <button
                 key={link.path || link.id}
