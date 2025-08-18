@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { HeroButton } from "@/components/ui/hero-button";
-import serviceImage from "@/assets/Ola-2.jpeg";
+import serviceImage from "@/assets/services.jpg";
 
 const Services = () => {
   const navigate = useNavigate();
@@ -147,7 +147,7 @@ const Services = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              
+
               {/* Call to Action Card */}
               <Card className="border-0 shadow-soft bg-card/90 backdrop-blur-sm">
                 <CardContent className="p-6 text-center">
@@ -155,10 +155,13 @@ const Services = () => {
                     Gotowa na metamorfozę?
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Umów wizyte już dziś i przekonaj się o jakości naszych usług.
+                    Umów wizyte już dziś i przekonaj się o jakości moich usług.
                   </p>
-                  <HeroButton onClick={scrollToForm} className="w-full sm:w-auto">
-                    Zarezerwuj wizyte
+                  <HeroButton
+                    onClick={scrollToForm}
+                    className="w-full sm:w-auto"
+                  >
+                    Zarezerwuj wizytę
                   </HeroButton>
                 </CardContent>
               </Card>

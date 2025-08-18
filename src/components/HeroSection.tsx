@@ -1,5 +1,5 @@
 import { HeroButton } from "@/components/ui/hero-button";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/hero_proposition.jpg";
 
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
@@ -37,7 +37,7 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
             Odkryj sztukę perfekcyjnych brwi w Brows•Zone
           </p>
 
