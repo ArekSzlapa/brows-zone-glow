@@ -37,7 +37,7 @@ const About = () => {
                   <div className="text-3xl font-bold text-primary mb-2">
                     100%
                   </div>
-                  <div className="text-foreground font-medium mb-2">
+                  <div className="text-foreground/80 font-medium mb-2">
                     Certyfikowanych Szkoleń
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -52,7 +52,7 @@ const About = () => {
                   <div className="text-3xl font-bold text-primary mb-2">
                     100%
                   </div>
-                  <div className="text-foreground font-medium mb-2">
+                  <div className="text-foreground/80 font-medium mb-2">
                     Najlepszych Produktów
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -66,7 +66,7 @@ const About = () => {
                   <div className="text-3xl font-bold text-primary mb-2">
                     24/7
                   </div>
-                  <div className="text-foreground font-medium mb-2">
+                  <div className="text-foreground/80 font-medium mb-2">
                     Rezerwacja wizyt
                   </div>
                   <div className="text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ const About = () => {
               </Card>
             </div>
 
-            <blockquote className="text-2xl italic text-foreground mb-12 font-light pl-6">
+            <blockquote className="text-2xl italic text-foreground/80 mb-12 font-light pl-6">
               "Każda klientka wychodzi pewniejsza siebie i piękniejsza. To cel
               Brows•Zone"
             </blockquote>
@@ -94,7 +94,7 @@ const About = () => {
             </div>
 
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
+              <h2 className="text-3xl font-bold text-foreground/80 mb-4">
                 Moja historia
               </h2>
               <p className="text-muted-foreground leading-relaxed">

@@ -36,7 +36,7 @@ const Services = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              <span className="text-foreground">Oferowane </span>
+              <span className="text-foreground/80">Oferowane </span>
               <span className="bg-clip-text text-primary">Usługi</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -59,7 +59,7 @@ const Services = () => {
                       {brwiServices.map((service, index) => (
                         <div key={index} className="flex justify-between items-center py-2">
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground">{service.title}</span>
+                            <span className="font-semibold text-foreground/80">{service.title}</span>
                             <span className="text-muted-foreground ml-2">({service.time})</span>
                           </div>
                           <span className="text-lg font-bold text-primary">{service.price}</span>
@@ -77,7 +77,7 @@ const Services = () => {
                       {rzesyServices.map((service, index) => (
                         <div key={index} className="flex justify-between items-center py-2">
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground">{service.title}</span>
+                            <span className="font-semibold text-foreground/80">{service.title}</span>
                             <span className="text-muted-foreground ml-2">({service.time})</span>
                           </div>
                           <span className="text-lg font-bold text-primary">{service.price}</span>
@@ -95,7 +95,7 @@ const Services = () => {
                       {kombinowaneServices.map((service, index) => (
                         <div key={index} className="flex justify-between items-center py-2">
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground">{service.title}</span>
+                            <span className="font-semibold text-foreground/80">{service.title}</span>
                             <span className="text-muted-foreground ml-2">({service.time})</span>
                           </div>
                           <span className="text-lg font-bold text-primary">{service.price}</span>
@@ -118,7 +118,7 @@ const Services = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
 
                 <div className="absolute bottom-6 left-6 right-6 bg-card/90 backdrop-blur-sm p-6 rounded-xl">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
+                  <h3 className="text-2xl font-bold text-foreground/80 mb-2">
                     Gotowa na metamorfozę?
                   </h3>
                   <p className="text-muted-foreground mb-4">
