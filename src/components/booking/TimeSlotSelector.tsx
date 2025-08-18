@@ -39,7 +39,7 @@ export const TimeSlotSelector = ({
       name="time"
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className="text-foreground font-semibold">
+          <FormLabel className="text-foreground/80 font-semibold">
             Godzina wizyty
           </FormLabel>
           <Select

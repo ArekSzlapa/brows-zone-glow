@@ -66,14 +66,14 @@ const ReviewsSection = () => {
                 </div>
 
                 {/* Review Text */}
-                <p className="text-foreground mb-4 leading-relaxed italic">
+                <p className="text-foreground/80 mb-4 leading-relaxed italic">
                   "{review.text}"
                 </p>
 
                 {/* Reviewer Info */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-semibold text-foreground">
+                    <div className="font-semibold text-foreground/80">
                       {review.name}
                     </div>
                     <div className="text-sm text-muted-foreground">

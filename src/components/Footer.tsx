@@ -57,7 +57,7 @@ const Footer = () => {
                 </span>
               </div>
               <div>
-                <h3 className="text-lg text-foreground group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-lg text-foreground/80 group-hover:text-primary transition-colors duration-300">
                   Brows•Zone
                 </h3>
                 <p className="text-sm text-muted-foreground">
@@ -73,7 +73,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Odnośniki</h3>
+            <h3 className="font-semibold text-foreground/80">Odnośniki</h3>
             <div className="space-y-2">
               {[
                 { name: "Usługi", path: "/services" },
@@ -95,7 +95,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">Kontakt</h3>
+            <h3 className="font-semibold text-foreground/80">Kontakt</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary" />

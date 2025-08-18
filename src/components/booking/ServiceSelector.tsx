@@ -28,7 +28,7 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
       name="service"
       render={({ field }) => (
         <FormItem>
-          <FormLabel className="text-foreground font-semibold">
+          <FormLabel className="text-foreground/80 font-semibold">
             Wybierz usługę
           </FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>

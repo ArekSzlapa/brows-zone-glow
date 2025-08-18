@@ -102,12 +102,12 @@ const InteractiveSlider = ({
       </div>
 
       {sliderPosition > 50 && (
-        <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+        <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground/80">
           Przed
         </div>
       )}
       {sliderPosition < 50 && (
-        <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground">
+        <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium text-foreground/80">
           Po
         </div>
       )}
@@ -198,7 +198,7 @@ const BeforeAfterSection = () => {
 
                 {/* Service Info - Flex grow to fill available space */}
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-foreground mb-2">
+                  <h3 className="text-xl font-bold text-foreground/80 mb-2">
                     {transformation.service}
                   </h3>
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed flex-grow">

@@ -50,7 +50,7 @@ export const BookingForm = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground font-semibold">
+                       <FormLabel className="text-foreground/80 font-semibold">
                         Imię i nazwisko
                       </FormLabel>
                       <FormControl>
@@ -70,7 +70,7 @@ export const BookingForm = () => {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground font-semibold">
+                       <FormLabel className="text-foreground/80 font-semibold">
                         Numer telefonu
                       </FormLabel>
                       <FormControl>
@@ -92,7 +92,7 @@ export const BookingForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-foreground font-semibold">
+                     <FormLabel className="text-foreground/80 font-semibold">
                       Adres email
                     </FormLabel>
                     <FormControl>
@@ -116,7 +116,7 @@ export const BookingForm = () => {
                   name="date"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel className="text-foreground font-semibold">
+                      <FormLabel className="text-foreground/80 font-semibold">
                         Data wizyty
                       </FormLabel>
                       <Popover
