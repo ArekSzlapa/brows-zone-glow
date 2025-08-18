@@ -97,7 +97,6 @@ const Navigation = () => {
 
   const navLinks = [
     { name: "Usługi", path: "/services" },
-    { name: "Virtual Try-On", path: "/virtual-try-on" },
     { name: "Metamorfozy", id: "transformations" },
     { name: "Opinie", id: "reviews" },
     { name: "O mnie", path: "/about" },
