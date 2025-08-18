@@ -13,7 +13,7 @@ const ContactSection = () => {
               <span className="bg-clip-text text-primary">wizytę</span>
             </h3>
             <p className="text-lg text-muted-foreground">
-              Wypełnij formularz, a skontaktujemy się z Tobą w ciągu 24 godzin
+              Wypełnij formularz i zarezerwuj swoją wizytę już teraz!
             </p>
           </div>
 

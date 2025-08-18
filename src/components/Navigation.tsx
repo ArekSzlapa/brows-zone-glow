@@ -173,7 +173,7 @@ const Navigation = () => {
 
             {/* CTA Button */}
             <HeroButton size="default" onClick={handleBooking}>
-              Umów wizyte
+              Umów wizytę
             </HeroButton>
           </div>
 

@@ -142,14 +142,14 @@ const BeforeAfterSection = () => {
       after: after1,
       service: "Geometria brwi z koloryzacja",
       description:
-        "Precyzyjne wyznaczenie kształtu i trwała koloryzacja dla idealnie dopasowanych brwi",
+        "Precyzyjne wyznaczenie kształtu i trwała koloryzacją dla idealnie dopasowanych brwi",
       price: "40 zł",
       duration: "60 min",
     },
     {
       before: before2,
       after: after2,
-      service: "Laminacja brwi z koloryzacja",
+      service: "Laminacja brwi z koloryzacją",
       description:
         "Utrwalenie kształtu i koloru brwi dla pełnego, zadbanego wyglądu",
       price: "50 zł ",
@@ -174,10 +174,6 @@ const BeforeAfterSection = () => {
             <span className="text-foreground/80">Wykonane </span>
             <span className="text-primary bg-clip-text ">Metamorfozy</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Te metamorfozy pokazują techniki, które opanowałam do perfekcji.
-            Przesuń suwak i porównaj efekty
-          </p>
         </div>
 
         {/* Three Separate Cards */}

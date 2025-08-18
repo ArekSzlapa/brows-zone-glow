@@ -66,8 +66,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              Z pasją, zaangażowaniem i pełnym oddaniem pomagam Ci osiągnąć
-              wymarzone brwi.
+              Tworzę brwi z pasją i dbałością – tak, byś czuła się wyjątkowo.
             </p>
           </div>
 
@@ -113,7 +112,7 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="pt-4">
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-foreground/80 mb-3 font-semibold">
                 Śledź mnie w mediach społecznościowych:
               </p>
               <div className="flex space-x-3">
@@ -140,10 +139,7 @@ const Footer = () => {
         <div className="border-t border-border mt-8 pt-8 text-center">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Brows•Zone. Dla Ciebie i Twoich brwi.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Przeszkolona i certyfikowana • Gotowa, by Ci pomóc
+              © {currentYear} Brows•Zone
             </p>
           </div>
         </div>

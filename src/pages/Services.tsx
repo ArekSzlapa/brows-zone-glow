@@ -24,9 +24,12 @@ const Services = () => {
 
   const kombinowaneServices = [
     { title: "Laminacja Brwi i Rzęs", time: "120 min", price: "70 zł" },
-    { title: "Laminacja Brwi i Rzęs z Koloryzacją", time: "120 min", price: "90 zł" },
+    {
+      title: "Laminacja Brwi i Rzęs z Koloryzacją",
+      time: "120 min",
+      price: "90 zł",
+    },
   ];
-
 
   return (
     <main className="min-h-screen bg-background">
@@ -53,16 +56,25 @@ const Services = () => {
                   {/* Brwi Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Brwi
+                      Brow Bar
                     </h3>
                     <div className="space-y-4">
                       {brwiServices.map((service, index) => (
-                        <div key={index} className="flex justify-between items-center py-2">
+                        <div
+                          key={index}
+                          className="flex justify-between items-center py-2"
+                        >
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground/80">{service.title}</span>
-                            <span className="text-muted-foreground ml-2">({service.time})</span>
+                            <span className="font-semibold text-foreground/80">
+                              {service.title}
+                            </span>
+                            <span className="text-muted-foreground ml-2">
+                              ({service.time})
+                            </span>
                           </div>
-                          <span className="text-lg font-bold text-primary">{service.price}</span>
+                          <span className="text-lg font-bold text-primary">
+                            {service.price}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -71,16 +83,25 @@ const Services = () => {
                   {/* Rzęsy Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Rzęsy
+                      Lash Bar
                     </h3>
                     <div className="space-y-4">
                       {rzesyServices.map((service, index) => (
-                        <div key={index} className="flex justify-between items-center py-2">
+                        <div
+                          key={index}
+                          className="flex justify-between items-center py-2"
+                        >
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground/80">{service.title}</span>
-                            <span className="text-muted-foreground ml-2">({service.time})</span>
+                            <span className="font-semibold text-foreground/80">
+                              {service.title}
+                            </span>
+                            <span className="text-muted-foreground ml-2">
+                              ({service.time})
+                            </span>
                           </div>
-                          <span className="text-lg font-bold text-primary">{service.price}</span>
+                          <span className="text-lg font-bold text-primary">
+                            {service.price}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -89,16 +110,25 @@ const Services = () => {
                   {/* Brwi i Rzęsy Section */}
                   <div>
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Brwi i Rzęsy
+                      Lash & Brow Bar{" "}
                     </h3>
                     <div className="space-y-4">
                       {kombinowaneServices.map((service, index) => (
-                        <div key={index} className="flex justify-between items-center py-2">
+                        <div
+                          key={index}
+                          className="flex justify-between items-center py-2"
+                        >
                           <div className="flex-1">
-                            <span className="font-semibold text-foreground/80">{service.title}</span>
-                            <span className="text-muted-foreground ml-2">({service.time})</span>
+                            <span className="font-semibold text-foreground/80">
+                              {service.title}
+                            </span>
+                            <span className="text-muted-foreground ml-2">
+                              ({service.time})
+                            </span>
                           </div>
-                          <span className="text-lg font-bold text-primary">{service.price}</span>
+                          <span className="text-lg font-bold text-primary">
+                            {service.price}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -116,19 +146,18 @@ const Services = () => {
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-
-                <div className="absolute bottom-6 left-6 right-6 bg-card/90 backdrop-blur-sm p-6 rounded-xl">
-                  <h3 className="text-2xl font-bold text-foreground/80 mb-2">
-                    Gotowa na metamorfozę?
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    Umów wizyte już dziś i przekonaj się o jakości naszych usług
-                  </p>
-                  <HeroButton onClick={scrollToForm} className="w-full sm:w-auto">
-                    Zarezerwuj wizyte
-                  </HeroButton>
-                </div>
               </div>
+            </div>
+            <div className="absolute bottom-6 left-6 right-6 bg-card/90 backdrop-blur-sm p-6 rounded-xl">
+              <h3 className="text-2xl font-bold text-foreground/80 mb-2">
+                Gotowa na metamorfozę?
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Umów wizyte już dziś i przekonaj się o jakości naszych usług.
+              </p>
+              <HeroButton onClick={scrollToForm} className="w-full sm:w-auto">
+                Zarezerwuj wizyte
+              </HeroButton>
             </div>
           </div>
         </div>

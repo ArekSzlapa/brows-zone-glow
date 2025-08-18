@@ -28,7 +28,7 @@ const About = () => {
               W Brows•Zone dbam o to, by Twoje brwi były perfekcyjnie dopasowane
               do Ciebie. Precyzja, estetyka i pasja sprawiają, że każda wizyta
               staje się wyjątkowym doświadczeniem, a efekt dodaje pewności
-              siebie
+              siebie.
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -70,8 +70,7 @@ const About = () => {
                     Rezerwacja wizyt
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    Skontaktuj się ze mną, a dobierzemy dla Ciebie
-                    najdogodniejszy termin
+                    Użyj formularza, aby zarezerwować wizytę!
                   </div>
                 </CardContent>
               </Card>
@@ -116,7 +115,7 @@ const About = () => {
               </p>
 
               <HeroButton onClick={scrollToForm} size="lg" className="mt-6">
-                Umów się na konsultację
+                Umów się na wizytę
               </HeroButton>
             </div>
           </div>

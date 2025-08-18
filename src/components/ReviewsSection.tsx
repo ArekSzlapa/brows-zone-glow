@@ -5,7 +5,7 @@ import "./mediaQueryStyles.css";
 const ReviewsSection = () => {
   const reviews = [
     {
-      name: "Martyna",
+      name: "Janina",
       location: "Klientka",
       rating: 5,
       text: "Byłam pod ogromnym wrażeniem dbałości o szczegóły podczas zabiegu. Precyzja i technika są naprawdę niesamowite!",
@@ -13,16 +13,16 @@ const ReviewsSection = () => {
     },
     {
       name: "Joanna Mąkosa",
-      location: "Instruktor",
+      location: "Instruktor szkoleniowy",
       rating: 5,
       text: "[...] Pracujesz niesamowicie pewnie i samodzielnie. Masz super estetykę ❤️",
-      service: "Szkolenie laminacja i geometria brwi",
+      // service: "Instruktor szkoleniowy",
     },
     {
-      name: "Janina",
+      name: "Martyna",
       location: "Klientka",
       rating: 5,
-      text: "Nie mogę przestać podziwiać swoich brwi! Geometria z koloryzacją nadała im perfekcyjny kształt, idealnie dopasowany do mojej twarzy. Precyzja i dbałość o każdy detal zrobiły na mnie ogromne wrażenie.",
+      text: "Gorąco polecam pięknie brwi i rzęski. Profesjonalna obsługa z dużą wiedzą. Brwi i rzęsy trzymają się naprawdę bardzo długo co pozwala mi się długo nacieszyć naturalnym wyglądem. Napewno wrócę i to nie raz!",
       service: "Geometria brwi z koloryzacją",
     },
     {
@@ -30,7 +30,7 @@ const ReviewsSection = () => {
       location: "Klientka",
       rating: 5,
       text: "Rzęsy są pięknie podkręcone i przyciemnione, a efekt wygląda bardzo naturalnie. Zabieg był profesjonalny i komfortowy, a spojrzenie od razu zyskało wyrazistość, Ola zadbała o komfortową i luźną atmosfere :)",
-      service: "Lifting z koloryzacją",
+      service: "Lifting rzęs z koloryzacją",
     },
   ];
 
@@ -43,8 +43,8 @@ const ReviewsSection = () => {
             <span className="bg-clip-text text-primary">Brows•Zone</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Poznaj opinie trenerów, klientek i instruktorów, którzy doświadczyli
-            mojej pasji do pięknych brwi.
+            Poznaj opinie klientek i instruktorów, którzy doświadczyli mojej
+            pasji do pięknych brwi.
           </p>
         </div>
 
