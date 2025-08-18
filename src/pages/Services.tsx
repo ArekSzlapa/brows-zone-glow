@@ -138,7 +138,7 @@ const Services = () => {
             </div>
 
             {/* Service Image */}
-            <div className="relative">
+            <div className="space-y-6">
               <div className="relative rounded-2xl overflow-hidden shadow-elegant">
                 <img
                   src={serviceImage}
@@ -147,17 +147,21 @@ const Services = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-            </div>
-            <div className="absolute bottom-6 left-6 right-6 bg-card/90 backdrop-blur-sm p-6 rounded-xl">
-              <h3 className="text-2xl font-bold text-foreground/80 mb-2">
-                Gotowa na metamorfozę?
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                Umów wizyte już dziś i przekonaj się o jakości naszych usług.
-              </p>
-              <HeroButton onClick={scrollToForm} className="w-full sm:w-auto">
-                Zarezerwuj wizyte
-              </HeroButton>
+              
+              {/* Call to Action Card */}
+              <Card className="border-0 shadow-soft bg-card/90 backdrop-blur-sm">
+                <CardContent className="p-6 text-center">
+                  <h3 className="text-2xl font-bold text-foreground/80 mb-3">
+                    Gotowa na metamorfozę?
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Umów wizyte już dziś i przekonaj się o jakości naszych usług.
+                  </p>
+                  <HeroButton onClick={scrollToForm} className="w-full sm:w-auto">
+                    Zarezerwuj wizyte
+                  </HeroButton>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
