@@ -57,12 +57,13 @@ const Footer = () => {
                 </span>
               </div>
               <div>
-                <h3 className="text-lg text-foreground/80 group-hover:text-primary transition-colors duration-300">
-                  Brows•Zone
+                <h3
+                  className="text-lg text-foreground/80 group-hover:text-primary transition-colors duration-300"
+                  style={{ fontFamily: "serif" }}
+                >
+                  BROWS•ZONE
                 </h3>
-                <p className="text-sm text-muted-foreground">
-                  Aleksandra Szłapa
-                </p>
+                <p className="text-sm text-foreground/80">Aleksandra Szłapa</p>
               </div>
             </div>
             <p className="text-muted-foreground leading-relaxed">

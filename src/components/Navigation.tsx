@@ -126,10 +126,13 @@ const Navigation = () => {
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl text-foreground/80 group-hover:text-primary transition-colors duration-300">
-                Brows•Zone
+              <span
+                className="text-xl text-foreground/80 group-hover:text-primary transition-colors duration-300"
+                style={{ fontFamily: "serif" }}
+              >
+                BROWS•ZONE
               </span>
-              <p className="text-sm text-muted-foreground">Aleksandra Szłapa</p>
+              <p className="text-sm text-foreground/80">Aleksandra Szłapa</p>
             </div>
           </div>
 

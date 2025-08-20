@@ -76,9 +76,10 @@ const About = () => {
               </Card>
             </div>
 
-            <blockquote className="text-2xl italic text-foreground/80 mb-12 font-light pl-6">
-              "Każda klientka wychodzi pewniejsza siebie i piękniejsza. To cel
-              Brows•Zone"
+            <blockquote className="text-2xl italic text-foreground/80 mb-12 font-light">
+              "Każda klientka wychodzi pewniejsza siebie i piękniejsza."
+              <br />
+              To cel Brows•Zone
             </blockquote>
           </div>
 
