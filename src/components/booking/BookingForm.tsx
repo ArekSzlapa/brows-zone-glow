@@ -172,14 +172,28 @@ export const BookingForm = () => {
                 />
               </div>
 
-              <HeroButton
-                type="submit"
-                size="lg"
-                className="w-full text-lg py-4"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Wysyłanie..." : "Umów wizytę"}
-              </HeroButton>
+              <div className="space-y-4">
+                <p className="text-sm text-foreground/60 text-center">
+                  Klikając "Umów wizytę" wyrażasz zgodę na{" "}
+                  <a 
+                    href="/privacy-policy" 
+                    target="_blank"
+                    className="text-primary hover:underline font-medium"
+                  >
+                    przetwarzanie danych osobowych
+                  </a>
+                  {" "}zgodnie z naszą polityką prywatności.
+                </p>
+                
+                <HeroButton
+                  type="submit"
+                  size="lg"
+                  className="w-full text-lg py-4"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Wysyłanie..." : "Umów wizytę"}
+                </HeroButton>
+              </div>
             </form>
           </Form>
         </CardContent>
