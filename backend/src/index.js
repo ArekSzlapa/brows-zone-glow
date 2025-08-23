@@ -9,9 +9,10 @@ const axios = require("axios");
 const mailRouter = require("./routes/sendMail");
 const reminderService = require("./services/reminderService");
 
-const BACKEND_URL = process.env.BACKEND_URL;
-
 dotenv.config();
+
+const BACKEND_URL = process.env.BACKEND_URL;
+console.log("BACKEND_URL =", BACKEND_URL);
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use("/api/instagram", instagramRouter);
 
 async function fetchInstagram() {
   try {
+    console.log("Calling:", `${BACKEND_URL}/api/instagram/fetch`);
     const res = await axios.get(`${BACKEND_URL}/api/instagram/fetch`);
     console.log("Fetched Instagram posts:", res.data);
   } catch (err) {
@@ -31,14 +33,11 @@ async function fetchInstagram() {
   }
 }
 
-if (!process.env.NODE_ENV === "development") {
-  fetchInstagram();
-}
 // === Static frontend ===
-const clientPath = path.join(__dirname, "../dist-client");
+const clientPath = path.join(__dirname, "../dist");
 app.use(express.static(clientPath));
 
-app.get("*", (req, res) => {
+app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(clientPath, "index.html"));
 });
 
@@ -51,6 +50,10 @@ cron.schedule("0 */6 * * *", () => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+
+  if (process.env.NODE_ENV !== "development") {
+    fetchInstagram();
+  }
+});

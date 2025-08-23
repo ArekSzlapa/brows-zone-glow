@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
       html: template,
     };
 
-    if (!process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV !== "development") {
       await transporter.sendMail(mailOptions);
     }
 
@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       html: notification,
     };
 
-    if (!process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV !== "development") {
       await transporter.sendMail(notificationOptions);
     }
 
