@@ -23,10 +23,12 @@ import {
 import { useBookingForm } from "@/hooks/useBookingForm";
 import { ServiceSelector } from "./ServiceSelector";
 import { TimeSlotSelector } from "./TimeSlotSelector";
+import { useNavigate } from "react-router-dom";
 
 export const BookingForm = () => {
   const { form, onSubmit, isSubmitting } = useBookingForm();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Watch form values for conditional rendering
   const watchedService = form.watch("service");
@@ -50,7 +52,7 @@ export const BookingForm = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                       <FormLabel className="text-foreground/80 font-semibold">
+                      <FormLabel className="text-foreground/80 font-semibold">
                         Imię i nazwisko
                       </FormLabel>
                       <FormControl>
@@ -70,7 +72,7 @@ export const BookingForm = () => {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                       <FormLabel className="text-foreground/80 font-semibold">
+                      <FormLabel className="text-foreground/80 font-semibold">
                         Numer telefonu
                       </FormLabel>
                       <FormControl>
@@ -92,7 +94,7 @@ export const BookingForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                     <FormLabel className="text-foreground/80 font-semibold">
+                    <FormLabel className="text-foreground/80 font-semibold">
                       Adres email
                     </FormLabel>
                     <FormControl>
@@ -175,16 +177,16 @@ export const BookingForm = () => {
               <div className="space-y-4">
                 <p className="text-sm text-foreground/60 text-center">
                   Klikając "Umów wizytę" wyrażasz zgodę na{" "}
-                  <a 
-                    href="/privacy-policy" 
-                    target="_blank"
+                  <span
+                    onClick={() => navigate("/privacy")}
                     className="text-primary hover:underline font-medium"
+                    style={{ cursor: "pointer" }}
                   >
                     przetwarzanie danych osobowych
-                  </a>
-                  {" "}zgodnie z naszą polityką prywatności.
+                  </span>{" "}
+                  zgodnie z naszą polityką prywatności.
                 </p>
-                
+
                 <HeroButton
                   type="submit"
                   size="lg"

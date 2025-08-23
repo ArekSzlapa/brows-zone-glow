@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -8,6 +6,8 @@ const path = require("path");
 const instagramRouter = require("./routes/instagram");
 const cron = require("node-cron");
 const axios = require("axios");
+const mailRouter = require("./routes/sendMail");
+const reminderService = require("./services/reminderService");
 
 const BACKEND_URL = process.env.BACKEND_URL;
 
@@ -19,18 +19,8 @@ app.use(express.json());
 
 // === API routes ===
 app.use("/api/bookings", bookingRouter);
+app.use("/api/send-mail", mailRouter);
 app.use("/api/instagram", instagramRouter);
-
-// === Static frontend ===
-const clientPath = path.join(__dirname, "../dist-client");
-app.use(express.static(clientPath));
-
-// Wszystkie inne trasy kierujemy do Reacta
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(clientPath, "index.html"));
-});
 
 async function fetchInstagram() {
   try {
@@ -41,8 +31,16 @@ async function fetchInstagram() {
   }
 }
 
-// 1️⃣ Run immediately on app start
-fetchInstagram();
+if (!process.env.NODE_ENV === "development") {
+  fetchInstagram();
+}
+// === Static frontend ===
+const clientPath = path.join(__dirname, "../dist-client");
+app.use(express.static(clientPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientPath, "index.html"));
+});
 
 // 2️⃣ Schedule cron job to run every 6 hours
 // This uses node-cron's syntax: minute hour day month weekday

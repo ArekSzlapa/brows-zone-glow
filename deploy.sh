@@ -24,12 +24,15 @@ cp -r dist/* "$OUTPUT_DIR/public"
 echo "=== Budowanie backendu (Express + TypeScript) ==="
 cd backend
 npm install
-npx tsc
+npx esbuild src/index.js --bundle --platform=node --outdir=dist
 cd ..
 
 echo "=== Kopiowanie backendu do public_nodejs/dist ==="
 mkdir -p "$OUTPUT_DIR/dist"
 cp -r backend/dist/* "$OUTPUT_DIR/dist"
+
+echo "=== Kopiowanie folderu templates ==="
+cp -r backend/src/templates "$OUTPUT_DIR/templates"
 
 echo "=== Tworzenie pliku startowego app.js ==="
 echo "require('./dist/index.js');" > "$OUTPUT_DIR/app.js"

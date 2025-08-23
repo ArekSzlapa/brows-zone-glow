@@ -1,22 +1,11 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
-const { Pool } = require("pg");
 const fs = require("fs");
 const { google } = require("googleapis");
 const nodePath = require("path");
 const nodeExpress = require("express");
 const nodeDotenv = require("dotenv");
+const pool = require("../../db");
 
 nodeDotenv.config();
-
-// === Połączenie z PostgreSQL ===
-const pool = new Pool({
-  host: process.env.PGHOST,
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  database: process.env.PGDATABASE,
-  port: process.env.PGPORT || 5432,
-});
 
 // === Google Calendar ===
 const serviceAccountPath = nodePath.resolve(
@@ -47,46 +36,26 @@ const serviceDurations = {
   "laminacja-brwi-rzes-koloryzacja": 120,
 };
 
-// Funkcja pomocnicza do zamiany HH:mm → minuty
-function timeToMinutes(time: string) {
+function timeToMinutes(time) {
   const [h, m] = time.split(":").map(Number);
   return h * 60 + m;
 }
 
 // === POST /api/bookings ===
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 router.post("/", async (req, res) => {
   try {
-    const {
-      from_name: name,
-      customer_email: email,
-      from_phone: phone,
-      booking_date: bookingDate, // teraz w formacie DD/MM/YYYY
-      booking_time: bookingTime, // np. "09:00 - 11:00"
-      selected_service: service,
-      service_duration: serviceDuration,
-    } = req.body;
+    const { name, phone, email, service, date, time, serviceDuration } =
+      req.body;
 
-    if (
-      !name ||
-      !phone ||
-      !bookingDate ||
-      !bookingTime ||
-      !service ||
-      !serviceDuration
-    ) {
+    if (!name || !phone || !date || !time || !service) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Konwersja DD/MM/YYYY → YYYY-MM-DD
-    const [day, month, year] = bookingDate.split("/");
+    const [day, month, year] = date.split("/");
     const bookingDateISO = `${year}-${month}-${day}`;
 
-    // Pobranie samej godziny startu
-    const bookingTimeOnly = bookingTime.split("-")[0].trim();
-
     // Zapytanie SQL
+    // UNCOMMENT
     const insertQuery = `
       INSERT INTO booking
         (client_name, client_email, client_phone, reservation_date, booking_time, service, duration, created_at)
@@ -100,17 +69,18 @@ router.post("/", async (req, res) => {
       email || "",
       phone,
       bookingDateISO,
-      bookingTimeOnly,
+      time,
       service,
       serviceDuration,
     ];
 
+    // UNCOMMENT
     const { rows } = await pool.query(insertQuery, values);
     const newBooking = rows[0];
 
     // Dodanie wydarzenia do Google Calendar (bez przesunięcia daty)
     try {
-      const [startHour, startMinute] = bookingTimeOnly.split(":").map(Number);
+      const [startHour, startMinute] = time.split(":").map(Number);
 
       // Tworzymy datę w strefie Europe/Warsaw
       const startDate = new Date(
@@ -151,8 +121,6 @@ router.post("/", async (req, res) => {
 });
 
 // === GET /api/bookings/available-slots ===
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 router.get("/available-slots", async (req, res) => {
   try {
     const dateParam = req.query.date; // format YYYY-MM-DD
@@ -199,8 +167,6 @@ router.get("/available-slots", async (req, res) => {
       orderBy: "startTime",
     });
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     googleEvents.data.items.forEach((event) => {
       if (!event.start || !event.end) return;
 
@@ -220,8 +186,6 @@ router.get("/available-slots", async (req, res) => {
 
       allSlots.forEach((slot) => {
         const slotStart = timeToMinutes(slot);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         const slotEnd = slotStart + (serviceDurations[serviceParam] || 0);
 
         if (eventStart < slotEnd && eventEnd > slotStart) {

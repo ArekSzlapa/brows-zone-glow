@@ -43,74 +43,70 @@ export const useBookingForm = () => {
     },
   });
 
-  async function sendEmail({ serviceId, templateId, userId, templateParams }) {
-    try {
-      const response = await axios.post(
-        "https://api.emailjs.com/api/v1.0/email/send",
-        {
-          service_id: serviceId,
-          template_id: templateId,
-          user_id: userId,
-          template_params: templateParams,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  //   const onSubmit = async (values: BookingFormData) => {
+  //     const timestamp = Date.now();
+  //     const currentDate = new Date(timestamp);
 
-      console.log(
-        `✅ Email sent via EmailJS template ${templateId}:`,
-        response.data
-      );
-    } catch (error) {
-      console.error(`❌ Error sending EmailJS template ${templateId}:`, error);
-    }
-  }
+  //     const day = String(currentDate.getDate()).padStart(2, "0");
+  //     const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  //     const year = currentDate.getFullYear();
+
+  //     const hours = String(currentDate.getHours()).padStart(2, "0");
+  //     const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+
+  //     const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}`;
+
+  //     // Format booking date and time
+  //     const bookingDate = format(values.date, "dd/MM/yyyy");
+  //     const bookingTime = values.time;
+  //     const serviceDuration = serviceDurations[values.service] || 120;
+
+  //     try {
+  //       const bookingDetails = `
+  // 📅 Data wizyty: ${bookingDate}
+  // ⏰ Godzina: ${bookingTime}
+  // 💅 Usługa: ${values.service}
+  // ⏱️ Czas trwania: ${serviceDuration} minut
+  // 📱 Telefon: ${values.phone}
+  // 📧 Email: ${values.email || "Nie podano"}
+  //       `;
+
+  //       const templateParams = {
+  //         from_name: values.name,
+  //         from_phone: values.phone,
+  //         selected_service: values.service,
+  //         booking_date: bookingDate,
+  //         booking_time: bookingTime,
+  //         service_duration: serviceDuration,
+  //         customer_email: values.email,
+  //         from_email: "asbrows.zone@gmail.com",
+  //         message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
+  //       };
+
+  //       await axios.post("/api/bookings", {
+  //         ...templateParams,
+  //       });
 
   const onSubmit = async (values: BookingFormData) => {
-    const timestamp = Date.now();
-    const currentDate = new Date(timestamp);
-
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const year = currentDate.getFullYear();
-
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-
-    const formattedDateTime = `${day}.${month}.${year} ${hours}:${minutes}`;
-
-    // Format booking date and time
     const bookingDate = format(values.date, "dd/MM/yyyy");
     const bookingTime = values.time;
     const serviceDuration = serviceDurations[values.service] || 120;
 
+    const payload = {
+      name: values.name,
+      phone: values.phone,
+      email: values.email,
+      service: values.service,
+      date: bookingDate,
+      time: bookingTime,
+      serviceDuration,
+    };
+
     try {
-      const bookingDetails = `
-📅 Data wizyty: ${bookingDate}
-⏰ Godzina: ${bookingTime}
-💅 Usługa: ${values.service}
-⏱️ Czas trwania: ${serviceDuration} minut
-📱 Telefon: ${values.phone}
-📧 Email: ${values.email || "Nie podano"}
-      `;
-
-      const templateParams = {
-        from_name: values.name,
-        from_phone: values.phone,
-        selected_service: values.service,
-        booking_date: bookingDate,
-        booking_time: bookingTime,
-        service_duration: serviceDuration,
-        customer_email: values.email,
-        from_email: "asbrows.zone@gmail.com",
-        message: `Nowa rezerwacja od ${values.name}${bookingDetails}`,
-      };
-
-      await axios.post("/api/bookings", {
-        ...templateParams,
+      await axios.post("/api/send-mail", payload).then((response) => {
+        if (response.status === 200) {
+          axios.post("/api/bookings", payload);
+        }
       });
 
       toast({
@@ -118,31 +114,6 @@ export const useBookingForm = () => {
         description: "Wizyta została zarezerwowana.",
       });
 
-      await sendEmail({
-        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CUSTOMER,
-        userId: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        templateParams: {
-          service_duration: templateParams.service_duration,
-          customer_name: templateParams.from_name,
-          booking_date: templateParams.booking_date,
-          booking_time: templateParams.booking_time,
-          booking_service: templateParams.selected_service,
-          customer_email: templateParams.customer_email,
-        },
-      });
-
-      await sendEmail({
-        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID_ADMIN,
-        userId: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        templateParams: {
-          reservation_date: templateParams.booking_date,
-          message: templateParams.message,
-        },
-      });
-
-      // Reset form
       form.reset({
         name: "",
         phone: "",
@@ -163,7 +134,6 @@ export const useBookingForm = () => {
       return false;
     }
   };
-
   return {
     form,
     onSubmit,
