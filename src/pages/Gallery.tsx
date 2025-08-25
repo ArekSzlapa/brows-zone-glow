@@ -14,10 +14,11 @@ export const Gallery = () => {
       setIgPosts(res.data);
     });
   }, []);
+
   return (
-    <>
+    <main className="min-h-screen bg-background">
       <Navigation />
-      <section className="py-20 bg-gradient-to-b from-muted/30 via-background to-muted/30">
+      <section className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -47,6 +48,6 @@ export const Gallery = () => {
           </div>
         </div>
       </section>
-    </>
+    </main>
   );
 };

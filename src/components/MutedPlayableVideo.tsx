@@ -48,6 +48,13 @@ export default function ModernHoverVideo({
     }
   };
 
+  const videoStyles = {
+    width: "100%",
+    height: "auto",
+    display: "block",
+    aspectRatio: isThumbnail ? "4/6" : "",
+  };
+
   return (
     <div
       className="w-full h-full object-cover rounded-xl cursor-pointer"
@@ -63,8 +70,37 @@ export default function ModernHoverVideo({
         loop={isThumbnail} // loop only in thumbnail
         playsInline
         className="w-full aspect-square object-cover rounded-xl"
-        style={{ width: "100%", height: "auto", display: "block" }}
+        style={videoStyles}
       />
+      {isThumbnail && (
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "rgba(0,0,0,0.5)",
+            borderRadius: "50%",
+            width: "50px",
+            height: "50px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none", // prevent blocking click
+          }}
+        >
+          <span
+            style={{
+              display: "inline-block",
+              width: 0,
+              height: 0,
+              borderLeft: "15px solid white",
+              borderTop: "10px solid transparent",
+              borderBottom: "10px solid transparent",
+            }}
+          />
+        </div>
+      )}
 
       {/* Only show play/pause button in modal */}
       {!isThumbnail && (
