@@ -1,7 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { HeroButton } from "@/components/ui/hero-button";
 import "./mediaQueryStyles.css";
 
 // Import before/after images

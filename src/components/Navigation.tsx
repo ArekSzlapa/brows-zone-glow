@@ -96,9 +96,10 @@ const Navigation = () => {
   };
 
   const navLinks = [
-    { name: "Usługi", path: "/services" },
     { name: "Metamorfozy", id: "transformations" },
     { name: "Opinie", id: "reviews" },
+    { name: "Usługi", path: "/services" },
+    { name: "Galeria", path: "/gallery" },
     { name: "O mnie", path: "/about" },
   ];
 

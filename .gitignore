@@ -17,6 +17,8 @@ deploy_small.sh
 public_nodejs
 public_nodejs.tar.gz
 dist-client
+.htaccess
+sitemap.xml
 
 # Editor directories and files
 .vscode/*

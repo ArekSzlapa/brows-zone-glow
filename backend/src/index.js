@@ -2,12 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const bookingRouter = require("./routes/booking");
-const path = require("path");
 const instagramRouter = require("./routes/instagram");
-const cron = require("node-cron");
-const axios = require("axios");
 const mailRouter = require("./routes/sendMail");
 const reminderService = require("./services/reminderService");
+const cron = require("node-cron");
+const axios = require("axios");
+const path = require("path");
 
 dotenv.config();
 
@@ -34,16 +34,21 @@ async function fetchInstagram() {
 }
 
 // === Static frontend ===
-const clientPath = path.join(__dirname, "../dist");
+const clientPath = path.join(__dirname, "public"); // wskazuje na public_nodejs/public
 app.use(express.static(clientPath));
 
-app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(clientPath, "index.html"));
+// Catch-all route: wszystko poza /api idzie do Reacta
+// Has to stay as "/(.*)/" for express above 5 version
+app.get(/(.*)/, (req, res) => {
+  if (!req.path.startsWith("/api")) {
+    console.log("Catch-all route hit:", req.path);
+    res.sendFile(path.join(clientPath, "index.html"));
+  } else {
+    res.status(404).send("API route not found");
+  }
 });
 
-// 2️⃣ Schedule cron job to run every 6 hours
-// This uses node-cron's syntax: minute hour day month weekday
-// "0 */6 * * *" → at minute 0 of every 6th hour
+// === Cron job co 6 godzin
 cron.schedule("0 */6 * * *", () => {
   console.log("Running scheduled Instagram fetch...");
   fetchInstagram();
