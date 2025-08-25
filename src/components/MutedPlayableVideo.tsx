@@ -52,7 +52,6 @@ export default function ModernHoverVideo({
     width: "100%",
     height: "auto",
     display: "block",
-    aspectRatio: isThumbnail ? "4/6" : "",
   };
 
   return (

@@ -26,7 +26,6 @@ export function MediaLightbox({ post }: { post: Media }) {
       {!isCarousel && (
         <div
           className="aspect-square w-full overflow-hidden rounded-xl cursor-pointer"
-          style={{ aspectRatio: "4/6" }}
           onClick={() => setOpen(true)}
         >
           {post.media_type === "IMAGE" && (
@@ -48,10 +47,7 @@ export function MediaLightbox({ post }: { post: Media }) {
 
       {/* Carousel thumbnail */}
       {isCarousel && (
-        <div
-          className="w-full overflow-hidden rounded-xl cursor-pointer"
-          style={{ aspectRatio: "4/6" }}
-        >
+        <div className="w-full overflow-hidden rounded-xl cursor-pointer">
           <CarouselWithArrows
             items={items}
             fitMode="cover"
