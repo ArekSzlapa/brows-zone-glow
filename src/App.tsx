@@ -19,7 +19,9 @@ import { Gallery } from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
-// Scroll to top component
+/**
+ * Scroll to top component - ensures users start at the top of the page on route changes
+ */
 const ScrollToTop = () => {
   const location = useLocation();
 

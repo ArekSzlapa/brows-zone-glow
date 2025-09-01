@@ -29,12 +29,12 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel className="text-foreground/80 font-semibold">
-            Wybierz usługę
+            Select Service
           </FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger className="border-border bg-background/50">
-                <SelectValue placeholder="Wybierz usługę, która Cię interesuje" />
+                <SelectValue placeholder="Choose the service that interests you" />
               </SelectTrigger>
             </FormControl>
             <SelectContent
@@ -50,21 +50,21 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
                 <SelectLabel className="text-primary font-semibold">
                   Brow Bar
                 </SelectLabel>
-                <SelectItem value="laminacja-brwi">Laminacja brwi</SelectItem>
+                <SelectItem value="laminacja-brwi">Eyebrow Lamination</SelectItem>
                 <SelectItem value="laminacja-brwi-koloryzacja">
-                  Laminacja brwi z koloryzacją
+                  Eyebrow Lamination with Tinting
                 </SelectItem>
                 <SelectItem value="geometria-brwi-koloryzacja">
-                  Geometria brwi z koloryzacją
+                  Eyebrow Shaping with Tinting
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectLabel className="text-primary font-semibold">
                   Lash Bar
                 </SelectLabel>
-                <SelectItem value="lifting-rzes">Lifting rzęs</SelectItem>
+                <SelectItem value="lifting-rzes">Lash Lift</SelectItem>
                 <SelectItem value="lifting-rzes-koloryzacja">
-                  Lifting rzęs z koloryzacją
+                  Lash Lift with Tinting
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
@@ -72,10 +72,10 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
                   Brow & Lash
                 </SelectLabel>
                 <SelectItem value="laminacja-brwi-rzes">
-                  Laminacja brwi i rzęs
+                  Eyebrow & Lash Lamination
                 </SelectItem>
                 <SelectItem value="laminacja-brwi-rzes-koloryzacja">
-                  Laminacja brwi i rzęs z koloryzacją
+                  Eyebrow & Lash Lamination with Tinting
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

@@ -1,37 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { format } from "date-fns";
-
-// Service duration mapping in minutes
-const serviceDurations: Record<string, number> = {
-  "laminacja-brwi": 120,
-  "laminacja-brwi-koloryzacja": 120,
-  "geometria-brwi-koloryzacja": 120,
-  "lifting-rzes": 90,
-  "lifting-rzes-koloryzacja": 90,
-  "laminacja-brwi-rzes": 120,
-  "laminacja-brwi-rzes-koloryzacja": 120,
-};
+import { SERVICE_DURATIONS, BUSINESS_HOURS } from "@/constants/services";
 
 export const useTimeSlots = (service: string, date: Date | undefined) => {
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Generate fallback time slots
+  /**
+   * Generate fallback time slots when API is unavailable
+   */
   const generateTimeSlots = (serviceDuration: number): string[] => {
     const slots: string[] = [];
-    const startHour = 8; // 8:00 AM
-    const endHour = 18; // 6:00 PM
+    const { START_HOUR, END_HOUR, SLOT_INTERVAL } = BUSINESS_HOURS;
 
-    for (let hour = startHour; hour < endHour; hour++) {
-      for (let minute = 0; minute < 60; minute += serviceDuration) {
+    for (let hour = START_HOUR; hour < END_HOUR; hour++) {
+      for (let minute = 0; minute < 60; minute += SLOT_INTERVAL) {
         const startTime = new Date();
         startTime.setHours(hour, minute, 0, 0);
 
         const endTime = new Date(startTime.getTime() + serviceDuration * 60000);
 
         // Stop if end time exceeds business hours
-        if (endTime.getHours() > endHour) break;
+        if (endTime.getHours() > END_HOUR) break;
 
         const formatTime = (date: Date) =>
           date.toLocaleTimeString("pl-PL", {
@@ -46,7 +37,9 @@ export const useTimeSlots = (service: string, date: Date | undefined) => {
     return slots;
   };
 
-  // Fetch available time slots from backend
+  /**
+   * Fetch available time slots from backend API
+   */
   const fetchAvailableTimeSlots = async (date: Date, service: string) => {
     setIsLoading(true);
     try {
@@ -58,7 +51,7 @@ export const useTimeSlots = (service: string, date: Date | undefined) => {
     } catch (error) {
       console.error("Error fetching available time slots:", error);
       // Fallback to generated time slots if API fails
-      const serviceDuration = serviceDurations[service] || 120;
+      const serviceDuration = SERVICE_DURATIONS[service] || 120;
       setTimeSlots(generateTimeSlots(serviceDuration));
     } finally {
       setIsLoading(false);
@@ -77,6 +70,5 @@ export const useTimeSlots = (service: string, date: Date | undefined) => {
   return {
     timeSlots,
     isLoading,
-    serviceDurations,
   };
 };
