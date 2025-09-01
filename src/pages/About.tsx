@@ -3,15 +3,15 @@ import Footer from "@/components/Footer";
 import { HeroButton } from "@/components/ui/hero-button";
 import { Card, CardContent } from "@/components/ui/card";
 import aboutImage from "@/assets/Ola-2.jpeg";
-
-const scrollToForm = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  setTimeout(() => {
-    window.location.href = "/#form";
-  }, 500);
-};
+import { Link, Pointer } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const scrollToForm = () => {
+    navigate("/#form");
+  };
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -70,7 +70,13 @@ const About = () => {
                     Rezerwacja wizyt
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    Użyj formularza, aby zarezerwować wizytę!
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => scrollToForm()}
+                    >
+                      Użyj formularza
+                    </span>
+                    , aby zarezerwować wizytę!
                   </div>
                 </CardContent>
               </Card>

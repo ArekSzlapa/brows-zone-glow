@@ -16,7 +16,7 @@ function callSync() {
     },
   };
 
-  const req = https.request(url, options, (res) => {
+  const req = http.request(url, options, (res) => {
     let body = "";
     res.on("data", (chunk) => (body += chunk));
     res.on("end", () => {
@@ -33,7 +33,7 @@ function callSync() {
 }
 
 // Cron everyhour
-cron.schedule("0 */1 * * *", () => {
+cron.schedule("*/30 * * * *", () => {
   console.log("⌚ Checking for events to be synced...");
   try {
     callSync();

@@ -12,23 +12,20 @@ const Services = () => {
     navigate("/#form");
   };
   const brwiServices = [
-    { title: "Laminacja Brwi", time: "120 min", price: "40 zł" },
-    { title: "Laminacja Brwi z Koloryzacją", time: "120 min", price: "50 zł" },
-    { title: "Geometria Brwi z Koloryzacją", time: "120 min", price: "40 zł" },
+    { title: "LAMINACJA BRWI • FARBKA • ODŻYWKA", price: "140,-" },
+    { title: "LAMINACJA BRWI • ODŻYWKA", price: "120,-" },
+    { title: "GEOMETRIA BRWI • FARBKA • ODŻYWKA", price: "70,-" },
+    { title: "GEOMETRIA BRWI • ODŻYWKA", price: "50,-" },
+    { title: "* W KAŻDEJ USŁUDZE REGULACJA BRWI *" },
   ];
 
   const rzesyServices = [
-    { title: "Lifting Rzęs", time: "90 min", price: "40 zł" },
-    { title: "Lifting Rzęs z Koloryzacją", time: "90 min", price: "50 zł" },
+    { title: "LIFTING RZĘS • FARBKA • ODŻYWKA", price: "140,-" },
+    { title: "LIFTING RZĘS • ODŻYWKA", price: "120,-" },
   ];
 
   const kombinowaneServices = [
-    { title: "Laminacja Brwi i Rzęs", time: "120 min", price: "70 zł" },
-    {
-      title: "Laminacja Brwi i Rzęs z Koloryzacją",
-      time: "120 min",
-      price: "90 zł",
-    },
+    { title: "PAKIET LAMINACJI • FARBKA • ODŻYWKA", price: "70 zł" },
   ];
 
   return (
@@ -56,7 +53,7 @@ const Services = () => {
                   {/* Brwi Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Brow Bar
+                      BROW BAR
                     </h3>
                     <div className="space-y-4">
                       {brwiServices.map((service, index) => (
@@ -67,9 +64,6 @@ const Services = () => {
                           <div className="flex-1">
                             <span className="font-semibold text-foreground/80">
                               {service.title}
-                            </span>
-                            <span className="text-muted-foreground ml-2">
-                              ({service.time})
                             </span>
                           </div>
                           <span className="text-lg font-bold text-primary">
@@ -83,7 +77,7 @@ const Services = () => {
                   {/* Rzęsy Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Lash Bar
+                      LASH BAR
                     </h3>
                     <div className="space-y-4">
                       {rzesyServices.map((service, index) => (
@@ -94,9 +88,6 @@ const Services = () => {
                           <div className="flex-1">
                             <span className="font-semibold text-foreground/80">
                               {service.title}
-                            </span>
-                            <span className="text-muted-foreground ml-2">
-                              ({service.time})
                             </span>
                           </div>
                           <span className="text-lg font-bold text-primary">
@@ -110,7 +101,7 @@ const Services = () => {
                   {/* Brwi i Rzęsy Section */}
                   <div>
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      Lash & Brow Bar{" "}
+                      LASH & BROW BAR{" "}
                     </h3>
                     <div className="space-y-4">
                       {kombinowaneServices.map((service, index) => (
@@ -121,9 +112,6 @@ const Services = () => {
                           <div className="flex-1">
                             <span className="font-semibold text-foreground/80">
                               {service.title}
-                            </span>
-                            <span className="text-muted-foreground ml-2">
-                              ({service.time})
                             </span>
                           </div>
                           <span className="text-lg font-bold text-primary">
@@ -155,7 +143,7 @@ const Services = () => {
                     Gotowa na metamorfozę?
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Umów wizyte już dziś i przekonaj się o jakości moich usług.
+                    Umów wizytę już dziś i przekonaj się o jakości moich usług.
                   </p>
                   <HeroButton
                     onClick={scrollToForm}

@@ -3,10 +3,11 @@
  * Centralized configuration for all service durations
  */
 export const SERVICE_DURATIONS: Record<string, number> = {
-  "laminacja-brwi": 120,
-  "laminacja-brwi-koloryzacja": 120,
-  "geometria-brwi-koloryzacja": 120,
-  "lifting-rzes": 90,
+  "laminacja-brwi": 60,
+  "laminacja-brwi-koloryzacja": 90,
+  "geometria-brwi-koloryzacja": 30,
+  "geometria-brwi": 30,
+  "lifting-rzes": 60,
   "lifting-rzes-koloryzacja": 90,
   "laminacja-brwi-rzes": 120,
   "laminacja-brwi-rzes-koloryzacja": 120,

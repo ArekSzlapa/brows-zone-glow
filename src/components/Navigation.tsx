@@ -235,7 +235,7 @@ const Navigation = () => {
               className="w-full mt-4"
               onClick={handleBooking}
             >
-              Umów wizyte
+              Umów wizytę
             </HeroButton>
           </div>
         </div>

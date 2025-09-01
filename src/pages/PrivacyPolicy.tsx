@@ -137,10 +137,6 @@ const PrivacyPolicy = () => {
               </p>
               <ul className="list-disc ml-6 space-y-2">
                 <li>
-                  Dostawcy usług IT (EmailJS) - w celu obsługi formularza
-                  kontaktowego
-                </li>
-                <li>
                   Dostawcy usług księgowych (w razie konieczności wystawienia
                   faktury)
                 </li>
@@ -182,7 +178,7 @@ const PrivacyPolicy = () => {
 
             <div className="mt-12 p-4 bg-muted/50 rounded-lg">
               <p className="text-sm text-foreground/60">
-                Ostatnia aktualizacja: {new Date().toLocaleDateString("pl-PL")}
+                Ostatnia aktualizacja: 01.09.2025
               </p>
             </div>
           </div>

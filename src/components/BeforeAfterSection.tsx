@@ -138,7 +138,7 @@ const BeforeAfterSection = () => {
     {
       before: before1,
       after: after1,
-      service: "Geometria brwi z koloryzacja",
+      service: "Geometria brwi z koloryzacją",
       description:
         "Precyzyjne wyznaczenie kształtu i trwała koloryzacją dla idealnie dopasowanych brwi",
       price: "40 zł",
@@ -198,26 +198,6 @@ const BeforeAfterSection = () => {
                   <p className="text-muted-foreground mb-4 text-sm leading-relaxed flex-grow">
                     {transformation.description}
                   </p>
-                  {/* 
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <span className="text-md font-bold text-primary">
-                        {transformation.price}
-                      </span>
-                      <span className="text-md text-muted-foreground ml-2">
-                        • {transformation.duration}
-                      </span>
-                    </div>
-                  </div> */}
-
-                  {/* Button positioned at bottom */}
-                  {/* <HeroButton
-                    onClick={() => scrollToSection("form")}
-                    size="default"
-                    className="w-full mt-auto"
-                  >
-                    Zarezerwuj wizyte
-                  </HeroButton>  */}
                 </div>
               </CardContent>
             </Card>

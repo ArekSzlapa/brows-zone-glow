@@ -48,34 +48,38 @@ export const ServiceSelector = ({ control }: ServiceSelectorProps) => {
             >
               <SelectGroup>
                 <SelectLabel className="text-primary font-semibold">
-                  Brow Bar
+                  BROW BAR
                 </SelectLabel>
-                <SelectItem value="laminacja-brwi">Laminacja brwi</SelectItem>
                 <SelectItem value="laminacja-brwi-koloryzacja">
-                  Laminacja brwi z koloryzacją
+                  LAMINACJA BRWI • FARBKA • ODŻYWKA
+                </SelectItem>
+                <SelectItem value="laminacja-brwi">
+                  LAMINACJA BRWI • ODŻYWKA
                 </SelectItem>
                 <SelectItem value="geometria-brwi-koloryzacja">
-                  Geometria brwi z koloryzacją
+                  GEOMETRIA BRWI • FARBKA • ODŻYWKA
+                </SelectItem>
+                <SelectItem value="geometria-brwi">
+                  GEOMETRIA BRWI • ODŻYWKA
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectLabel className="text-primary font-semibold">
-                  Lash Bar
+                  LASH BAR
                 </SelectLabel>
-                <SelectItem value="lifting-rzes">Lifting rzęs</SelectItem>
                 <SelectItem value="lifting-rzes-koloryzacja">
-                  Lifting rzęs z koloryzacją
+                  LIFTING RZĘS • FARBKA • ODŻYWKA
+                </SelectItem>
+                <SelectItem value="lifting-rzes">
+                  LIFTING RZĘS • ODŻYWKA
                 </SelectItem>
               </SelectGroup>
               <SelectGroup>
                 <SelectLabel className="text-primary font-semibold">
-                  Brow & Lash
+                  LASG & BROW BAR
                 </SelectLabel>
-                <SelectItem value="laminacja-brwi-rzes">
-                  Laminacja brwi i rzęs
-                </SelectItem>
                 <SelectItem value="laminacja-brwi-rzes-koloryzacja">
-                  Laminacja brwi i rzęs z koloryzacją
+                  PAKIET LAMINACJI • FARBKA • ODŻYWKA
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

@@ -1,19 +1,21 @@
 const transpileService = (service) => {
   switch (service) {
     case "laminacja-brwi":
-      return "Laminacja brwi";
+      return "LAMINACJA BRWI • ODŻYWKA";
     case "laminacja-brwi-koloryzacja":
-      return "Laminacja brwi z koloryzacją";
+      return "LAMINACJA BRWI • FARBKA • ODŻYWKA";
     case "geometria-brwi-koloryzacja":
-      return "Geometria brwi z koloryzacją";
+      return "GEOMETRIA BRWI • FARBKA • ODŻYWKA";
+    case "geometria-brwi":
+      return "GEOMETRIA BRWI • ODŻYWKA";
     case "lifting-rzes":
-      return "Lifting rzęs";
+      return "LIFTING RZĘS • ODŻYWKA";
     case "lifting-rzes-koloryzacja":
-      return "Lifting rzęs z koloryzacją";
+      return "LIFTING RZĘS • FARBKA • ODŻYWKA";
     case "laminacja-brwi-rzes":
-      return "Lifting brwi i rzęs";
+      return "PAKIET LAMINACJI • ODŻYWKA";
     case "laminacja-brwi-rzes-koloryzacja":
-      return "Lifting brwi i rzęs z koloryzacją";
+      return "PAKIET LAMINACJI • FARBKA • ODŻYWKA";
   }
 };
 

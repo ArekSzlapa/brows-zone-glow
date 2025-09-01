@@ -4,6 +4,7 @@ const nodePath = require("path");
 const nodeExpress = require("express");
 const nodeDotenv = require("dotenv");
 const pool = require("../../db");
+const { sendBookingEmails } = require("../services/mailerService");
 
 nodeDotenv.config();
 
@@ -288,6 +289,18 @@ router.post("/sync-google-events", async (req, res) => {
             duration,
           ]
         );
+
+        const mailClientObject = {
+          email: clientObject.Mail || "Brak maila",
+          date: bookingDate,
+          time: bookingTime,
+          name: clientObject.Klient || "Brak imienia",
+          phone: clientObject.Nr || "Brak numeru",
+          service: service,
+          isFromCalendar: true,
+        };
+
+        await sendBookingEmails(mailClientObject);
         insertedCount++;
       }
     }

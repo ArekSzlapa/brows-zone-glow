@@ -80,7 +80,7 @@ const Footer = () => {
                 { name: "Metamorfozy", id: "transformations" },
                 { name: "Opinie", id: "reviews" },
                 { name: "O mnie", path: "/about" },
-                { name: "Zarezerwuj wizyte", id: "form" },
+                { name: "Zarezerwuj wizytę", id: "form" },
               ].map((link) => (
                 <button
                   key={link.name}
