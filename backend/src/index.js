@@ -5,6 +5,7 @@ const bookingRouter = require("./routes/booking");
 const instagramRouter = require("./routes/instagram");
 const mailRouter = require("./routes/sendMail");
 const reminderService = require("./services/reminderService");
+const syncService = require("./services/syncGoogleCalendar");
 const cron = require("node-cron");
 const axios = require("axios");
 const path = require("path");

@@ -54,13 +54,11 @@ router.post("/", async (req, res) => {
     const [day, month, year] = date.split("/");
     const bookingDateISO = `${year}-${month}-${day}`;
 
-    // Zapytanie SQL
-    // UNCOMMENT
     const insertQuery = `
       INSERT INTO booking
-        (client_name, client_email, client_phone, reservation_date, booking_time, service, duration, created_at)
+        (client_name, client_email, client_phone, reservation_date, booking_time, service, duration, created_at, sync)
       VALUES
-        ($1, $2, $3, $4::date, $5::time, $6, $7, NOW())
+        ($1, $2, $3, $4::date, $5::time, $6, $7, NOW(), NOW())
       RETURNING *;
     `;
 
@@ -74,15 +72,12 @@ router.post("/", async (req, res) => {
       serviceDuration,
     ];
 
-    // UNCOMMENT
     const { rows } = await pool.query(insertQuery, values);
     const newBooking = rows[0];
 
-    // Dodanie wydarzenia do Google Calendar (bez przesunięcia daty)
+    // Dodanie wydarzenia do Google Calendar
     try {
       const [startHour, startMinute] = time.split(":").map(Number);
-
-      // Tworzymy datę w strefie Europe/Warsaw
       const startDate = new Date(
         year,
         Number(month) - 1,
@@ -103,10 +98,7 @@ router.post("/", async (req, res) => {
             dateTime: startDate.toISOString(),
             timeZone: "Europe/Warsaw",
           },
-          end: {
-            dateTime: endDate.toISOString(),
-            timeZone: "Europe/Warsaw",
-          },
+          end: { dateTime: endDate.toISOString(), timeZone: "Europe/Warsaw" },
         },
       });
     } catch (err) {
@@ -123,13 +115,13 @@ router.post("/", async (req, res) => {
 // === GET /api/bookings/available-slots ===
 router.get("/available-slots", async (req, res) => {
   try {
-    const dateParam = req.query.date; // format YYYY-MM-DD
+    const dateParam = req.query.date;
     const serviceParam = req.query.service;
 
     if (!dateParam || !serviceParam) {
-      return res.status(400).json({
-        error: "Missing required date and service parameters",
-      });
+      return res
+        .status(400)
+        .json({ error: "Missing required date and service parameters" });
     }
 
     const allSlots = [
@@ -154,8 +146,6 @@ router.get("/available-slots", async (req, res) => {
     ];
 
     const unavailable = new Set();
-
-    // 2️⃣ Pobranie eventów z Google Calendar
     const dayStart = new Date(`${dateParam}T00:00:00+02:00`);
     const dayEnd = new Date(`${dateParam}T23:59:59+02:00`);
 
@@ -165,46 +155,149 @@ router.get("/available-slots", async (req, res) => {
       timeMax: dayEnd.toISOString(),
       singleEvents: true,
       orderBy: "startTime",
+      showDeleted: false,
     });
 
     googleEvents.data.items.forEach((event) => {
       if (!event.start || !event.end) return;
-
       const startTime = event.start.dateTime || event.start.date;
       const endTime = event.end.dateTime || event.end.date;
 
-      // 🔴 Jeśli wydarzenie jest całodniowe (brak dateTime)
       if (!event.start.dateTime) {
-        // blokujemy wszystkie sloty
         allSlots.forEach((slot) => unavailable.add(slot));
         return;
       }
 
-      // 🕒 Normalne wydarzenia godzinowe
       const eventStart = timeToMinutes(startTime.substring(11, 16));
       const eventEnd = timeToMinutes(endTime.substring(11, 16));
 
       allSlots.forEach((slot) => {
         const slotStart = timeToMinutes(slot);
         const slotEnd = slotStart + (serviceDurations[serviceParam] || 0);
-
-        if (eventStart < slotEnd && eventEnd > slotStart) {
-          unavailable.add(slot);
-        }
+        if (eventStart < slotEnd && eventEnd > slotStart) unavailable.add(slot);
       });
     });
 
-    // 3️⃣ Filtrowanie wolnych slotów
     const availableSlots = allSlots.filter((slot) => !unavailable.has(slot));
 
-    res.json({
-      availableSlots,
-      date: dateParam,
-      service: serviceParam,
-    });
+    res.json({ availableSlots, date: dateParam, service: serviceParam });
   } catch (error) {
     console.error("Error fetching available slots:", error);
     res.status(500).json({ error: "Failed to fetch available slots" });
+  }
+});
+
+// === NEW: POST /api/bookings/sync-google-events ===
+router.post("/sync-google-events", async (req, res) => {
+  try {
+    // 1️⃣ Determine last sync from booking table
+    const { rows } = await pool.query(`SELECT MAX(sync) AS sync FROM booking`);
+    let sync;
+    if (rows[0].sync) {
+      sync = rows[0].sync;
+    } else {
+      sync = new Date();
+      sync.setDate(sync.getDate() - 21); // go 21 days back
+    }
+
+    console.log("Last sync:", sync);
+
+    // 2️⃣ Fetch events updated since last sync
+    const googleEvents = await calendar.events.list({
+      calendarId: CALENDAR_ID,
+      updatedMin: sync.toISOString(),
+      singleEvents: true,
+      orderBy: "startTime",
+      showDeleted: true,
+    });
+
+    let insertedCount = 0;
+    let updatedCount = 0;
+    let deletedCount = 0;
+
+    for (const event of googleEvents.data.items) {
+      if (event.status === "cancelled") {
+        // Remove from DB
+        await pool.query(`DELETE FROM booking WHERE google_event_id = $1`, [
+          event.id,
+        ]);
+        deletedCount++;
+        continue;
+      }
+      if (!event.start || !event.end || !event.start.dateTime) continue;
+
+      const clientObject =
+        event.description?.split("\n").reduce((acc, line) => {
+          const [key, value] = line.split(":");
+          if (key && value) acc[key.trim()] = value.trim();
+          return acc;
+        }, {}) || {};
+
+      const startDateObj = new Date(event.start.dateTime);
+      const endDateObj = new Date(event.end.dateTime);
+      const bookingDate = startDateObj.toISOString().split("T")[0];
+      const bookingTime = event.start.dateTime.substring(11, 16);
+      const duration = (endDateObj.getTime() - startDateObj.getTime()) / 60000;
+      const service = event.summary || "Unknown";
+
+      // 3️⃣ Check if booking already exists
+      const existing = await pool.query(
+        `SELECT id FROM booking WHERE google_event_id = $1`,
+        [event.id]
+      );
+
+      if (existing.rowCount > 0) {
+        // 4️⃣ Update existing booking
+        await pool.query(
+          `UPDATE booking
+           SET client_name = $1,
+               client_email = $2,
+               client_phone = $3,
+               reservation_date = $4,
+               booking_time = $5,
+               service = $6,
+               duration = $7,
+               sync = NOW()
+           WHERE google_event_id = $8`,
+          [
+            clientObject.Klient || "Brak imienia",
+            clientObject.Mail || "Brak maila",
+            clientObject.Nr || "Brak numeru",
+            bookingDate,
+            bookingTime,
+            service,
+            duration,
+            event.id,
+          ]
+        );
+        updatedCount++;
+      } else {
+        // 5️⃣ Insert new booking
+        await pool.query(
+          `INSERT INTO booking
+           (google_event_id, client_name, client_email, client_phone, reservation_date, booking_time, service, duration, created_at, sync)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,NOW(),NOW())`,
+          [
+            event.id,
+            clientObject.Klient || "Brak imienia",
+            clientObject.Mail || "Brak maila",
+            clientObject.Nr || "Brak numeru",
+            bookingDate,
+            bookingTime,
+            service,
+            duration,
+          ]
+        );
+        insertedCount++;
+      }
+    }
+
+    res.json({
+      message: `Sync completed. Inserted ${insertedCount}, updated ${updatedCount}, deleted ${deletedCount} bookings.`,
+    });
+  } catch (err) {
+    console.error("Error syncing Google events:", err);
+    res.status(500).json({ error: "Failed to sync Google events" });
   }
 });
 
