@@ -40,7 +40,7 @@ export const TimeSlotSelector = ({
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <FormLabel className="text-foreground/80 font-semibold">
-            Appointment Time
+            Godzina wizyty
           </FormLabel>
           <Select
             onValueChange={(value) => {
@@ -54,14 +54,14 @@ export const TimeSlotSelector = ({
                 <SelectValue
                   placeholder={
                     isLoading
-                      ? "Loading available times..."
+                      ? "Ładowanie dostępnych godzin..."
                       : !service
-                      ? "Please select a service first"
+                      ? "Najpierw wybierz usługę"
                       : !date
-                      ? "Please select a date first"
+                      ? "Najpierw wybierz datę"
                       : timeSlots.length === 0
-                      ? "No available appointments"
-                      : "Select time"
+                      ? "Brak dostępnych terminów"
+                      : "Wybierz godzinę"
                   }
                 />
               </SelectTrigger>

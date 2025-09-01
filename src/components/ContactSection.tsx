@@ -9,11 +9,11 @@ const ContactSection = () => {
         <div id="form">
           <div className="text-center mb-12">
             <h3 className="text-3xl lg:text-4xl font-bold mb-4">
-              <span className="text-foreground/80">Book your </span>
-              <span className="bg-clip-text text-primary">appointment</span>
+              <span className="text-foreground/80">Umów się na </span>
+              <span className="bg-clip-text text-primary">wizytę</span>
             </h3>
             <p className="text-lg text-muted-foreground">
-              Fill out the form and book your appointment now!
+              Wypełnij formularz i zarezerwuj swoją wizytę już teraz!
             </p>
           </div>
 

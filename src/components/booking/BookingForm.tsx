@@ -53,11 +53,11 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground/80 font-semibold">
-                        Full Name
+                        Imię i nazwisko
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your full name"
+                          placeholder="Wprowadź swoje imię i nazwisko"
                           {...field}
                           className="border-border bg-background/50"
                         />
@@ -73,7 +73,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground/80 font-semibold">
-                        Phone Number
+                        Numer telefonu
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -95,11 +95,11 @@ export const BookingForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-foreground/80 font-semibold">
-                      Email Address
+                      Adres email
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="your.email@example.com"
+                        placeholder="TwojMail@brwi.pl"
                         type="email"
                         {...field}
                         className="border-border bg-background/50"
@@ -119,7 +119,7 @@ export const BookingForm = () => {
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel className="text-foreground/80 font-semibold">
-                        Appointment Date
+                        Data wizyty
                       </FormLabel>
                       <Popover
                         open={isCalendarOpen}
@@ -137,7 +137,7 @@ export const BookingForm = () => {
                               {field.value ? (
                                 format(field.value, "dd/MM/yyyy")
                               ) : (
-                                <span>Select date</span>
+                                <span>Wybierz datę</span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
@@ -176,15 +176,15 @@ export const BookingForm = () => {
 
               <div className="space-y-4">
                 <p className="text-sm text-foreground/60 text-center">
-                  By clicking "Book Appointment" you agree to{" "}
+                  Klikając "Umów wizytę" wyrażasz zgodę na{" "}
                   <span
                     onClick={() => navigate("/privacy")}
                     className="text-primary hover:underline font-medium"
                     style={{ cursor: "pointer" }}
                   >
-                    personal data processing
+                    przetwarzanie danych osobowych
                   </span>{" "}
-                  according to our privacy policy.
+                  zgodnie z naszą polityką prywatności.
                 </p>
 
                 <HeroButton
@@ -193,7 +193,7 @@ export const BookingForm = () => {
                   className="w-full text-lg py-4"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Submitting..." : "Book Appointment"}
+                  {isSubmitting ? "Wysyłanie..." : "Umów wizytę"}
                 </HeroButton>
               </div>
             </form>

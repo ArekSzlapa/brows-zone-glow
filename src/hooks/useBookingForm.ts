@@ -7,14 +7,14 @@ import axios from "axios";
 import { SERVICE_DURATIONS } from "@/constants/services";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().min(9, "Phone number is required"),
-  service: z.string().min(1, "Please select a service"),
+  name: z.string().min(2, "Imię musi mieć co najmniej 2 znaki"),
+  phone: z.string().min(9, "Numer telefonu jest wymagany"),
+  service: z.string().min(1, "Wybierz usługę"),
   email: z.string().optional(),
   date: z.date({
-    required_error: "Please select an appointment date",
+    required_error: "Wybierz datę wizyty",
   }),
-  time: z.string().min(1, "Please select an appointment time"),
+  time: z.string().min(1, "Wybierz godzinę wizyty"),
 });
 
 export type BookingFormData = z.infer<typeof formSchema>;
@@ -57,8 +57,8 @@ export const useBookingForm = () => {
       });
 
       toast({
-        title: "Form submitted successfully!",
-        description: "Your appointment has been booked.",
+        title: "Formularz wysłany!",
+        description: "Wizyta została zarezerwowana.",
       });
 
       form.reset({
@@ -74,8 +74,8 @@ export const useBookingForm = () => {
     } catch (error) {
       console.error("Error sending booking:", error);
       toast({
-        title: "Submission error",
-        description: "Please try again or contact us by phone.",
+        title: "Błąd wysyłania",
+        description: "Spróbuj ponownie lub skontaktuj się telefonicznie.",
         variant: "destructive",
       });
       return false;
