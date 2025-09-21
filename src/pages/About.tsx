@@ -96,7 +96,7 @@ const About = () => {
               <img
                 src={aboutImage}
                 alt="Professional eyebrow stylist at work"
-                className="w-full h-96 object-cover object-center"
+                className="w-full h-auto object-contain"
               />
             </div>
 

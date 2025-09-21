@@ -132,7 +132,7 @@ const Services = () => {
                 <img
                   src={serviceImage}
                   alt="Professional eyebrow and eyelash services"
-                  className="w-full h-96 object-cover object-center"
+                  className="w-full h-auto object-contain"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>

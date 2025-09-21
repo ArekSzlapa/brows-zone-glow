@@ -17,20 +17,20 @@ const scrollToSection = (sectionId: string) => {
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with image pattern on left side */}
-      <div className="absolute inset-0 z-0 lg:w-1/2">
+      {/* Full width background */}
+      <div className="absolute inset-0 z-0">
         <img
           src={heroImage}
           alt="Professional eyebrow shaping service"
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/90 to-background/70" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
-          {/* Left Content */}
-          <div className="space-y-8 text-center lg:text-left">
+        <div className="flex items-center justify-center lg:justify-start min-h-screen">
+          {/* Content */}
+          <div className="space-y-8 text-center lg:text-left max-w-2xl">
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
               <span className="text-foreground/80">Podkreślam Twoje</span> <br />
               <span className="text-foreground/80">
@@ -59,18 +59,6 @@ const HeroSection = () => {
               >
                 Zadzwoń 516 170 052
               </HeroButton>
-            </div>
-          </div>
-
-          {/* Right Image */}
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-elegant">
-              <img
-                src={heroImage}
-                alt="Professional eyebrow shaping service"
-                className="w-full h-[600px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
             </div>
           </div>
         </div>
