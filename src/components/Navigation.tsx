@@ -129,7 +129,7 @@ const Navigation = () => {
             </div>
             <div className="flex flex-col">
               <span
-                className="text-xl text-foreground/80 group-hover:text-primary transition-colors duration-300"
+                className="text-xl text-foreground/80 transition-colors duration-300"
                 style={{ fontFamily: "serif" }}
               >
                 BROWS•ZONE
