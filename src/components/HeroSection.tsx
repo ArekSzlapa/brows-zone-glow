@@ -1,5 +1,6 @@
 import { HeroButton } from "@/components/ui/hero-button";
 import heroImage from "@/assets/hero_proposition.jpg";
+import openBooksy from "@/helpers/BooksyBooking";
 
 const scrollToSection = (sectionId: string) => {
   const element = document.getElementById(sectionId);
@@ -43,7 +44,8 @@ const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <HeroButton
-              onClick={() => scrollToSection("form")}
+              // onClick={() => scrollToSection("form")}
+              onClick={() => openBooksy()}
               size="lg"
               className="text-lg px-8 py-4"
             >

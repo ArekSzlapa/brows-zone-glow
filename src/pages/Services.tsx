@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { HeroButton } from "@/components/ui/hero-button";
 import serviceImage from "@/assets/services.jpg";
+import openBooksy from "@/helpers/BooksyBooking";
 
 const Services = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Services = () => {
   ];
 
   const kombinowaneServices = [
-    { title: "PAKIET LAMINACJI • FARBKA • ODŻYWKA", price: "70 zł" },
+    { title: "PAKIET LAMINACJI • FARBKA • ODŻYWKA", price: "250,-" },
   ];
 
   return (
@@ -146,7 +147,7 @@ const Services = () => {
                     Umów wizytę już dziś i przekonaj się o jakości moich usług.
                   </p>
                   <HeroButton
-                    onClick={scrollToForm}
+                    onClick={() => openBooksy()}
                     className="w-full sm:w-auto"
                   >
                     Zarezerwuj wizytę

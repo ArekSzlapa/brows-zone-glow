@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import aboutImage from "@/assets/Ola-2.jpeg";
 import { Link, Pointer } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import openBooksy from "@/helpers/BooksyBooking";
 
 const About = () => {
   const navigate = useNavigate();
@@ -121,7 +122,11 @@ const About = () => {
                 z najwyższą precyzją i dbałością o detale.
               </p>
 
-              <HeroButton onClick={scrollToForm} size="lg" className="mt-6">
+              <HeroButton
+                onClick={() => openBooksy()}
+                size="lg"
+                className="mt-6"
+              >
                 Umów się na wizytę
               </HeroButton>
             </div>

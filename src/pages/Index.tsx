@@ -18,9 +18,9 @@ const Index = () => {
       <section id="reviews">
         <ReviewsSection />
       </section>
-      <section id="contact">
+      {/* <section id="contact">
         <ContactSection />
-      </section>
+      </section> */}
       <Footer />
     </main>
   );

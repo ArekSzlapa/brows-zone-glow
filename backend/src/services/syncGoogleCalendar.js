@@ -16,7 +16,7 @@ function callSync() {
     },
   };
 
-  const req = http.request(url, options, (res) => {
+  const req = https.request(url, options, (res) => {
     let body = "";
     res.on("data", (chunk) => (body += chunk));
     res.on("end", () => {

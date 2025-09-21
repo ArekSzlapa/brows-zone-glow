@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Facebook, Instagram } from "lucide-react";
 import { HeroButton } from "./ui/hero-button";
 import logo from "../assets/logo.png";
+import openBooksy from "@/helpers/BooksyBooking";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -176,7 +177,7 @@ const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <HeroButton size="default" onClick={handleBooking}>
+            <HeroButton size="default" onClick={() => openBooksy()}>
               Umów wizytę
             </HeroButton>
           </div>
@@ -233,7 +234,7 @@ const Navigation = () => {
             <HeroButton
               size="default"
               className="w-full mt-4"
-              onClick={handleBooking}
+              onClick={() => openBooksy()}
             >
               Umów wizytę
             </HeroButton>

@@ -1,6 +1,7 @@
 import { Heart, Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
+import openBooksy from "@/helpers/BooksyBooking";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -84,7 +85,9 @@ const Footer = () => {
               ].map((link) => (
                 <button
                   key={link.name}
-                  onClick={() => handleNavigation(link)}
+                  onClick={() =>
+                    link.id === "form" ? openBooksy() : handleNavigation(link)
+                  }
                   className="block text-left text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
                   {link.name}
