@@ -1,5 +1,5 @@
 import { HeroButton } from "@/components/ui/hero-button";
-import heroImage from "@/assets/hero_proposition.jpg";
+import heroImage from "@/assets/hero_session.jpg";
 import openBooksy from "@/helpers/BooksyBooking";
 
 const scrollToSection = (sectionId: string) => {

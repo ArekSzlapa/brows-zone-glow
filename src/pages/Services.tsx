@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { HeroButton } from "@/components/ui/hero-button";
-import serviceImage from "@/assets/services.jpg";
+import serviceImage from "@/assets/services_session.jpg";
 import openBooksy from "@/helpers/BooksyBooking";
 
 const Services = () => {
