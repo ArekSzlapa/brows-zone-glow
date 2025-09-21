@@ -92,7 +92,7 @@ const About = () => {
 
           {/* About Image and Story */}
           <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
-            <div className="relative overflow-hidden rounded-2xl shadow-elegant max-w-full">
+            <div className="relative overflow-hidden rounded-2xl shadow-elegant max-w-full w-4/5">
               <img
                 src={aboutImage}
                 alt="Professional eyebrow stylist at work"

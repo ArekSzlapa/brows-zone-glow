@@ -46,10 +46,20 @@ const Services = () => {
             </p>
           </div>
 
+          {/* Title spanning across both columns */}
+          <div className="mb-8">
+            <h3 className="text-3xl font-bold text-foreground/80 text-center mb-3">
+              Gotowa na metamorfozę?
+            </h3>
+            <p className="text-muted-foreground text-center mb-6">
+              Umów wizytę już dziś i przekonaj się o jakości moich usług.
+            </p>
+          </div>
+
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Services Card */}
-            <div className="space-y-8">
-              <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
+            <div className="h-full">
+              <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm h-full">
                 <CardContent className="p-8">
                   {/* Brwi Section */}
                   <div className="mb-8">
@@ -126,34 +136,25 @@ const Services = () => {
               </Card>
             </div>
 
-            {/* Service Image */}
-            <div className="space-y-6">
-              <div className="relative rounded-2xl overflow-hidden shadow-elegant max-w-full">
+            {/* Service Image with CTA Button */}
+            <div className="flex flex-col h-full">
+              <div className="relative rounded-2xl overflow-hidden shadow-elegant flex-1">
                 <img
                   src={serviceImage}
                   alt="Professional eyebrow and eyelash services"
-                  className="w-full h-auto object-contain"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-
-              {/* Call to Action Card */}
-              <Card className="border-0 shadow-soft bg-card/90 backdrop-blur-sm">
-                <CardContent className="p-6 text-center">
-                  <h3 className="text-2xl font-bold text-foreground/80 mb-3">
-                    Gotowa na metamorfozę?
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Umów wizytę już dziś i przekonaj się o jakości moich usług.
-                  </p>
-                  <HeroButton
-                    onClick={() => openBooksy()}
-                    className="w-full sm:w-auto"
-                  >
-                    Zarezerwuj wizytę
-                  </HeroButton>
-                </CardContent>
-              </Card>
+              
+              <div className="mt-6 text-center">
+                <HeroButton
+                  onClick={() => openBooksy()}
+                  className="w-full sm:w-auto"
+                >
+                  Zarezerwuj wizytę
+                </HeroButton>
+              </div>
             </div>
           </div>
         </div>
