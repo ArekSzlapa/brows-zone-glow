@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { HeroButton } from "@/components/ui/hero-button";
 import { Card, CardContent } from "@/components/ui/card";
-import aboutImage from "@/assets/aboutme_session.jpg";
+import aboutImage from "@/assets/aboutme_session_new.jpg";
 import { Link, Pointer } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import openBooksy from "@/helpers/BooksyBooking";

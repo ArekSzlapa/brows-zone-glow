@@ -35,7 +35,7 @@ const ReviewsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-muted/20">
+    <section className="pb-20 bg-muted/20">
       <div className="container mx-auto px-6 mediaSmall">
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold mb-4">
@@ -87,13 +87,6 @@ const ReviewsSection = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-12">
-          <p className="text-lg text-muted-foreground">
-            Gotowa aby zostać kolejną zadowoloną klientką?
-          </p>
         </div>
       </div>
     </section>

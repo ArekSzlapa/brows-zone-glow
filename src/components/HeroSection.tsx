@@ -36,7 +36,7 @@ const HeroSection = () => {
           alt="Professional eyebrow shaping service"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60" />
       </div>
 
       {/* Content */}
@@ -50,7 +50,10 @@ const HeroSection = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
+          <p
+            className="text-xl text-foreground/80 mb-8 leading-relaxed"
+            style={{ fontWeight: 500 }}
+          >
             Odkryj sztukę perfekcyjnych brwi w Brows•Zone
           </p>
 
