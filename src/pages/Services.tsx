@@ -46,16 +46,6 @@ const Services = () => {
             </p>
           </div>
 
-          {/* Title spanning across both columns */}
-          <div className="mb-8">
-            <h3 className="text-3xl font-bold text-foreground/80 text-center mb-3">
-              Gotowa na metamorfozę?
-            </h3>
-            <p className="text-muted-foreground text-center mb-6">
-              Umów wizytę już dziś i przekonaj się o jakości moich usług.
-            </p>
-          </div>
-
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Services Card */}
             <div className="h-full">
@@ -146,15 +136,23 @@ const Services = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              
-              <div className="mt-6 text-center">
-                <HeroButton
-                  onClick={() => openBooksy()}
-                  className="w-full sm:w-auto"
-                >
-                  Zarezerwuj wizytę
-                </HeroButton>
-              </div>
+            </div>
+            {/* Title spanning across both columns */}
+          </div>
+          <div className="mt-8">
+            <h3 className="text-3xl font-bold text-foreground/80 text-center mb-3">
+              Gotowa na metamorfozę?
+            </h3>
+            <p className="text-muted-foreground text-center mb-6">
+              Umów wizytę już dziś i przekonaj się o jakości moich usług.
+            </p>
+            <div className="mt-6 text-center">
+              <HeroButton
+                onClick={() => openBooksy()}
+                className="w-full sm:w-auto"
+              >
+                Zarezerwuj wizytę
+              </HeroButton>
             </div>
           </div>
         </div>
