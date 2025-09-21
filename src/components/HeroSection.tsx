@@ -22,7 +22,7 @@ const HeroSection = () => {
         <img
           src={heroImage}
           alt="Professional eyebrow shaping service"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/90 to-background/70" />
       </div>

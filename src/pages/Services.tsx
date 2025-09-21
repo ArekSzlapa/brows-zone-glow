@@ -46,7 +46,7 @@ const Services = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Services Card */}
             <div className="space-y-8">
               <Card className="border-0 shadow-soft bg-card/80 backdrop-blur-sm">
