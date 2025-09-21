@@ -128,11 +128,11 @@ const Services = () => {
 
             {/* Service Image */}
             <div className="space-y-6">
-              <div className="relative rounded-2xl overflow-hidden shadow-elegant">
+              <div className="relative rounded-2xl overflow-hidden shadow-elegant max-w-full">
                 <img
                   src={serviceImage}
                   alt="Professional eyebrow and eyelash services"
-                  className="w-full h-96 object-cover"
+                  className="w-full h-96 object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>

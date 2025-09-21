@@ -17,54 +17,67 @@ const scrollToSection = (sectionId: string) => {
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* Background with image pattern on left side */}
+      <div className="absolute inset-0 z-0 lg:w-1/2">
         <img
           src={heroImage}
           alt="Professional eyebrow shaping service"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/90 to-background/70" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center lg:text-left">
-        <div className="max-w-2xl mx-auto lg:mx-0">
-          <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-foreground/80">Podkreślam Twoje</span> <br />
-            <span className="text-foreground/80">
-              naturalne
-              <span className=" text-primary"> piękno</span>
-            </span>
-          </h1>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+          {/* Left Content */}
+          <div className="space-y-8 text-center lg:text-left">
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+              <span className="text-foreground/80">Podkreślam Twoje</span> <br />
+              <span className="text-foreground/80">
+                naturalne
+                <span className=" text-primary"> piękno</span>
+              </span>
+            </h1>
 
-          <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
-            Odkryj sztukę perfekcyjnych brwi w Brows•Zone
-          </p>
+            <p className="text-xl text-foreground/80 leading-relaxed">
+              Odkryj sztukę perfekcyjnych brwi w Brows•Zone
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <HeroButton
-              // onClick={() => scrollToSection("form")}
-              onClick={() => openBooksy()}
-              size="lg"
-              className="text-lg px-8 py-4"
-            >
-              Umów wizytę
-            </HeroButton>
-            <HeroButton
-              onClick={() => (window.location.href = "tel:+48516170052")}
-              variant="outline"
-              size="lg"
-              className="text-lg px-8 py-4"
-            >
-              Zadzwoń 516 170 052
-            </HeroButton>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <HeroButton
+                onClick={() => openBooksy()}
+                size="lg"
+                className="text-lg px-8 py-4"
+              >
+                Umów wizytę
+              </HeroButton>
+              <HeroButton
+                onClick={() => (window.location.href = "tel:+48516170052")}
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-4"
+              >
+                Zadzwoń 516 170 052
+              </HeroButton>
+            </div>
+          </div>
+
+          {/* Right Image */}
+          <div className="relative">
+            <div className="relative rounded-2xl overflow-hidden shadow-elegant">
+              <img
+                src={heroImage}
+                alt="Professional eyebrow shaping service"
+                className="w-full h-[600px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Decorative Elements */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block">
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden sm:block lg:left-1/4">
         <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
           <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
         </div>
