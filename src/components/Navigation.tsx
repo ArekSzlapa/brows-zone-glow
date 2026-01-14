@@ -129,12 +129,12 @@ const Navigation = () => {
             </div>
             <div className="flex flex-col">
               <span
-                className="text-xl text-foreground/80 transition-colors duration-300"
+                className="text-xl text-foreground transition-colors duration-300"
                 style={{ fontFamily: "serif" }}
               >
                 BROWS•ZONE
               </span>
-              <p className="text-sm text-foreground/80">Aleksandra Szłapa</p>
+              <p className="text-sm text-foreground">Aleksandra Szłapa</p>
             </div>
           </div>
 

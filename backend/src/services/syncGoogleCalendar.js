@@ -1,5 +1,10 @@
-const https = require("https");
-const http = require("http");
+let protocol;
+if (process.env.NODE_ENV === "development") {
+  protocol = require("https");
+} else {
+  protocol = require("http");
+}
+
 const cron = require("node-cron");
 
 const BACKEND_URL = process.env.BACKEND_URL;
@@ -16,7 +21,7 @@ function callSync() {
     },
   };
 
-  const req = https.request(url, options, (res) => {
+  const req = protocol.request(url, options, (res) => {
     let body = "";
     res.on("data", (chunk) => (body += chunk));
     res.on("end", () => {

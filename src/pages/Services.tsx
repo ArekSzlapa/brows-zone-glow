@@ -7,26 +7,47 @@ import serviceImage from "@/assets/services_session.jpg";
 import openBooksy from "@/helpers/BooksyBooking";
 
 const Services = () => {
-  const navigate = useNavigate();
-
-  const scrollToForm = () => {
-    navigate("/#form");
-  };
   const brwiServices = [
-    { title: "LAMINACJA BRWI • FARBKA • ODŻYWKA", price: "140,-" },
-    { title: "LAMINACJA BRWI • ODŻYWKA", price: "120,-" },
-    { title: "GEOMETRIA BRWI • FARBKA • ODŻYWKA", price: "70,-" },
-    { title: "GEOMETRIA BRWI • ODŻYWKA", price: "50,-" },
-    { title: "* W KAŻDEJ USŁUDZE REGULACJA BRWI *" },
+    { title: "REGULACJA BRWI • BOTOKS", price: "50,-" },
+    { title: "REGULACJA BRWI • FARBKA • BOTOKS", price: "80,-" },
+    { title: "REGULACJA BRWI • HENNA PUDROWA • BOTOKS", price: "90,-" },
+    { title: "LAMINACJA BRWI • REGULACJA • BOTOKS", price: "120,-" },
+    { title: "LAMINACJA BRWI • FARBKA • REGULACJA • BOTOKS", price: "140,-" },
   ];
 
   const rzesyServices = [
-    { title: "LIFTING RZĘS • FARBKA • ODŻYWKA", price: "140,-" },
-    { title: "LIFTING RZĘS • ODŻYWKA", price: "120,-" },
+    { title: "KOLORYZACJA RZĘS • BOTOKS", price: "50,-" },
+    { title: "LIFTING RZĘS • BOTOKS", price: "120,-" },
+    { title: "LIFTING RZĘS • FARBKA • BOTOKS", price: "140,-" },
+    { title: "KOREAŃSKI LIFTING RZĘS • FARBKA • BOTOKS", price: "150,-" },
   ];
 
   const kombinowaneServices = [
-    { title: "PAKIET LAMINACJI • FARBKA • ODŻYWKA", price: "250,-" },
+    {
+      title: "LAMINACJA BRWI I RZĘS • REGULACJA BRWI • BOTOKS",
+      price: "230,-",
+    },
+    {
+      title:
+        "KOREAŃSKI LIFTING RZĘS • LAMINACJA BRWI • REGULACJA BRWI • BOTOKS ",
+      price: "240,-",
+    },
+    {
+      title: "LAMINACJA BRWI I RZĘS • REGULACJA BRWI • FARBKA • BOTOKS ",
+      price: "250,-",
+    },
+    {
+      title:
+        "KOREAŃSKI LIFTING RZĘS • LAMINACJA BRWI • REGULACJA BRWI • FARBKA • BOTOKS ",
+      price: "260,-",
+    },
+  ];
+
+  const otherServices = [
+    {
+      title: "DEPILACJA WĄSIK",
+      price: "30,-",
+    },
   ];
 
   return (
@@ -54,7 +75,7 @@ const Services = () => {
                   {/* Brwi Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      BROW BAR
+                      STYLIZACJA BRWI
                     </h3>
                     <div className="space-y-4">
                       {brwiServices.map((service, index) => (
@@ -78,7 +99,7 @@ const Services = () => {
                   {/* Rzęsy Section */}
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      LASH BAR
+                      STYLIZACJA RZĘS
                     </h3>
                     <div className="space-y-4">
                       {rzesyServices.map((service, index) => (
@@ -100,12 +121,34 @@ const Services = () => {
                   </div>
 
                   {/* Brwi i Rzęsy Section */}
-                  <div>
+                  <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
-                      LASH & BROW BAR{" "}
+                      PAKIETY{" "}
                     </h3>
                     <div className="space-y-4">
                       {kombinowaneServices.map((service, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center py-2"
+                        >
+                          <div className="flex-1">
+                            <span className="font-semibold text-foreground/80">
+                              {service.title}
+                            </span>
+                          </div>
+                          <span className="text-lg font-bold text-primary">
+                            {service.price}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-primary mb-4 border-b border-border/50 pb-2">
+                      POZOSTAŁE USŁUGI{" "}
+                    </h3>
+                    <div className="space-y-4">
+                      {otherServices.map((service, index) => (
                         <div
                           key={index}
                           className="flex justify-between items-center py-2"

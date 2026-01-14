@@ -22,6 +22,7 @@ function MediaItem({
   if (item.media_type === "IMAGE") {
     return (
       <img
+        style={{ aspectRatio: "1/1", width: "100%", height: "100%" }}
         src={item.media_url}
         alt="Carousel image"
         className={`max-h-[90vh] max-w-[90vw] object-${fitMode} mx-auto rounded-xl`}

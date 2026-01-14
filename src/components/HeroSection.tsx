@@ -43,7 +43,8 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-6 text-center lg:text-left">
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-            {isMobile ? <br></br> : ""}
+            {isMobile ? <br /> : ""}
+            {isMobile ? <br /> : ""}
             <span className="text-foreground/80">Podkreślam Twoje</span> <br />
             <span className="text-foreground/80">
               naturalne
@@ -72,7 +73,7 @@ const HeroSection = () => {
               size="lg"
               className="text-lg px-8 py-4"
             >
-              Zadzwoń 516 170 052
+              Zadzwoń
             </HeroButton>
           </div>
         </div>
